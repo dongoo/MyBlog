@@ -19,6 +19,7 @@ categories: octopress
 {% video url/to/video [width height] [url/to/poster] %}
 {% endcodeblock %}
 
+<!--more-->
 ##插入代码片段
 
 	{ % codeblock [lang:language] [title] [url] [link text] %}   # ｛和%之间不能有空格
@@ -35,7 +36,7 @@ categories: octopress
 
 个人认为这几个插件比较常用一点，就只介绍这几个，其它有需要请参考官方文档吧:)
 
-参考：
+参考：[http://octopress.org/docs/plugins/](http://octopress.org/docs/plugins/)
 
 
 
