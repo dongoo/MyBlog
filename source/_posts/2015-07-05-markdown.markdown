@@ -1,0 +1,117 @@
+---
+layout: post
+title: "markdown简单语法"
+date: 2015-07-05 23:45:23 +0800
+comments: true
+categories: markdown
+---
+
+使用octopress，就要使用markdown来写作，这里只记录一些常用&&必备的内容
+
+####1.Headers标题，行首插入1至6个#，分别对应h1到h6：
+
+	#header
+
+	###header
+
+对应的html是：
+
+	<h1>header</h1>
+	
+	<h3>header</h3>
+
+####2.斜体和粗体，被一个* 包括的文本代表斜体，被两个* 包括的文本代表粗体，被三个*包含的文本代表粗斜体
+<!--more-->
+	*斜体*
+	
+	**粗体**
+	
+	***粗斜体***
+
+对应的html：
+
+	<em>斜体</em>
+	
+	<strong>粗体</strong>
+	
+	<strong><em>粗斜体</em></strong>
+
+####3.链接
+
+如果是为了使URL本身变成可以点击的超链接，只需要用尖括号将URL括起来：
+
+	<http://xxx.xxx>
+
+对应的html：
+
+	<a href="http://xxx.xxx">http://xxx.xxx</a>
+
+如果是为一段文字加链接（"title"部分可选）：
+
+	[超链接文字](http://xxx.xxx "title")
+
+对应的html:
+
+	<a href="http://xxx.xxx" title="title">超链接文字</a>
+
+####4.列表
+
+**无序列表**在列表项前加一个*号和空格:
+
+	* 第一条
+	
+	* 第二条
+	
+	* 第三条
+
+对应的html:
+
+	<ul>
+
+		<li><p>第一条</p></li>
+		<li><p>第二条</p></li>
+		<li><p>第三条</p></li>
+
+	</ul>
+
+**有序列表**，在列表项前面加数字点号和空格:
+
+	1. 第一条
+	
+	2. 第二条
+	
+	3. 第三条
+
+对应的html:
+
+	<ol>
+
+		<li>第一条</li>
+		<li>第二条</li>
+		<li>第三条</li>
+
+	</ol>
+
+####5.转义字符：
+
+	\	
+
+Markdown使用了很多字符，如果想在文章中使用这些字符而不被当作Markdown标记的话，可以使用"\"来转义特殊字符。例如：
+
+	\*斜体*
+
+将按原样输出对应的html:
+
+	<p>*斜体*</p>
+
+####6.代码块
+
+若有大段的代码想按原样输出，只需要在前面加4个以上的空格或一个以上的Tab：
+
+	(四个空格或一个Tab) #head
+
+对应的html:
+
+	<pre>
+		<code>#head</code>
+	</pre>

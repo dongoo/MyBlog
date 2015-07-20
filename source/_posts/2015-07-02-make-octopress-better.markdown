@@ -10,27 +10,30 @@ categories: octopress
 ##插入图片
 
 {% codeblock %}
+
 {% img [class names] /path/to/image [width] [height] [title text [alt text]] %}
 {% endcodeblock %}
 
 ##插入视频
 
-{% codeblock %}
-{% video url/to/video [width height] [url/to/poster] %}
-{% endcodeblock %}
+	{ % video url/to/video [width height] [url/to/poster] %}
+
 
 <!--more-->
 ##插入代码片段
 
-	{ % codeblock [lang:language] [title] [url] [link text] %}   # ｛和%之间不能有空格
+	{ % codeblock [lang:language] [title] [url] [link text] %} 
+		# ｛和%之间不能有空格
 	code snippet
-	{ % endcodeblock %} # ｛和%之间不能有空格
+	{ % endcodeblock %} 
+		#｛和%之间不能有空格
 
 
 ##插入代码文件
 
 
-    {% include_code [title] [lang:language] path/to/file %}		#path值指的是_config.yml中code_dir的值
+    {% include_code [title] [lang:language] path/to/file %}	
+		#path值指的是_config.yml中code_dir的值
     
 
 
