@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Lidong&#39;s blog">
+    <title>Rsync部署HEXO，使用HTTPS，附加HTTP2 - Lidong&#39;s blog</title>
+    <meta name="author" content="lidong">
+    
+    
+        <link rel="alternative" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="首先如果想部署在GITHUB上使用HTTPS，就目前来看那是不可能，除非使用github.io域名，所以首先要有一个VPS或云主机，之前做SS时，在digitalocean买了一个水滴，使用也不算多我的BLOG访问量也不高，为了省钱就一起搞吧，也是为了充分利用资源吧  O(∩_∩)O
+我的digitalocean推荐链接：使用我的链接，你将有10美元奖励，我也有额外获得。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Rsync部署HEXO，使用HTTPS，附加HTTP2">
+<meta property="og:url" content="https://blog.lidong.me/2015/https/index.html">
+<meta property="og:site_name" content="Lidong's blog">
+<meta property="og:description" content="首先如果想部署在GITHUB上使用HTTPS，就目前来看那是不可能，除非使用github.io域名，所以首先要有一个VPS或云主机，之前做SS时，在digitalocean买了一个水滴，使用也不算多我的BLOG访问量也不高，为了省钱就一起搞吧，也是为了充分利用资源吧  O(∩_∩)O
+我的digitalocean推荐链接：使用我的链接，你将有10美元奖励，我也有额外获得。">
+<meta property="og:updated_time" content="2015-11-14T17:49:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rsync部署HEXO，使用HTTPS，附加HTTP2">
+<meta name="twitter:description" content="首先如果想部署在GITHUB上使用HTTPS，就目前来看那是不可能，除非使用github.io域名，所以首先要有一个VPS或云主机，之前做SS时，在digitalocean买了一个水滴，使用也不算多我的BLOG访问量也不高，为了省钱就一起搞吧，也是为了充分利用资源吧  O(∩_∩)O
+我的digitalocean推荐链接：使用我的链接，你将有10美元奖励，我也有额外获得。">
+<meta name="twitter:creator" content="@｀Dondongooo｀">
+    
+    
+    
+        <meta property="og:image" content="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=640"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style.min.css" type="text/css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-69794593-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">Lidong&#39;s blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="/#about">
+        
+        
+            <img class="header-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=90"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">lidong</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="/#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-user"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/dongoo" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://www.lidong.me" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-list"></i>
+                    <span class="sidebar-button-desc">Website</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Rsync部署HEXO，使用HTTPS，附加HTTP2
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Sat Nov 14 2015 10:36:54 GMT+0800">
+	
+		    11月 14, 2015
+    	
+    </time>
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>首先如果想部署在GITHUB上使用HTTPS，就目前来看那是不可能，除非使用github.io域名，所以首先要有一个VPS或云主机，之前做SS时，在digitalocean买了一个水滴，使用也不算多我的BLOG访问量也不高，为了省钱就一起搞吧，也是为了充分利用资源吧  O(∩_∩)O</p>
+<p>我的digitalocean推荐链接：使用我的链接，你将有10美元奖励，我也有额外获得。 <a id="more"></a><br><a href="https://www.digitalocean.com/?refcode=7c320d50fe04" target="_blank" rel="external">https://www.digitalocean.com/?refcode=7c320d50fe04</a></p>
+<p>###下载nginx</p>
+<pre><code>cd ~/tmp/
+wget http:<span class="comment">//nginx.org/download/nginx-1.9.6.tar.gz</span>
+wget https:<span class="comment">//www.openssl.org/source/openssl-1.0.2d.tar.gz</span>
+
+tar -xzf nginx-<span class="number">1.9</span>.<span class="number">6</span><span class="class">.tar</span><span class="class">.gz</span>
+tar -xzf openssl-<span class="number">1.0</span>.<span class="number">2</span>d<span class="class">.tar</span><span class="class">.gz</span>
+</code></pre><p>###编译安装</p>
+<pre><code>cd nginx-<span class="number">1.9</span>.<span class="number">6</span>
+./configure --<span class="keyword">with</span>-openssl=<span class="regexp">/home/dong</span><span class="regexp">/tmp/openssl</span>-<span class="number">1.0</span>.<span class="number">2</span>d/ --<span class="keyword">with</span>-http_spdy_module --<span class="keyword">with</span>-http_ssl_module
+make
+sudo make install
+</code></pre><p>使用 <code>--with-openssl</code>指定openssl文件位置</p>
+<p>###编辑nginx配置文件</p>
+<p> <code>vi /usr/local/nginx/conf/nginx.conf</code></p>
+<pre><code><span class="comment"># HTTPS server     </span>
+<span class="title">server</span> {
+<span class="comment">#   此处添加HTTP2 即可启用HTTP2</span>
+    <span class="title">listen</span>       <span class="number">443</span> ssl http2;
+    <span class="title">server_name</span>  localhost;
+    <span class="comment"># 证书文件路径</span>
+    <span class="comment"># 证书私钥文件路径</span>
+    <span class="title">ssl_certificate</span>      ./ssl/cert.pem;
+    <span class="title">ssl_certificate_key</span>  ./ssl/cert.key;
+
+<span class="comment">#   ssl_session_cache    shared:SSL:1m;</span>
+    <span class="title">ssl_session_timeout</span>  <span class="number">5m</span>;
+
+<span class="comment">#    ssl_ciphers  HIGH:!aNULL:!MD5;</span>
+<span class="comment">#    ssl_prefer_server_ciphers  on;</span>
+<span class="comment">#    location / {</span>
+<span class="comment"># 在root后面位网站的根目录</span>
+        <span class="title">root</span>   /home/wwwroot/blog/; 
+        <span class="title">index</span>  index.html index.htm;
+    }
+ <span class="comment"># }</span>
+</code></pre><p>编译安装的直接去掉配置文件中相应条目的注释就好了，如果是使用yum或apt-get自动安装的，可能需要手工添加</p>
+<p>###重载nginx</p>
+<pre><code><span class="regexp">/usr/</span>local<span class="regexp">/nginx/</span>sbin/nginx -t
+<span class="regexp">/usr/</span>local<span class="regexp">/nginx/</span>sbin/nginx -s reload
+</code></pre><p>  使用 <code>-t</code>参数检查配置文件的正确性，避免配置文件出错nginx停止</p>
+<p>不仅使用了HTTPS，还是使用HTTP2。瞎折腾 -_-|||</p>
+<p>###rsync部署hexo<br>我选择的是rsync模式，服务器上需要安装有rsync，一般linux中都安装了rsync，命令<code>rsync --version</code>确定是否安装，若没有安装，<code>yum install rsync</code>或 <code>apt-get install rsync</code>安装就好啦。</p>
+<p>安装hexo-deployer-rsync<br>npm install hexo-deployer-rsync –save</p>
+<p>####修改配置</p>
+<p>修改hexo的主配置文件<code>_config.yml</code></p>
+<pre><code><span class="attribute">deploy</span>:
+- <span class="attribute">type</span>: rsync
+  <span class="attribute">host</span>: 主机地址(填你主机的ip)
+  <span class="attribute">user</span>: lidong（主机登陆用户名）
+  <span class="attribute">root</span>: /home/wwwroot/blog/
+  <span class="attribute">port</span>: <span class="number">22</span>
+  <span class="attribute">delete</span>: true
+  <span class="attribute">verbose</span>: true
+  <span class="attribute">ignore_errors</span>: [true|false] 
+- <span class="attribute">type</span>: git
+   <span class="attribute">repo</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:dongoo/dongoo.github.io.git
+   <span class="attribute">branch</span>: 
+   <span class="attribute">message</span>: 
+</code></pre><p>多个部署，之前使用git部署，现在保留，使用git方便版本管理。也以防哪天挂了，可以再搞起。<br>  相关内容参看官方文档: <a href="https://hexo.io/zh-cn/docs/deployment.html" target="_blank" rel="external">https://hexo.io/zh-cn/docs/deployment.html</a></p>
+<p> <strong>你会发现选择使用rsync部署时，没有填写密码选项，不用认证吗？那是不可能的！不使用密码就要用密钥，和部署github时生成密钥相似</strong>。<br> 而且这对密钥是可以通用的哟，你只是公开的你的公钥，私钥自己保留着，破解？目前那是相当困难滴。<br> 我之前多次尝试部署不成功，都是没有意识到这一点。所以都失败了。</p>
+<p> PS:在digitalocean中可以在创建水滴(Droplet)时候，可以直接添加SSHkey，<br>digitalocean自动将SSHkey写入到系统中，若你使用的是其他主机，请检索相关资料啦。<br>总之，<strong>你需要能在本机使用SSHkey而不是密码，登陆到服务器</strong>，才能成功通过rsync部署HEXO。</p>
+<p>当一切都OK时，是 <code>hexo deploy</code> 一下，看看效果。<br>别忘记了修改DNS解析。自己实验的时候可以先修改hosts实现快速切换。</p>
+
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/hexo/">hexo</a> <a class="tag tag--primary tag--small t-link" href="/tags/http2/">http2</a> <a class="tag tag--primary tag--small t-link" href="/tags/https/">https</a> <a class="tag tag--primary tag--small t-link" href="/tags/rsync/">rsync</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/quickstarthttp/" data-tooltip="快速开启HTTP服务器">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/https/&amp;title=Rsync部署HEXO，使用HTTPS，附加HTTP2">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/https/&amp;title=Rsync部署HEXO，使用HTTPS，附加HTTP2">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/https/&amp;title=Rsync部署HEXO，使用HTTPS，附加HTTP2">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/https/&amp;title=Rsync部署HEXO，使用HTTPS，附加HTTP2">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2015 lidong. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/quickstarthttp/" data-tooltip="快速开启HTTP服务器">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/https/&amp;title=Rsync部署HEXO，使用HTTPS，附加HTTP2">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/https/&amp;title=Rsync部署HEXO，使用HTTPS，附加HTTP2">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/https/&amp;title=Rsync部署HEXO，使用HTTPS，附加HTTP2">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/https/&amp;title=Rsync部署HEXO，使用HTTPS，附加HTTP2">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2015/https/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2015/https/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2015/https/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=110"/>
+        
+            <h4 id="about-card-name">lidong</h4>
+        
+            <h5 id="about-card-bio"><p>author.bio</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </h5>
+        
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('https://dn-lidongim.qbox.me/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script.min.js" type="text/javascript"></script>
+<!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'lidongme';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','PC-rbcbbSstfz5xfcUAK','2.0.0');
+    </script>
+
+
+</html>

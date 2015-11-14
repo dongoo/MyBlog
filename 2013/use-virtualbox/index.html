@@ -1,0 +1,561 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Lidong&#39;s blog">
+    <title>VirtualBox虚拟机网络环境解析和搭建 - Lidong&#39;s blog</title>
+    <meta name="author" content="lidong">
+    
+    
+        <link rel="alternative" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="如果出现主机无法ping通虚拟机的情况，请首先确认虚拟机防火墙已关闭。
+一、NAT模式
+特点：
+
+如果主机可以上网，虚拟机可以上网
+虚拟机之间不能ping通
+虚拟机可以ping通主机（此时ping虚拟机的网关，即是ping主机）
+主机不能ping通虚拟机应用场景：
+
+虚拟机只要求可以上网，无其它特殊要求，满足最一般需求配置方法：连接方式 选择 网络地址转换（NAT）
+高级-控制芯片 选择 PCne">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="VirtualBox虚拟机网络环境解析和搭建">
+<meta property="og:url" content="https://blog.lidong.me/2013/use-virtualbox/index.html">
+<meta property="og:site_name" content="Lidong's blog">
+<meta property="og:description" content="如果出现主机无法ping通虚拟机的情况，请首先确认虚拟机防火墙已关闭。
+一、NAT模式
+特点：
+
+如果主机可以上网，虚拟机可以上网
+虚拟机之间不能ping通
+虚拟机可以ping通主机（此时ping虚拟机的网关，即是ping主机）
+主机不能ping通虚拟机应用场景：
+
+虚拟机只要求可以上网，无其它特殊要求，满足最一般需求配置方法：连接方式 选择 网络地址转换（NAT）
+高级-控制芯片 选择 PCne">
+<meta property="og:updated_time" content="2015-10-21T01:06:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VirtualBox虚拟机网络环境解析和搭建">
+<meta name="twitter:description" content="如果出现主机无法ping通虚拟机的情况，请首先确认虚拟机防火墙已关闭。
+一、NAT模式
+特点：
+
+如果主机可以上网，虚拟机可以上网
+虚拟机之间不能ping通
+虚拟机可以ping通主机（此时ping虚拟机的网关，即是ping主机）
+主机不能ping通虚拟机应用场景：
+
+虚拟机只要求可以上网，无其它特殊要求，满足最一般需求配置方法：连接方式 选择 网络地址转换（NAT）
+高级-控制芯片 选择 PCne">
+<meta name="twitter:creator" content="@｀Dondongooo｀">
+    
+    
+    
+        <meta property="og:image" content="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=640"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style.min.css" type="text/css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-69794593-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">Lidong&#39;s blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="/#about">
+        
+        
+            <img class="header-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=90"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">lidong</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="/#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-user"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/dongoo" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://www.lidong.me" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-list"></i>
+                    <span class="sidebar-button-desc">Website</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            VirtualBox虚拟机网络环境解析和搭建
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Thu Dec 05 2013 19:39:58 GMT+0800">
+	
+		    12月 05, 2013
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>如果出现主机无法ping通虚拟机的情况，请首先确认<strong>虚拟机防火墙已关闭</strong>。</p>
+<p>一、NAT模式</p>
+<p>特点：</p>
+<ol>
+<li>如果主机可以上网，虚拟机可以上网</li>
+<li>虚拟机之间不能ping通</li>
+<li>虚拟机可以ping通主机（此时ping虚拟机的网关，即是ping主机）</li>
+<li>主机不能ping通虚拟机<br>应用场景：</li>
+</ol>
+<p>虚拟机只要求可以上网，无其它特殊要求，满足最一般需求<br>配置方法：<br>连接方式 选择 网络地址转换（NAT）</p>
+<p>高级-控制芯片 选择 PCnet-FAST III</p>
+<p>高级-混杂模式 拒绝</p>
+<p>高级-接入网线 √ （虚拟机ip自动获取）</p>
+<p>ip样式：</p>
+<p><a id="more"></a>ip 10.0.2.15</p>
+<p>网关 10.0.2.2</p>
+<p>注意此处的网关在不同虚拟机中可能是同一个值，但是这归属于不同的NAT Engine，因此实际上各个虚拟机用的不是同一个网关</p>
+<p>原理：<br>虚拟机的请求传递给NAT Engine，由它来利用主机进行对外的网络访问，返回的数据包再由NAT Engine给虚拟机。</p>
+<p>二、Bridged Adapter模式（桥接模式）</p>
+<p>特点：</p>
+<ol>
+<li>如果主机可以上网，虚拟机可以上网</li>
+<li>虚拟机之间可以ping通</li>
+<li>虚拟机可以ping通主机</li>
+<li>主机可以ping通虚拟机以上各点基于一个前提：主机可以上网</li>
+<li>如果主机不可以上网，所有1-4特点均无<br>应用场景：<br>虚拟机要求可以上网，且虚拟机完全模拟一台实体机</li>
+</ol>
+<p>配置方法：</p>
+<p>连接方式 选择 桥接网卡</p>
+<p>界面名称 选择 （如果你的笔记本有无线网卡和有线网卡，需要根据现在的上网方式对应选择）</p>
+<p>高级-控制芯片 选择 PCnet-FAST III</p>
+<p>高级-混杂模式 拒绝</p>
+<p>高级-接入网线 √ （虚拟机ip自动获取）</p>
+<p>ip样式：<br>ip 与本机ip在同一网段内<br>网关 与本机网关相同</p>
+<p>原理：<br>通过主机网卡，架设一条桥，直接连入到网络中。它使得虚拟机能被分配到一个网络中独立的IP，所有网络功能完全和<br>在网络中的真实机器一样。?<br>（虚拟机是通过主机所在网络中的DHCP服务得到ip地址的，所以按理来说，两者是完全独立的，但事实却是虚拟机是没<br>有独立硬件的，它还是要依靠主机的网卡，因此，主机要断开网络，虚拟机也就没法拿到ip了，所以呵呵~~所有特点全<br>消失咯）</p>
+<p>三、Host-only Adapter模式</p>
+<p>特点：</p>
+<ol>
+<li>虚拟机不可以上网</li>
+<li>虚拟机之间可以ping通</li>
+<li>虚拟机可以ping通主机（注意虚拟机与主机通信是通过主机的名为VirtualBox Host-Only Network的网卡，因此ip是该网卡ip 192.168.56.1，而不是你现在正在上网所用的ip）</li>
+<li>主机可以ping通虚拟机<br>应用场景：<br>在主机无法上网的情况下（主机可以上网的情况下可以用host-only，也可以用桥接），需要搭建一个模拟局域网，所有机器可以互访</li>
+</ol>
+<p>配置方法：</p>
+<p>连接方式 选择 仅主机（Host-Only）适配器</p>
+<p>界面名称 选择 VirtualBox Host-Only Ethernet Adapter</p>
+<p>高级-控制芯片 选择 PCnet-FAST III</p>
+<p>高级-混杂模式 拒绝</p>
+<p>高级-接入网线 √<br>（虚拟机ip自动获取，也可以自己进行配置，网关配置为主机中虚拟网卡的地址【默认为192.168.56.1】，ip配置为与虚拟网卡地址同网段地址）</p>
+<p>ip样式：<br>ip 与本机VirtualBox Host-Only Network的网卡ip在同一网段内（默认192.168.56.*）</p>
+<p>网关?本机VirtualBox Host-Only Network的网卡ip（默认192.168.56.1）</p>
+<p>原理：</p>
+<p>通过VirtualBox Host-Only Network网卡进行通信，虚拟机以此ip作为网关，因此模拟了一个本机与各个虚拟机的局域网，如名称所指，<br>应该是无法上网的（但是有人说可以通过对VirtualBox Host-Only Network网卡进行桥接等操作使虚拟机可以上网，但如此就不如直接<br>采用桥接来的容易了，而且，呵呵，我没试成功，有的人也说不可以，因为主机不提供路由服务，我也不好乱说到底行不行，你自己试吧~~）<br>四、Internal模式（内网模式）</p>
+<p>特点：</p>
+<ol>
+<li>虚拟机不可以上网</li>
+<li>虚拟机之间可以ping通</li>
+<li>虚拟机不能ping通主机</li>
+<li>主机不能ping通虚拟机<br>应用场景：</li>
+</ol>
+<p>让各台虚拟机处于隔离的局域网内，只让它们相互通信，与外界（包括主机）隔绝</p>
+<p>配置方法：</p>
+<p>连接方式 选择 内部网络</p>
+<p>界面名称 选择 intnet（可以重新命名，所有放在同一局域网内的虚拟机此名称相同）</p>
+<p>高级-控制芯片 选择 PCnet-FAST III</p>
+<p>高级-混杂模式 拒绝</p>
+<p>高级-接入网线 √<br>（虚拟机ip：对于XP自动获取ip即可，但对于linux，必须手动配置ip和子网掩码，手动配置时需保证各个虚拟机ip在同一网段）</p>
+<p>ip样式：<br>ip?169.254.147.9<br>子网掩码 255.255.0.0<br>默认网关 无</p>
+<p>原理：</p>
+<p>各个虚拟机利用VirtualBox内置的DHCP服务器得到ip，数据包传递不经过主机所在网络，因此安全性高，防止外部抓包~<br>五、NAT模式+端口映射</p>
+<p>将虚拟机某端口映射到主机某端口，可以使主机和外部机器访问虚拟机提供的服务哦~~</p>
+<p>命令如下：</p>
+<p>（在命令行模式下，先到VirtualBox的安装目录下面，否则找不到命令）</p>
+<pre><code>vboxmanage setextradata &lt;VM name&gt; “VBoxInternal/Devices/pcnet/<span class="number">0</span>/LUN<span class="preprocessor">#<span class="number">0</span>/Config/&lt;rule name&gt;/Protocol” TCP</span>
+
+vboxmanage setextradata &lt;VM name&gt; “VBoxInternal/Devices/pcnet/<span class="number">0</span>/LUN<span class="preprocessor">#<span class="number">0</span>/Config/&lt;rule name&gt;/GuestPort” <span class="number">80</span></span>
+
+vboxmanage setextradata &lt;VM name&gt; “VBoxInternal/Devices/pcnet/<span class="number">0</span>/LUN<span class="preprocessor">#<span class="number">0</span>/Config/&lt;rule name&gt;/HostPort” <span class="number">8000</span>&gt;</span>
+</code></pre><p>转载自：<a href="http://blog.csdn.net/yxc135/article/details/8458939" target="_blank" rel="external">CSDN</a> 文章内容略有修改。</p>
+
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/VirtualBox/">VirtualBox</a> <a class="tag tag--primary tag--small t-link" href="/tags/桥接/">桥接</a> <a class="tag tag--primary tag--small t-link" href="/tags/虚拟机/">虚拟机</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/driving-license-step2/"  data-tooltip="明天要去考试科目二">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/linux-limit/" data-tooltip="linux权限机制">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/use-virtualbox/&amp;title=VirtualBox虚拟机网络环境解析和搭建">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/use-virtualbox/&amp;title=VirtualBox虚拟机网络环境解析和搭建">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/use-virtualbox/&amp;title=VirtualBox虚拟机网络环境解析和搭建">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/use-virtualbox/&amp;title=VirtualBox虚拟机网络环境解析和搭建">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2015 lidong. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/driving-license-step2/"  data-tooltip="明天要去考试科目二">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/linux-limit/" data-tooltip="linux权限机制">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/use-virtualbox/&amp;title=VirtualBox虚拟机网络环境解析和搭建">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/use-virtualbox/&amp;title=VirtualBox虚拟机网络环境解析和搭建">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/use-virtualbox/&amp;title=VirtualBox虚拟机网络环境解析和搭建">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/use-virtualbox/&amp;title=VirtualBox虚拟机网络环境解析和搭建">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2013/use-virtualbox/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2013/use-virtualbox/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2013/use-virtualbox/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=110"/>
+        
+            <h4 id="about-card-name">lidong</h4>
+        
+            <h5 id="about-card-bio"><p>author.bio</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </h5>
+        
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('https://dn-lidongim.qbox.me/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script.min.js" type="text/javascript"></script>
+<!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'lidongme';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','PC-rbcbbSstfz5xfcUAK','2.0.0');
+    </script>
+
+
+</html>

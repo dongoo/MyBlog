@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Lidong's blog]]></title>
+  <subtitle><![CDATA[My life and My notes]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="https://blog.lidong.me/"/>
+  <updated>2015-11-14T17:49:59.000Z</updated>
+  <id>https://blog.lidong.me/</id>
+  
+  <author>
+    <name><![CDATA[lidong]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Rsync部署HEXO，使用HTTPS，附加HTTP2]]></title>
+    <link href="https://blog.lidong.me/2015/https/"/>
+    <id>https://blog.lidong.me/2015/https/</id>
+    <published>2015-11-14T02:36:54.000Z</published>
+    <updated>2015-11-14T17:49:59.000Z</updated>
+    <content type="html"><![CDATA[<p>首先如果想部署在GITHUB上使用HTTPS，就目前来看那是不可能，除非使用github.io域名，所以首先要有一个VPS或云主机，之前做SS时，在digitalocean买了一个水滴，使用也不算多我的BLOG访问量也不高，为了省钱就一起搞吧，也是为了充分利用资源吧  O(∩_∩)O</p>
+<p>我的digitalocean推荐链接：使用我的链接，你将有10美元奖励，我也有额外获得。 <a id="more"></a><br><a href="https://www.digitalocean.com/?refcode=7c320d50fe04" target="_blank" rel="external">https://www.digitalocean.com/?refcode=7c320d50fe04</a></p>
+<p>###下载nginx</p>
+<pre><code>cd ~/tmp/
+wget http:<span class="comment">//nginx.org/download/nginx-1.9.6.tar.gz</span>
+wget https:<span class="comment">//www.openssl.org/source/openssl-1.0.2d.tar.gz</span>
+
+tar -xzf nginx-<span class="number">1.9</span>.<span class="number">6</span><span class="class">.tar</span><span class="class">.gz</span>
+tar -xzf openssl-<span class="number">1.0</span>.<span class="number">2</span>d<span class="class">.tar</span><span class="class">.gz</span>
+</code></pre><p>###编译安装</p>
+<pre><code>cd nginx-<span class="number">1.9</span>.<span class="number">6</span>
+./configure --<span class="keyword">with</span>-openssl=<span class="regexp">/home/dong</span><span class="regexp">/tmp/openssl</span>-<span class="number">1.0</span>.<span class="number">2</span>d/ --<span class="keyword">with</span>-http_spdy_module --<span class="keyword">with</span>-http_ssl_module
+make
+sudo make install
+</code></pre><p>使用 <code>--with-openssl</code>指定openssl文件位置</p>
+<p>###编辑nginx配置文件</p>
+<p> <code>vi /usr/local/nginx/conf/nginx.conf</code></p>
+<pre><code><span class="comment"># HTTPS server     </span>
+<span class="title">server</span> {
+<span class="comment">#   此处添加HTTP2 即可启用HTTP2</span>
+    <span class="title">listen</span>       <span class="number">443</span> ssl http2;
+    <span class="title">server_name</span>  localhost;
+    <span class="comment"># 证书文件路径</span>
+    <span class="comment"># 证书私钥文件路径</span>
+    <span class="title">ssl_certificate</span>      ./ssl/cert.pem;
+    <span class="title">ssl_certificate_key</span>  ./ssl/cert.key;
+
+<span class="comment">#   ssl_session_cache    shared:SSL:1m;</span>
+    <span class="title">ssl_session_timeout</span>  <span class="number">5m</span>;
+
+<span class="comment">#    ssl_ciphers  HIGH:!aNULL:!MD5;</span>
+<span class="comment">#    ssl_prefer_server_ciphers  on;</span>
+<span class="comment">#    location / {</span>
+<span class="comment"># 在root后面位网站的根目录</span>
+        <span class="title">root</span>   /home/wwwroot/blog/; 
+        <span class="title">index</span>  index.html index.htm;
+    }
+ <span class="comment"># }</span>
+</code></pre><p>编译安装的直接去掉配置文件中相应条目的注释就好了，如果是使用yum或apt-get自动安装的，可能需要手工添加</p>
+<p>###重载nginx</p>
+<pre><code><span class="regexp">/usr/</span>local<span class="regexp">/nginx/</span>sbin/nginx -t
+<span class="regexp">/usr/</span>local<span class="regexp">/nginx/</span>sbin/nginx -s reload
+</code></pre><p>  使用 <code>-t</code>参数检查配置文件的正确性，避免配置文件出错nginx停止</p>
+<p>不仅使用了HTTPS，还是使用HTTP2。瞎折腾 -_-|||</p>
+<p>###rsync部署hexo<br>我选择的是rsync模式，服务器上需要安装有rsync，一般linux中都安装了rsync，命令<code>rsync --version</code>确定是否安装，若没有安装，<code>yum install rsync</code>或 <code>apt-get install rsync</code>安装就好啦。</p>
+<p>安装hexo-deployer-rsync<br>npm install hexo-deployer-rsync –save</p>
+<p>####修改配置</p>
+<p>修改hexo的主配置文件<code>_config.yml</code></p>
+<pre><code><span class="attribute">deploy</span>:
+- <span class="attribute">type</span>: rsync
+  <span class="attribute">host</span>: 主机地址(填你主机的ip)
+  <span class="attribute">user</span>: lidong（主机登陆用户名）
+  <span class="attribute">root</span>: /home/wwwroot/blog/
+  <span class="attribute">port</span>: <span class="number">22</span>
+  <span class="attribute">delete</span>: true
+  <span class="attribute">verbose</span>: true
+  <span class="attribute">ignore_errors</span>: [true|false] 
+- <span class="attribute">type</span>: git
+   <span class="attribute">repo</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:dongoo/dongoo.github.io.git
+   <span class="attribute">branch</span>: 
+   <span class="attribute">message</span>: 
+</code></pre><p>多个部署，之前使用git部署，现在保留，使用git方便版本管理。也以防哪天挂了，可以再搞起。<br>  相关内容参看官方文档: <a href="https://hexo.io/zh-cn/docs/deployment.html" target="_blank" rel="external">https://hexo.io/zh-cn/docs/deployment.html</a></p>
+<p> <strong>你会发现选择使用rsync部署时，没有填写密码选项，不用认证吗？那是不可能的！不使用密码就要用密钥，和部署github时生成密钥相似</strong>。<br> 而且这对密钥是可以通用的哟，你只是公开的你的公钥，私钥自己保留着，破解？目前那是相当困难滴。<br> 我之前多次尝试部署不成功，都是没有意识到这一点。所以都失败了。</p>
+<p> PS:在digitalocean中可以在创建水滴(Droplet)时候，可以直接添加SSHkey，<br>digitalocean自动将SSHkey写入到系统中，若你使用的是其他主机，请检索相关资料啦。<br>总之，<strong>你需要能在本机使用SSHkey而不是密码，登陆到服务器</strong>，才能成功通过rsync部署HEXO。</p>
+<p>当一切都OK时，是 <code>hexo deploy</code> 一下，看看效果。<br>别忘记了修改DNS解析。自己实验的时候可以先修改hosts实现快速切换。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>首先如果想部署在GITHUB上使用HTTPS，就目前来看那是不可能，除非使用github.io域名，所以首先要有一个VPS或云主机，之前做SS时，在digitalocean买了一个水滴，使用也不算多我的BLOG访问量也不高，为了省钱就一起搞吧，也是为了充分利用资源吧  O(∩_∩)O</p>
+<p>我的digitalocean推荐链接：使用我的链接，你将有10美元奖励，我也有额外获得。]]>
+    
+    </summary>
+    
+      <category term="hexo" scheme="https://blog.lidong.me/tags/hexo/"/>
+    
+      <category term="http2" scheme="https://blog.lidong.me/tags/http2/"/>
+    
+      <category term="https" scheme="https://blog.lidong.me/tags/https/"/>
+    
+      <category term="rsync" scheme="https://blog.lidong.me/tags/rsync/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[快速开启HTTP服务器]]></title>
+    <link href="https://blog.lidong.me/2015/quickstarthttp/"/>
+    <id>https://blog.lidong.me/2015/quickstarthttp/</id>
+    <published>2015-11-08T14:43:41.000Z</published>
+    <updated>2015-11-08T15:06:18.000Z</updated>
+    <content type="html"><![CDATA[<p>时常需要使用HTTP服务器环境，<br>今天发现一条命名就可以开启服务器（机器上需要安装有Python）</p>
+<pre><code>$ python -m SimpleHTTPServer <span class="number">8000</span>
+</code></pre><p>8000位端口号，可选，默认是8000，设置成其他比如 8080，8888</p>
+<p>另外惊喜的发现，居然可以同时在不同的端口开启HTTP服务器<br><a id="more"></a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>时常需要使用HTTP服务器环境，<br>今天发现一条命名就可以开启服务器（机器上需要安装有Python）</p>
+<pre><code>$ python -m SimpleHTTPServer <span class="number">8000</span>
+</code></pre><p>8000位端口号，可选，默认是8000，设置成其他比如 8080，8888</p>
+<p>另外惊喜的发现，居然可以同时在不同的端口开启HTTP服务器<br>]]>
+    
+    </summary>
+    
+      <category term="HTTP" scheme="https://blog.lidong.me/tags/HTTP/"/>
+    
+      <category term="note" scheme="https://blog.lidong.me/tags/note/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Digitalocean地区迁移]]></title>
+    <link href="https://blog.lidong.me/2015/digitalocean-transfer/"/>
+    <id>https://blog.lidong.me/2015/digitalocean-transfer/</id>
+    <published>2015-10-26T04:34:15.000Z</published>
+    <updated>2015-11-06T13:32:28.000Z</updated>
+    <content type="html"><![CDATA[<p>在网上看到很多说San Francisco速度快一些，而我用的是Singapore今天测速看了一下，发现San Francisco确实是更快一些，延迟也会更低一些<br><a id="more"></a></p>
+<h3 id="1-关机">1.关机</h3><p><img src="http://img3.lidong.me/pic/pic20151026135142pyh8m.png" alt="" title="关机"></p>
+<h3 id="2-设置快照(snapshots)">2.设置快照(snapshots)</h3><p>Take a Snapshot</p>
+<h3 id="3-迁移">3.迁移</h3><p>将快照发送的sfo（根据快照的大小，可能需要一些时间）<br><img src="http://img3.lidong.me/pic/pic201510261358360rcf4.png" alt=""></p>
+<h3 id="4-重装">4.重装</h3><p>也就是重新买一个，在选择镜像(select image)的时候,选择刚刚的snapshots<br><img src="http://img3.lidong.me/pic/pic20151026140158f8vjw.png" alt=""></p>
+<p>测速情况<br>San Francisco：<br><img src="http://img3.lidong.me/pic/pic20151026154219qgs3f.png" alt=""><br>Singapore：<br><img src="http://img3.lidong.me/pic/pic20151026154517jodyn.png" alt=""></p>
+<h3 id="速度测试连接">速度测试连接</h3><p><a href="https://www.digitalocean.com/community/questions/do-you-have-a-speed-test" target="_blank" rel="external">https://www.digitalocean.com/community/questions/do-you-have-a-speed-test</a></p>
+<h4 id="参考链接">参考链接</h4><p><a href="http://boweihe.me/?p=1369" target="_blank" rel="external">http://boweihe.me/?p=1369</a><br><a href="http://www.laozuo.org/3907.html" target="_blank" rel="external">http://www.laozuo.org/3907.html</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在网上看到很多说San Francisco速度快一些，而我用的是Singapore今天测速看了一下，发现San Francisco确实是更快一些，延迟也会更低一些<br>]]>
+    
+    </summary>
+    
+      <category term="digitalocean" scheme="https://blog.lidong.me/tags/digitalocean/"/>
+    
+      <category term="迁移" scheme="https://blog.lidong.me/tags/%E8%BF%81%E7%A7%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[工作一年总结]]></title>
+    <link href="https://blog.lidong.me/2015/resign/"/>
+    <id>https://blog.lidong.me/2015/resign/</id>
+    <published>2015-08-31T17:55:41.000Z</published>
+    <updated>2015-11-06T12:25:46.000Z</updated>
+    <content type="html"><![CDATA[<p>终于我又要换工作了。在这马上要办离职手续的时期，赶紧总结一下吧～～<br>这份工作算起来刚刚好，干满一年了。之前的PM跟我说，无论工作满意不满意都要尽去做，最好能做满一年。也有人跟我说过，不要浪费时间了，去做就要做自己喜欢的工作吧。<br>现在我算折中了。我算是都做了。<br><a id="more"></a><br>在上一份工作快要离职的时候，我在看那本叫《人人都是产品经理》的书，那时候我就特别想做产品经理，于是找了一份与产品搭点边的工作（实际上貌似与产品关系不大），现在发现我也不太适合产品工作，因为我不愿意吹牛，不想去哄别人。。。<b>想想还是去做实在一些工作，比如软件编程，前端开发</b>，在这休假的时间正好补一补课，虽然之前了解过一些。</p>
+<p>回想过去，一年浪费好多时间、机会&amp;&amp;💰💰。<br>虽然我们做的事是直接触及到用户，但没有太大价值365天全年无休，但是做的是基础内容，拿着买白菜💰，却操白粉❤️。加那么多班，最后只有给自己来个长假。</p>
+<p>越发要离开的时候，越发不喜欢那工作，好像做错了什么。我本身是不喜欢限制，希望给予和被给予自由的，但是这工作却是去限制别人</p>
+<p>回想过去的一年，虽然没有做成什么，但是，在TX感受了一把与TX人工作的感觉，吃了一年TX食堂，坐了一年那2000多块的高级椅子，哈哈哈</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>终于我又要换工作了。在这马上要办离职手续的时期，赶紧总结一下吧～～<br>这份工作算起来刚刚好，干满一年了。之前的PM跟我说，无论工作满意不满意都要尽去做，最好能做满一年。也有人跟我说过，不要浪费时间了，去做就要做自己喜欢的工作吧。<br>现在我算折中了。我算是都做了。<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[tar命令]]></title>
+    <link href="https://blog.lidong.me/2015/tar/"/>
+    <id>https://blog.lidong.me/2015/tar/</id>
+    <published>2015-08-30T07:32:25.000Z</published>
+    <updated>2015-11-06T12:20:32.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="重要的内容放前面">重要的内容放前面</h3><p>解压tar.gz  <code>tar -xzvf nginx-1.8.0.tar.gz</code></p>
+<p>归档后gzip压缩 <code>tar -zcvf /tmp/etc.tar.gz /etc</code>(将/etc目录下的文件归档成为/tmp/etc.tar.gz)<br><a id="more"></a></p>
+<h3 id="详细讲解">详细讲解</h3><p>tar命令</p>
+<p>参数：</p>
+<p>-c ：建立一个压缩文件的参数指令(create 的意思)； <br><br>-x ：解开一个压缩文件的参数指令！<br><br>-t ：查看 tarfile 里面的文件！<br></p>
+<blockquote>
+<p>特别注意，在参数的下达中， c/x/t 仅能存在一个！不可同时存在！<br><br>因为不可能同时压缩与解压缩。<br></p>
+</blockquote>
+<p>-z ：是否同时具有 gzip 的属性？亦即是否需要用 gzip 压缩？<br><br>-j ：是否同时具有 bzip2 的属性？亦即是否需要用 bzip2 压缩？<br><br>-v ：压缩的过程中显示文件！这个常用，不建议用在背景执行过程！<br><br>-f ：使用档名，请留意，在 f 之后要立即接档名喔！不要再加参数！<br></p>
+<blockquote>
+<p>例如使用『 tar -zcvfP tfile sfile』就是错误的写法，要写成『 tar -zcvPf tfile sfile』才对喔！<br></p>
+</blockquote>
+<p>-p ：使用原文件的原来属性（属性不会依据使用者而变）<br><br>-P ：可以使用绝对路径来压缩！<br><br>-N ：比后面接的日期(yyyy/mm/dd)还要新的才会被打包进新建的文件中！<br><br>–exclude FILE：在压缩的过程中，不要将 FILE 打包！ </p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="重要的内容放前面">重要的内容放前面</h3><p>解压tar.gz  <code>tar -xzvf nginx-1.8.0.tar.gz</code></p>
+<p>归档后gzip压缩 <code>tar -zcvf /tmp/etc.tar.gz /etc</code>(将/etc目录下的文件归档成为/tmp/etc.tar.gz)<br>]]>
+    
+    </summary>
+    
+      <category term="tar" scheme="https://blog.lidong.me/tags/tar/"/>
+    
+      <category term="tar.gz" scheme="https://blog.lidong.me/tags/tar-gz/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[常用的DNS搜集]]></title>
+    <link href="https://blog.lidong.me/2015/dns/"/>
+    <id>https://blog.lidong.me/2015/dns/</id>
+    <published>2015-08-27T15:53:41.000Z</published>
+    <updated>2015-11-06T12:43:40.000Z</updated>
+    <content type="html"><![CDATA[<p>最近腾讯旗下的Dnspod也推出公共DNS，到此，BAT三家又竞争到一块去了<br><a id="more"></a><br>百度公共DNS<br>180.76.76.76</p>
+<p>阿里公共DNS<br>233.5.5.5<br>233.6.6.6</p>
+<p>腾讯Dnspod<br>119.29.29.29</p>
+<p>114DNS<br>纯净无劫持<br>114.114.114.114<br>114.114.115.115</p>
+<p>拦截钓鱼、病毒木马网站<br>114.114.114.119<br>114.114.115.119</p>
+<p>拦截色情、病毒木马、钓鱼网站<br>114.114.114.110<br>114.114.115.110</p>
+<p>Google DNS<br>8.8.8.8<br>8.8.4.4</p>
+<p>OPEN DNS<br>208.67.222.222<br>208.67.220.220</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>最近腾讯旗下的Dnspod也推出公共DNS，到此，BAT三家又竞争到一块去了<br>]]>
+    
+    </summary>
+    
+      <category term="dns" scheme="https://blog.lidong.me/tags/dns/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Mac中在Finder里面打开终端]]></title>
+    <link href="https://blog.lidong.me/2015/mac-go2shell/"/>
+    <id>https://blog.lidong.me/2015/mac-go2shell/</id>
+    <published>2015-08-24T15:01:37.000Z</published>
+    <updated>2015-11-06T12:52:53.000Z</updated>
+    <content type="html"><![CDATA[<p>在finder中查找文件，更加方便，毕竟是图形界面，在终端中查找文件多麻烦，或许记住命令也很方便，可惜记不住(⊙o⊙)… 还好有解决办法啦。<br><a id="more"></a><br>第一种方法：<br>在Mac App Store 中下载Go2Shell软件，链接<a href="https://itunes.apple.com/us/app/go2shell/id445770608?mt=12" target="_blank" rel="external">https://itunes.apple.com/us/app/go2shell/id445770608?mt=12</a><br>launchpad中找到Go2Shell软件，按住Cmd键，将其拖动到Finder的工具栏上，借用一下图片<br><img src="https://dn-lidongim.qbox.me/mac-go2shell.jpeg" alt=""></p>
+<blockquote>
+<p>图片来自<a href="http://my.oschina.net/ioslighter/blog/359258" target="_blank" rel="external">http://my.oschina.net/ioslighter/blog/359258</a></p>
+</blockquote>
+<p>第二种方法：</p>
+<p>系统偏好设置 -&gt; 键盘 -&gt; 快捷键 -&gt; 服务，勾选「新建位于文件夹位置的终端窗口」（后面的键盘快捷键可以不选），然后在 Finder 里面选中文件夹右键菜单的「服务」下面就会有「新建位于文件夹位置的终端窗口」这一子菜单了。</p>
+<p>两种方法各有优缺点，最佳做法就是把两种方法都弄上，那个方便用那个。</p>
+<p>参考：<br><a href="http://my.oschina.net/ioslighter/blog/359258" target="_blank" rel="external">http://my.oschina.net/ioslighter/blog/359258</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在finder中查找文件，更加方便，毕竟是图形界面，在终端中查找文件多麻烦，或许记住命令也很方便，可惜记不住(⊙o⊙)… 还好有解决办法啦。<br>]]>
+    
+    </summary>
+    
+      <category term="Mac小技巧" scheme="https://blog.lidong.me/tags/Mac%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[给Mac添加wget功能]]></title>
+    <link href="https://blog.lidong.me/2015/mac-wget/"/>
+    <id>https://blog.lidong.me/2015/mac-wget/</id>
+    <published>2015-08-23T14:01:25.000Z</published>
+    <updated>2015-11-06T12:53:32.000Z</updated>
+    <content type="html"><![CDATA[<p>wget是个好工具，但是Mac上本身没有这个工具<br><img src="https://dn-lidongim.qbox.me/15-8-23/92308559.jpg" alt=""><br>下面我们给Mac添加wget功能<br><a id="more"></a></p>
+<ol>
+<li><p>打开<a href="https://ftp.gnu.org/gnu/wget/选择下载最新版wget（我下载的是tar.gz版）" target="_blank" rel="external">https://ftp.gnu.org/gnu/wget/选择下载最新版wget（我下载的是tar.gz版）</a><br><img src="https://dn-lidongim.qbox.me/15-8-23/11473128.jpg" alt=""></p>
+</li>
+<li><p>找到下载的文件，双击解压文件得到一个文件夹，在终端中打开进入到该文件夹</p>
+</li>
+<li><p>输入 <code>./configure --with-ssl=openssl</code>后按下回车并等它安装完成</p>
+</li>
+<li><p>输入 make 后同样按下回车</p>
+</li>
+<li><p>然后输入代码<code>sudo make install</code>（有可能需要输入你的Mac密码）就安装完成啦！</p>
+</li>
+<li><p>现在测试一下是否安装完成，输入 <code>wget http://www.lidong.im/</code> ，如果正常执行就说明成功啦！（如果不行则重新从头做一次）</p>
+</li>
+</ol>
+<p>PS：</p>
+<p>其实Mac也自带了一个Curl同样也可以下载网页，用法：<br><code>curl -O [文件的URL]</code></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>wget是个好工具，但是Mac上本身没有这个工具<br><img src="https://dn-lidongim.qbox.me/15-8-23/92308559.jpg" alt=""><br>下面我们给Mac添加wget功能<br>]]>
+    
+    </summary>
+    
+      <category term="Mac小技巧" scheme="https://blog.lidong.me/tags/Mac%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
+    
+      <category term="wget" scheme="https://blog.lidong.me/tags/wget/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Mac上一些软件]]></title>
+    <link href="https://blog.lidong.me/2015/mac-software/"/>
+    <id>https://blog.lidong.me/2015/mac-software/</id>
+    <published>2015-08-23T12:16:19.000Z</published>
+    <updated>2015-11-06T12:57:02.000Z</updated>
+    <content type="html"><![CDATA[<p>刚刚开始使用Mac电脑，木有经验，从0开始，收集一些常用的软件作为备份！备份！备份！<br><a id="more"></a></p>
+<ul>
+<li>QQ    (必备)</li>
+<li>微信    （不解释）</li>
+<li>网易云音乐   （良心之作）</li>
+<li>Chrome    （必备）</li>
+<li>Evernote  （记录笔记）</li>
+<li>Day One   （记录日记）</li>
+<li>reeder    （rss阅读）</li>
+<li>mou   （markdown）</li>
+<li>lastpass  （密码记录）</li>
+<li>sublime text  （文本编辑器）</li>
+<li>迅雷    （下载，有时会用到）</li>
+<li>百度云 （资源丰富）</li>
+<li>Shadowsocks   （我朝必备）</li>
+<li>Dropbox   （必备神器）</li>
+</ul>
+<p>//以下2015-10-27更新添加（大部分是付费软件）</p>
+<ul>
+<li>1password (密码管理)</li>
+<li>Alfred 2 （升级版spotlight，我用的不多）</li>
+<li>bartrnder 2 （通知栏工具）</li>
+<li>caffeine （免费，防止休眠）</li>
+<li>cheatsheet （免费，查看快捷键）</li>
+<li>go2shell（免费，finder中打开Terminal） </li>
+<li>ithoughtsX (思维导图)</li>
+<li>monosnap（免费，截图上传）</li>
+<li>paste（剪切版工具）</li>
+<li>popclip （类似而胜于右键的工具）</li>
+<li>ulysses （markdown文档）</li>
+<li>ember (图片素材管理)</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>刚刚开始使用Mac电脑，木有经验，从0开始，收集一些常用的软件作为备份！备份！备份！<br>]]>
+    
+    </summary>
+    
+      <category term="Mac" scheme="https://blog.lidong.me/tags/Mac/"/>
+    
+      <category term="软件" scheme="https://blog.lidong.me/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[奢侈一回，Mac到手]]></title>
+    <link href="https://blog.lidong.me/2015/get-mac/"/>
+    <id>https://blog.lidong.me/2015/get-mac/</id>
+    <published>2015-08-03T12:17:00.000Z</published>
+    <updated>2015-08-24T16:25:03.000Z</updated>
+    <content type="html"><![CDATA[<p>大家都说Mac好呀，各种追捧，我也按按捺不住了，去买了一台Mac，第一次去香港就只为买一台💻 ：）</p>
+<p>作为穷屌丝，木有钱，所以去香港买喽，还算是比较顺利，木有被逮着。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>大家都说Mac好呀，各种追捧，我也按按捺不住了，去买了一台Mac，第一次去香港就只为买一台💻 ：）</p>
+<p>作为穷屌丝，木有钱，所以去香港买喽，还算是比较顺利，木有被逮着。</p>
+]]>
+    </summary>
+    
+      <category term="Mac" scheme="https://blog.lidong.me/tags/Mac/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[修改WordPress邮件通知的发件人]]></title>
+    <link href="https://blog.lidong.me/2015/change-wordpress-mail-from/"/>
+    <id>https://blog.lidong.me/2015/change-wordpress-mail-from/</id>
+    <published>2015-02-01T12:45:13.000Z</published>
+    <updated>2015-11-06T13:02:43.000Z</updated>
+    <content type="html"><![CDATA[<p>使用新的主机，发现我的WordPress可以不使用插件就可以发送通知邮件了，但是发件人是wordpress，与之前自定义的不一样。<a href="https://blog.hackroad.com/life/1454.html" target="_blank" rel="external">搜索找到方法</a>，记录一下</p>
+<pre><code> 修改wp-includes目录下的pluggable.php文件，在最后一行加入如下代码：
+ // 更改默认发信地址
+add_filter(<span class="string">'wp_mail_from'</span>,<span class="string">'mail_from'</span>);
+<span class="keyword">function</span> mail_from() {
+<span class="variable">$emailaddress</span> = <span class="string">'admin@yourname.com'</span>; //你的邮箱地址
+return <span class="variable">$emailaddress</span>;
+}
+// 更改默认发信人名字
+add_filter(<span class="string">'wp_mail_from_name'</span>,<span class="string">'mail_from_name'</span>);
+<span class="keyword">function</span> mail_from_name() {
+<span class="variable">$sendername</span> = <span class="string">'youname'</span>; //你的名字
+return <span class="variable">$sendername</span>;
+}
+</code></pre><!--怎么修改注释都有，网上错误的方法是修改functions.php，我修改过后博客直接打不开了，为什么是修改pluggable.php而不是functions.php？这是pluggable.php中的一段： Using the two 'wp_mail_from' and 'wp_mail_from_name' hooks allow from * creating a from address like 'Name &lt;email@address.com&gt;' when both are set. If * just 'wp_mail_from' is set, then just the email address will be used with no * name. 想必大家都明白了，人家说的很清楚 'wp_mail_from' 和 'wp_mail_from_name' 这两个函数是这里的。-->
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>使用新的主机，发现我的WordPress可以不使用插件就可以发送通知邮件了，但是发件人是wordpress，与之前自定义的不一样。<a href="https://blog.hackroad.com/life/1454.html" target="_blank" rel="]]>
+    </summary>
+    
+      <category term="wordprees" scheme="https://blog.lidong.me/tags/wordprees/"/>
+    
+      <category term="电脑网络" scheme="https://blog.lidong.me/categories/%E7%94%B5%E8%84%91%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[在电脑上打开手机网页－－在电脑上完成触屏操作]]></title>
+    <link href="https://blog.lidong.me/2014/play-buluo-with-pc/"/>
+    <id>https://blog.lidong.me/2014/play-buluo-with-pc/</id>
+    <published>2014-11-04T00:30:46.000Z</published>
+    <updated>2015-10-21T00:39:42.000Z</updated>
+    <content type="html"><![CDATA[<p>兴趣部落是一款在手机QQ上的类似贴吧的产品，我现在每天的工作就是围绕兴趣部落，前几天运气背，把手机给整坏了，木有手机了，工作怎么进行。虽然我们有可用PC端的后台，但是我就想用玩前端的，前端的才可以发帖，回帖嘛，要不然玩得多没意思。</p>
+<h3 id="正文开始">正文开始</h3><p>1.准备工具：chrome浏览器（我使用的是chrome 38，不同的版本可能有细微的差别）</p>
+<p>2.打开兴趣部落的网址：<a href="http://xiaoqu.qq.com/mobile/" title="兴趣部落" target="_blank" rel="external">http://xiaoqu.qq.com/mobile/</a>（网址会变成其他，不用担心，如果不放心也可以把这一步放在第五步之后）（网址可以通过关注兴趣部落官方微信获取噢 o(∩_∩)o ）</p>
+<p>3.按F12 打开浏览器的开发者工具；</p>
+<p>4.按图示操作，先选择弹出的开发者工具的左上角第二个图标，再点击右边圈中的按钮，并最小化弹出窗口（切记弹出的窗口不可以关闭。）</p>
+<p><a href="https://ilidong.com/wp-content/uploads/2014/11/20141104081200.png" target="_blank" rel="external">undefined</a><br>（点击可以放大）</p>
+<p>5.按图示设置，手机机型建议选择安卓机型，（苹果机型进去后没有搜索框，其它机型请自行测试）</p>
+<p><a href="https://ilidong.com/wp-content/uploads/2014/11/20141104084248.png" target="_blank" rel="external">undefined</a><br>（点击可以放大）</p>
+<p>6.按F5刷新页面，即可见到熟悉的页面了</p>
+<p>现在鼠标就是你的手的了，你可以用鼠标的点击代替手指的点按，用鼠标的点击按住拖动鼠标来代替手指的滑动。</p>
+<p>以上的方法适用于所有你想在电脑端浏览手机版页面，因为chrome浏览器已经帮我们配置好了手机模拟环境，不行你可以试试打开 <a href="http://3g.qq.com/" title="腾讯网" target="_blank" rel="external">腾讯网http://3g.qq.com/</a> <a href="http://3g.sina.com.cn/" title="新浪网" target="_blank" rel="external">新浪网http://3g.sina.com.cn/</a> 是不是都是手机版的页面呢，你选的手机型号比较NB的，还是触屏版噢，还能用鼠标操作噢。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>兴趣部落是一款在手机QQ上的类似贴吧的产品，我现在每天的工作就是围绕兴趣部落，前几天运气背，把手机给整坏了，木有手机了，工作怎么进行。虽然我们有可用PC端的后台，但是我就想用玩前端的，前端的才可以发帖，回帖嘛，要不然玩得多没意思。</p>
+<h3 id="正文开始">正文开]]>
+    </summary>
+    
+      <category term="兴趣部落" scheme="https://blog.lidong.me/tags/%E5%85%B4%E8%B6%A3%E9%83%A8%E8%90%BD/"/>
+    
+      <category term="触屏版" scheme="https://blog.lidong.me/tags/%E8%A7%A6%E5%B1%8F%E7%89%88/"/>
+    
+      <category term="电脑网络" scheme="https://blog.lidong.me/categories/%E7%94%B5%E8%84%91%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[查找附近的点——使用Geohash.class.php]]></title>
+    <link href="https://blog.lidong.me/2014/find-nearby-by-geohash/"/>
+    <id>https://blog.lidong.me/2014/find-nearby-by-geohash/</id>
+    <published>2014-09-24T03:08:41.000Z</published>
+    <updated>2015-10-15T07:54:32.000Z</updated>
+    <content type="html"><![CDATA[<p>在做微信的时候想到很多微信服务号有查找附近门店，网点的功能，如顺丰快递，就可以发送位置信息，就可以得到附近的收寄件网点。</p>
+<p>如何实现这样的功能呢？</p>
+<p>实现的方法有2种（文章写的比较粗略也，小儿科，高手可以移步至<a href="http://www.wubiao.info/372" title="查找附近的xxx 球面距离以及Geohash方案探讨" target="_blank" rel="external">http://www.wubiao.info/372</a>）</p>
+<p>1.将用户的位置（坐标）与数据库中所有坐标对比，计算出距离，并按距离由远到近进行排序，这方法是不是太笨了</p>
+<p>2.高级模式：</p>
+<p>因为每个坐标都有两个数，我们平常更关注的长度，两个数就不便于对数排序计算了。<br>所以我们可以坐标重新编码，编码原理Geohash，参看<a href="https://en.wikipedia.org/wiki/Geohash" target="_blank" rel="external">维基百科</a>，或<a href="http://www.wubiao.info/372" title="查找附近的xxx 球面距离以及Geohash方案探讨" target="_blank" rel="external">http://www.wubiao.info/372</a>，在数据库保存编码。比如：坐标(22.539341，113.995115)按照Geohash编码后为：uxbpbzuxuxyz因为编码规则是将两个坐标的数字交叉进行，所以以后查询附近的点可以用类似LIKE ‘uxbpbzux%’语句查询，调整uxbpbzux的长度就可以对附近的距离的值设定了。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在做微信的时候想到很多微信服务号有查找附近门店，网点的功能，如顺丰快递，就可以发送位置信息，就可以得到附近的收寄件网点。</p>
+<p>如何实现这样的功能呢？</p>
+<p>实现的方法有2种（文章写的比较粗略也，小儿科，高手可以移步至<a href="http://www.]]>
+    </summary>
+    
+      <category term="Geohash" scheme="https://blog.lidong.me/tags/Geohash/"/>
+    
+      <category term="附近的点" scheme="https://blog.lidong.me/tags/%E9%99%84%E8%BF%91%E7%9A%84%E7%82%B9/"/>
+    
+      <category term="电脑网络" scheme="https://blog.lidong.me/categories/%E7%94%B5%E8%84%91%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[github仓库使用]]></title>
+    <link href="https://blog.lidong.me/2014/github/"/>
+    <id>https://blog.lidong.me/2014/github/</id>
+    <published>2014-09-09T06:09:26.000Z</published>
+    <updated>2015-10-21T02:30:11.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="1-生成SSH_keys">1.生成SSH keys</h3><p>email修改成你自己的email地址</p>
+<p>然后就可以一路回车，使用默认值即可</p>
+<pre><code><span class="variable">$ </span>ssh-keygen -t rsa -<span class="constant">C </span><span class="string">"youremail@example.com"</span>
+</code></pre><p>看到如下画面就说明SSH keys已经生成</p>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/09/20140909114443.png" target="_blank" rel="external">undefined</a></p>
+<h3 id="2-将生成的SSH_keys添加到github">2.将生成的SSH keys添加到github</h3><p>登陆GitHub，打开“settings”，“SSH Keys”页面，</p>
+<p>将id_rsa.pub文件用文本编辑器打开，把其中的内容全部粘贴到key里面。</p>
+<p>测试链接</p>
+<pre><code><span class="variable">$ </span>ssh -<span class="constant">T</span> git<span class="variable">@github</span>.com
+</code></pre><p>提示是否继续连接，yes后，你将看到如下信息，说明你已经</p>
+<pre><code>Hi <span class="string">"username"</span>! You've successfully authentiated,<span class="keyword">but</span> GitHub <span class="keyword">does</span> <span class="keyword">not</span> provide shell access.
+</code></pre><h3 id="3-将本地库与github仓库同步">3.将本地库与github仓库同步</h3><p>在github创建一个仓库<br><a href="http://ilidong.com/wp-content/uploads/2014/09/20140909134018.png" target="_blank" rel="external">undefined</a><br>执行下面命令(执行其中一步即可)<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">创建一个新的仓库</span><br><span class="line">$ mkdir test</span><br><span class="line">$ cd test</span><br><span class="line">$ git init</span><br><span class="line">$ touch README</span><br><span class="line">$ git add README</span><br><span class="line">$ git commit -m <span class="string">'first commit'</span></span><br><span class="line">$ git remote add origin git@github<span class="class">.com</span>:ilidong/test<span class="class">.git</span></span><br><span class="line">$ git push -u origin <span class="function"><span class="title">master</span><span class="params">(第一次推送需要加-u参数，之后的推送不需要加-u参数)</span></span></span><br><span class="line"></span><br><span class="line">推送（push）一个已有的仓库(如仓库已经创建了)</span><br><span class="line">$ git remote add origin git@github<span class="class">.com</span>:ilidong/test<span class="class">.git</span></span><br><span class="line">$ git push -u origin <span class="function"><span class="title">master</span><span class="params">(第一次推送需要加-u参数，之后的推送不需要加-u参数)</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="4-从github仓库将内容克隆到本地">4.从github仓库将内容克隆到本地</h3><pre><code><span class="variable">$ </span>git clone git<span class="variable">@github</span>.<span class="symbol">com:</span>ilidong/test.git
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="1-生成SSH_keys">1.生成SSH keys</h3><p>email修改成你自己的email地址</p>
+<p>然后就可以一路回车，使用默认值即可</p>
+<pre><code><span class="variable">$ </span>ssh-ke]]>
+    </summary>
+    
+      <category term="git" scheme="https://blog.lidong.me/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[github入门]]></title>
+    <link href="https://blog.lidong.me/2014/learn-github/"/>
+    <id>https://blog.lidong.me/2014/learn-github/</id>
+    <published>2014-09-09T03:25:32.000Z</published>
+    <updated>2015-10-15T08:30:18.000Z</updated>
+    <content type="html"><![CDATA[<p>1.下载msysgit，<a href="http://msysgit.github.io/" title="下载msysgit" target="_blank" rel="external">http://msysgit.github.io/</a>，按照默认设置安装即可<br>安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash”，出现一个类似命令行窗口的东西，就说明Git安装成功！</p>
+<p>2.添加全局设置,设置你的名字和Email地址</p>
+<blockquote><p>$ git config –global user.name &quot;Your Name&quot;<br>$ git config –global user.email &quot;email@example.com&quot;</p>
+</blockquote>
+<p>3.创建版本库</p>
+<blockquote><p>$ mkdir test<br>$ cd test<br>$ git init<br>$ git add readme.txt<br>$ git commit -m &quot;wrote a readme file&quot;</p>
+</blockquote>]]></content>
+    <summary type="html">
+    <![CDATA[<p>1.下载msysgit，<a href="http://msysgit.github.io/" title="下载msysgit" target="_blank" rel="external">http://msysgit.github.io/</a>，按照默认设置安装即可]]>
+    </summary>
+    
+      <category term="git" scheme="https://blog.lidong.me/tags/git/"/>
+    
+      <category term="电脑网络" scheme="https://blog.lidong.me/categories/%E7%94%B5%E8%84%91%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Oracle VM VirtualBox不能安装64位系统]]></title>
+    <link href="https://blog.lidong.me/2014/oracle-vm-virtualbox-x64/"/>
+    <id>https://blog.lidong.me/2014/oracle-vm-virtualbox-x64/</id>
+    <published>2014-09-02T03:03:55.000Z</published>
+    <updated>2015-08-31T07:17:22.000Z</updated>
+    <content type="html"><![CDATA[<p>今天在公司用一台新的电脑，准备使用虚拟机安装Linux系统，下载Oracle VM VirtualBox，准备安装的时候发现如下情况</p>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/09/1565-1.png" target="_blank" rel="external">undefined</a>居然不能使用64位系统，全是32位系统，搜索了一下，发现<span style="line-height: 1.714285714; font-size: 1rem;">安装64位需要主板和CPU支持，在BIOS中查看是否有virtualization选项是否开启，开启后vbox就可以安装64位系统了。<a href="http://ilidong.com/wp-content/uploads/2014/09/1565-2.jpg" target="_blank" rel="external">undefined</a></span></p>
+<p><span style="line-height: 1.714285714; font-size: 1rem;">之前我的电脑可以使用，应该是我的那台电脑默认开启了。</span></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今天在公司用一台新的电脑，准备使用虚拟机安装Linux系统，下载Oracle VM VirtualBox，准备安装的时候发现如下情况</p>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/09/1565-1.p]]>
+    </summary>
+    
+      <category term="VirtualBox" scheme="https://blog.lidong.me/tags/VirtualBox/"/>
+    
+      <category term="电脑网络" scheme="https://blog.lidong.me/categories/%E7%94%B5%E8%84%91%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[糊涂申请信用卡获批]]></title>
+    <link href="https://blog.lidong.me/2014/get-credit-card/"/>
+    <id>https://blog.lidong.me/2014/get-credit-card/</id>
+    <published>2014-08-10T08:51:36.000Z</published>
+    <updated>2015-10-15T07:53:49.000Z</updated>
+    <content type="html"><![CDATA[<p>有时候有钱也买不到东西，比如 亚马逊，name，AWS，Google Play，只能用信用卡支付，于是拥有一张信用卡成了我的梦想。现在终于梦想成真了，哈哈。</p>
+<p>这一切都是源于意外，因为我很想拥有信用卡，加上刚刚找到工作了，于是到招商银行看了看，因在网上申请的步骤太简单，一不小心就提交了资料。过两天就有业务员打电话过来，问我住哪里，我说，我不办了；那业务员说，为什么不办了，说我的资料已经基本资料已经通过审核，只等上门再填一下其他资料；最后我还是给了她我工作的地址。</p>
+<p>上门填资料很简单，只有一样可能有困难，公司的盖章（谢谢俺的老板的开明），所以很顺利。因上面提到的原因，业务员问我要什么样的卡，我说我想用信用卡在网上购买国外的一些东西。她说“那你办这个visa卡吧”，我听了是visa卡我就同意了，没有顾虑那些，只是担心办不办的了。</p>
+<p>经过了20天左右的时间，卡通过快递寄到公司了。（不是一般都是挂号信寄过来的吗？）寄卡短信居然是我收到卡片的第二天才收到的。（是不是有点诡异）<br>拿到卡之后，仔细看了一下参数，招商银行标准Visa金卡，金卡噢，10000元信用额度。突然觉得自己好富有了，哈哈。（我现在的工资也只有3000元一月，10000元的额度叫我怎么用啊）</p>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/08/zhaoshangyinhangxinyongka.jpg" target="_blank" rel="external">undefined</a>糊涂的就这么办成了这张信用卡，最初的目的倒是达到了——办一张可以在国外消费的信用卡。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>有时候有钱也买不到东西，比如 亚马逊，name，AWS，Google Play，只能用信用卡支付，于是拥有一张信用卡成了我的梦想。现在终于梦想成真了，哈哈。</p>
+<p>这一切都是源于意外，因为我很想拥有信用卡，加上刚刚找到工作了，于是到招商银行看了看，因在网上申请的步骤]]>
+    </summary>
+    
+      <category term="信用卡" scheme="https://blog.lidong.me/tags/%E4%BF%A1%E7%94%A8%E5%8D%A1/"/>
+    
+      <category term="生活感悟" scheme="https://blog.lidong.me/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java在windows上开发环境的搭建]]></title>
+    <link href="https://blog.lidong.me/2014/java-on-windows/"/>
+    <id>https://blog.lidong.me/2014/java-on-windows/</id>
+    <published>2014-07-22T09:52:09.000Z</published>
+    <updated>2015-08-31T07:17:22.000Z</updated>
+    <content type="html"><![CDATA[<ol>
+<li><p>下载jdk<br>下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a><br>选择相对应的版本<br><a href="http://ilidong.com/wp-content/uploads/2014/07/java-1.png" target="_blank" rel="external">undefined</a></p>
+</li>
+<li><p>安装jdk<br>安装可以直接下一步，下一步……完成安装。可以根据需要更改安装路径。</p>
+</li>
+</ol>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/07/java-2.png" target="_blank" rel="external">undefined</a></p>
+<p>我的安装路径<a href="http://ilidong.com/wp-content/uploads/2014/07/java-3.png" target="_blank" rel="external">undefined</a><a href="http://ilidong.com/wp-content/uploads/2014/07/java-4.png" target="_blank" rel="external">undefined</a></p>
+<ol>
+<li>修改环境变量<br>a． 在“计算机”图标上右击鼠标，选择“属性”命令，在弹出的对话框中，单击左侧的高级系统设置，打开如图的系统属性<a href="http://ilidong.com/wp-content/uploads/2014/07/java-5.png" target="_blank" rel="external">undefined</a></li>
+</ol>
+<p>b． 新建 变量名”JAVA_HOME”的变量，变量值为JDK的安装路径</p>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/07/JAVA_HOME.png" target="_blank" rel="external">undefined</a></p>
+<p>c． 新建 变量名”CLASSPATH”的变量，变量值为%JAVA_HOME%\lib;%JAVA_HOME%\jre\bin\;（;不可以丢掉）</p>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/07/PATH.png" target="_blank" rel="external">undefined</a></p>
+<p>d． 修改path变量：在path变量值最前面添加%JAVA_HOME%\bin;（;不可以丢掉，它是用于分割不同的变量值）<a href="http://ilidong.com/wp-content/uploads/2014/07/CLASSPATH.png" target="_blank" rel="external">undefined</a></p>
+<ol>
+<li>验证环境变量是否正确<br>打开“运行”窗口，输入“cmd”回车；输入java和javac有如图的输出，则Java在 windows开发环境搭建大功告成了</li>
+</ol>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/07/java-9.png" target="_blank" rel="external">undefined</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<ol>
+<li><p>下载jdk<br>下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel=]]>
+    </summary>
+    
+      <category term="java" scheme="https://blog.lidong.me/tags/java/"/>
+    
+      <category term="电脑网络" scheme="https://blog.lidong.me/categories/%E7%94%B5%E8%84%91%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[找到工作了]]></title>
+    <link href="https://blog.lidong.me/2014/get-job/"/>
+    <id>https://blog.lidong.me/2014/get-job/</id>
+    <published>2014-07-06T08:14:08.000Z</published>
+    <updated>2015-10-15T07:57:46.000Z</updated>
+    <content type="html"><![CDATA[<p><a href="http://ilidong.com/wp-content/uploads/2014/07/6795768_111427384397_2.jpg" target="_blank" rel="external">undefined</a>来到深圳大约10天了，找到工作意味着我可以继续在这边呆下去了。我也思考过，10天了，还找不到，是不是应该回去了，难道我错了，不该到深圳来？但是我很期待留下。 终于这一天到了。 面试经过了两次，第一次面试后回家，我并没有抱太大的期望，只是觉得能在那工作是挺好的。 下午接到电话，让我第二天再去面试一下，心中暗喜，但是我也没把握，只是觉得有机会，我就是没有信心的人，但是我又想去试一试，我并不知道我是否可以通过，也不知道他怎么想的。 话说这是一个高大上的工作，至少工作环境算得上是高大上，得到这份工作我确实很激动。 很感谢能有这么一份工作，无论结果如何，至少我可以继续在深圳呆下去。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><a href="http://ilidong.com/wp-content/uploads/2014/07/6795768_111427384397_2.jpg" target="_blank" rel="external">undefined</a>来到深圳大约10天了]]>
+    </summary>
+    
+      <category term="工作" scheme="https://blog.lidong.me/tags/%E5%B7%A5%E4%BD%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[深圳，我又来了]]></title>
+    <link href="https://blog.lidong.me/2014/shenzhen-again/"/>
+    <id>https://blog.lidong.me/2014/shenzhen-again/</id>
+    <published>2014-06-25T15:49:36.000Z</published>
+    <updated>2015-10-21T00:47:53.000Z</updated>
+    <content type="html"><![CDATA[<div><br><br>[caption id=”” align=”aligncenter” width=”400”]undefined 图片来至网络[/caption]<br><br>只身一人，怀着一颗不安分的心，叛逆的盲目的好奇的坐上了前往深圳的火车。这是我第三次来深圳了。之前都没好好的体验深圳城市的生活，这回一定好好的感受一下深圳的大城市的生活。<br><br></div><br><div>来深圳只是觉得很想到大城市看看有什么新鲜的，都说大城市机会多，待遇好，于是来深圳再闯一闯。</div><br><div>为什么要到深圳呢？</div>
+
+
+<ol>
+<li>机会多、待遇好。</li>
+<li>在武汉，有太多牵隔,太多个人，家人的束缚，来这里可以开辟一个新天地。</li>
+<li>都说去北上广深，作为一个想做互联网行业技术类的人，深圳可谓是天高皇帝远，得天独厚的地理优势。哈哈^O^。</li>
+<li>距离香港近，以后可以很容易去香港（可惜这回没有办证）。</li>
+</ol>
+<p>理由这么多，归根结底就一个，一颗不安分的心。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<div><br><br>[caption id=”” align=”aligncenter” width=”400”]undefined 图片来至网络[/caption]<br><br>只身一人，怀着一颗不安分的心，叛逆的盲目的好奇的坐上了前往深圳的火车。这是我第三次来深圳了。]]>
+    </summary>
+    
+      <category term="深圳" scheme="https://blog.lidong.me/tags/%E6%B7%B1%E5%9C%B3/"/>
+    
+      <category term="生活感悟" scheme="https://blog.lidong.me/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/"/>
+    
+  </entry>
+  
+</feed>

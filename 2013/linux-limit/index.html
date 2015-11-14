@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Lidong&#39;s blog">
+    <title>linux权限机制 - Lidong&#39;s blog</title>
+    <meta name="author" content="lidong">
+    
+    
+        <link rel="alternative" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="权限权限是操作系统用来限制对资源访问的机制，权限一般分为读、写、执行。系统中每一个文件都拥有特定的权限、所属用户及附属组，通过这样的机制来限制哪些用户。哪些组可以对特定的文件进行什么样的操作。每个进程都是以某个用户的身份运行的，所以进程的权限与该用户的权限一样，用户的权限大，该进程拥有的权限就大。
+文件权限
+Linux中每个文件都拥有以下三种权限：">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="linux权限机制">
+<meta property="og:url" content="https://blog.lidong.me/2013/linux-limit/index.html">
+<meta property="og:site_name" content="Lidong's blog">
+<meta property="og:description" content="权限权限是操作系统用来限制对资源访问的机制，权限一般分为读、写、执行。系统中每一个文件都拥有特定的权限、所属用户及附属组，通过这样的机制来限制哪些用户。哪些组可以对特定的文件进行什么样的操作。每个进程都是以某个用户的身份运行的，所以进程的权限与该用户的权限一样，用户的权限大，该进程拥有的权限就大。
+文件权限
+Linux中每个文件都拥有以下三种权限：">
+<meta property="og:updated_time" content="2015-08-31T07:17:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux权限机制">
+<meta name="twitter:description" content="权限权限是操作系统用来限制对资源访问的机制，权限一般分为读、写、执行。系统中每一个文件都拥有特定的权限、所属用户及附属组，通过这样的机制来限制哪些用户。哪些组可以对特定的文件进行什么样的操作。每个进程都是以某个用户的身份运行的，所以进程的权限与该用户的权限一样，用户的权限大，该进程拥有的权限就大。
+文件权限
+Linux中每个文件都拥有以下三种权限：">
+<meta name="twitter:creator" content="@｀Dondongooo｀">
+    
+    
+    
+        <meta property="og:image" content="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=640"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style.min.css" type="text/css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-69794593-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">Lidong&#39;s blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="/#about">
+        
+        
+            <img class="header-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=90"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">lidong</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="/#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-user"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/dongoo" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://www.lidong.me" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-list"></i>
+                    <span class="sidebar-button-desc">Website</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            linux权限机制
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Tue Dec 03 2013 23:46:19 GMT+0800">
+	
+		    12月 03, 2013
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p><strong>权限</strong><br>权限是操作系统用来限制对资源访问的机制，权限一般分为读、写、执行。<br>系统中每一个文件都拥有特定的权限、所属用户及附属组，通过这样的机制来限制哪些用户。哪些组可以对特定的文件进行什么样的操作。<br>每个进程都是以某个用户的身份运行的，所以进程的权限与该用户的权限一样，用户的权限大，该进程拥有的权限就大。</p>
+<p><strong>文件权限</strong></p>
+<p>Linux中每个文件都拥有以下三种权限：<a id="more"></a></p>
+<p><table width="100%" border="1" cellspacing="0" cellpadding="2"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td valign="top">权限</td></p>
+<p><td valign="top">对文件的影响</td></p>
+<p><td valign="top">对目录的影响</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top">r(read读取)</td></p>
+<p><td valign="top">可读取文件的内容</td></p>
+<p><td valign="top">可以列出目录内容</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top">w(write写入)</td></p>
+<p><td valign="top">可以修改文件内容</td></p>
+<p><td valign="top">可在目录中创建删除文件</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top">x(执行)</td></p>
+<p><td valign="top">可以作为命令执行</td></p>
+<p><td valign="top">可访问目录内容</td><br><br><br><br>目录必须拥有x权限，否则无法查看其中的内容</p>
+<p><strong>UGO</strong><br>Linux权限基于UGO模型进行控制：</p>
+<ul>
+<li>U代表User，G代表Group，O代表Other</li>
+<li>每一个文件的权限基于UGO进行设置</li>
+<li>权限三个一组（rwx），对应UGO分别设置</li>
+<li>每一个文件拥有一个所属用户和所属组，对应UG，不属于该文件所属用户或所属组的使用O权限<br>命令ls -l可以查看当前目录下文件的详细信息</li>
+</ul>
+<p><strong>UGO</strong></p>
+<p>修改文件所属用户、组<br>命令chown用以改变文件的所属用户：<br>chown username file<br>-R 参数递归的修改目录下的所有文件的所属用户<br>命令chgrp用以改变文件的所属组：<br>chgrp username file<br>-R参数递归的修改目录下的所有文件的所属组</p>
+<p><strong>修改权限</strong><br>命令chrmod用以修改文件的权限<br>chmod 模式 文件<br>-R参数递归的修改目录下的所有文件的权限<br>模式为如下格式：</p>
+<ul>
+<li>u、g、o分别代表用户、组、其它</li>
+<li>a可以代指ugo</li>
+<li>+、=代表加入或删除对应的权限</li>
+<li>r、w、x代表三种三种权限<br>模式示例：<br>chmod u+rw file<br>chmod g-x file<br>chmod go+r file</li>
+</ul>
+<p>命令chmod也支持以数字方式修改权限，三个权限分别由三个数字表示：<br>r = 4<br>w = 2<br>x = 1<br>使用数字表示权限时，每组权限分别为对应数字之和</p>
+
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/linux/">linux</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/use-virtualbox/"  data-tooltip="VirtualBox虚拟机网络环境解析和搭建">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/linux-user-basic/" data-tooltip="linux用户基础">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-limit/&amp;title=linux权限机制">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-limit/&amp;title=linux权限机制">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-limit/&amp;title=linux权限机制">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-limit/&amp;title=linux权限机制">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2015 lidong. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/use-virtualbox/"  data-tooltip="VirtualBox虚拟机网络环境解析和搭建">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/linux-user-basic/" data-tooltip="linux用户基础">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-limit/&amp;title=linux权限机制">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-limit/&amp;title=linux权限机制">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-limit/&amp;title=linux权限机制">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-limit/&amp;title=linux权限机制">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2013/linux-limit/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2013/linux-limit/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2013/linux-limit/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=110"/>
+        
+            <h4 id="about-card-name">lidong</h4>
+        
+            <h5 id="about-card-bio"><p>author.bio</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </h5>
+        
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('https://dn-lidongim.qbox.me/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script.min.js" type="text/javascript"></script>
+<!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'lidongme';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','PC-rbcbbSstfz5xfcUAK','2.0.0');
+    </script>
+
+
+</html>

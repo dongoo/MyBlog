@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Lidong&#39;s blog">
+    <title>常用命令 - Lidong&#39;s blog</title>
+    <meta name="author" content="lidong">
+    
+    
+        <link rel="alternative" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="日期时间
+命令date用以查看设置当前系统日期时间格式化显示时间：+%Y–%m–%d(Y、m、d、–可以更换)命令hwclock（clock）用以查看硬件时钟时间命令cal用以查看日历命令uptime用以查看系统运行时间，登录用户数量，平均负载（1分钟，5分钟，15分钟）">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="常用命令">
+<meta property="og:url" content="https://blog.lidong.me/2013/linux-commands/index.html">
+<meta property="og:site_name" content="Lidong's blog">
+<meta property="og:description" content="日期时间
+命令date用以查看设置当前系统日期时间格式化显示时间：+%Y–%m–%d(Y、m、d、–可以更换)命令hwclock（clock）用以查看硬件时钟时间命令cal用以查看日历命令uptime用以查看系统运行时间，登录用户数量，平均负载（1分钟，5分钟，15分钟）">
+<meta property="og:updated_time" content="2015-10-20T16:28:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常用命令">
+<meta name="twitter:description" content="日期时间
+命令date用以查看设置当前系统日期时间格式化显示时间：+%Y–%m–%d(Y、m、d、–可以更换)命令hwclock（clock）用以查看硬件时钟时间命令cal用以查看日历命令uptime用以查看系统运行时间，登录用户数量，平均负载（1分钟，5分钟，15分钟）">
+<meta name="twitter:creator" content="@｀Dondongooo｀">
+    
+    
+    
+        <meta property="og:image" content="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=640"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style.min.css" type="text/css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-69794593-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">Lidong&#39;s blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="/#about">
+        
+        
+            <img class="header-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=90"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">lidong</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="/#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-user"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/dongoo" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://www.lidong.me" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-list"></i>
+                    <span class="sidebar-button-desc">Website</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            常用命令
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Sat Nov 23 2013 22:59:52 GMT+0800">
+	
+		    11月 23, 2013
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p><strong>日期时间</strong></p>
+<p>命令date用以查看设置当前系统日期时间<br>格式化显示时间：+%Y–%m–%d(Y、m、d、–可以更换)<br>命令hwclock（clock）用以查看硬件时钟时间<br>命令cal用以查看日历<br>命令uptime用以查看系统运行时间，登录用户数量，平均负载（1分钟，5分钟，15分钟）<br><a id="more"></a></p>
+<p><strong>输出、查看</strong><br>命令echo用以显示输入的内容<br>命令cat用以显示文件内容<br>命令more用以翻页显示文件内容（只能向下翻页，空格翻页）<br>命令less用以翻页显示文件内容（可以上下翻页，上下方向键或pageup、pagedown翻页，按q退出查询）<br>命令head用以显示文件的头几行（默认10行）<br>-n 指定显示行数<br>命令tail用以显示文件的末尾几行（默认10行）<br>-n 指定显示行数<br>-f 追踪显示文件更新（一般用于查看日志，命令不会退出而是持续显示新加入的内容）</p>
+<p><strong>查看硬件信息</strong><br>命令lspci用以查看PCI设备<br>-v 查看详细信息<br>命令lsusb用以查看USB设备<br>-v 查看详细信息<br>命令lsmod用以查看加载的模块（驱动）</p>
+<p><strong>关机、重启</strong><br>命令shutdoun用以关闭、重启计算机<br>shutdown [关机、重启]时间<br>-h 关闭计算机<br>-r 重启计算机<br>如：<br>立即关机：shutdown -h now<br>10分钟后关机：shutdown -h +10<br>23：00关机：shutdown -h 23：00<br>命令poweroff用以立即关机计算机<br>命令reboot用以立即重启计算机</p>
+<p><strong>归档、压缩</strong><br>命令zip用以压缩文件<br>zip 压缩后的文件名 要压缩的文件<br>命令unzip用以解压文件<br>unzip 压缩文件<br>命令gzip用以压缩文件<br>命令tar用以归档文件</p>
+<ul>
+<li>tar -cvf 要归档的文件 （创建归档）</li>
+<li>tar -xvf 要释放归档文件 (解开归档)</li>
+<li>tar -cvzf 要归档并压缩文件 （归档并压缩文件，文件后缀：.tar.gz）</li>
+</ul>
+<p><strong>查找</strong><br>命令locate用以快速查找文件、文件夹<br>此命令需要预先建立数据库，数据库默认每天更新一次<br>可用update命令手工建立、更新数据库<br>命令find用以高级查找文件、文件夹<br>find 查找位置 查找参数<br>如：</p>
+<p>find . -name<em>aabb</em><br>find / -name<em>.conf 以.conf<br>find /-perm 777 查找权限是<br>find /-type d<br>find /-type l 查找链接（快捷方式）<br>find .-name“a</em>” -exec ls -l ｛｝\; 查找以a开头的文件（ -exec …｛｝\;固定格式）并作为参数传递给…执行<br>查找条件：<br>-name 基于文件名<br>-perm 基于权限<br>-user 查找属于某个用户的文件<br>-group 查找属于某个组的文件<br>-ctime 基于文件最后修改时间<br>-type 基于类型<br>-size 基于大小</p>
+
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/linux/">linux</a> <a class="tag tag--primary tag--small t-link" href="/tags/命令/">命令</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/vim/"  data-tooltip="vim文本编辑器使用">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/linux-system-directory-structure/" data-tooltip="系统目录结构">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-commands/&amp;title=常用命令">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-commands/&amp;title=常用命令">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-commands/&amp;title=常用命令">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-commands/&amp;title=常用命令">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2015 lidong. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/vim/"  data-tooltip="vim文本编辑器使用">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/linux-system-directory-structure/" data-tooltip="系统目录结构">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-commands/&amp;title=常用命令">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-commands/&amp;title=常用命令">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-commands/&amp;title=常用命令">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-commands/&amp;title=常用命令">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2013/linux-commands/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2013/linux-commands/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2013/linux-commands/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=110"/>
+        
+            <h4 id="about-card-name">lidong</h4>
+        
+            <h5 id="about-card-bio"><p>author.bio</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </h5>
+        
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('https://dn-lidongim.qbox.me/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script.min.js" type="text/javascript"></script>
+<!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'lidongme';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','PC-rbcbbSstfz5xfcUAK','2.0.0');
+    </script>
+
+
+</html>

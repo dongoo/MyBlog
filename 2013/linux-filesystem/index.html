@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Lidong&#39;s blog">
+    <title>linux文件系统 - Lidong&#39;s blog</title>
+    <meta name="author" content="lidong">
+    
+    
+        <link rel="alternative" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="linux文件系统
+操作系统通过文件系统管理文件及数据，磁盘或分区需要文件系统之后才能够为操作系统使用，创建文件an系统的过程又称为格式化。
+
+没有文件系统的设备又称为裸（raw）设备
+常见的文件系统有fat32，NTFS、ext2、ext3、ext4、xfs、HFS等
+文件系统之间的区别：日志、支持的分区大小、支持单个文件大小、性能等windows下的主流文件系统：NTFS
+
+linux下主流文">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="linux文件系统">
+<meta property="og:url" content="https://blog.lidong.me/2013/linux-filesystem/index.html">
+<meta property="og:site_name" content="Lidong's blog">
+<meta property="og:description" content="linux文件系统
+操作系统通过文件系统管理文件及数据，磁盘或分区需要文件系统之后才能够为操作系统使用，创建文件an系统的过程又称为格式化。
+
+没有文件系统的设备又称为裸（raw）设备
+常见的文件系统有fat32，NTFS、ext2、ext3、ext4、xfs、HFS等
+文件系统之间的区别：日志、支持的分区大小、支持单个文件大小、性能等windows下的主流文件系统：NTFS
+
+linux下主流文">
+<meta property="og:updated_time" content="2015-08-31T07:17:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux文件系统">
+<meta name="twitter:description" content="linux文件系统
+操作系统通过文件系统管理文件及数据，磁盘或分区需要文件系统之后才能够为操作系统使用，创建文件an系统的过程又称为格式化。
+
+没有文件系统的设备又称为裸（raw）设备
+常见的文件系统有fat32，NTFS、ext2、ext3、ext4、xfs、HFS等
+文件系统之间的区别：日志、支持的分区大小、支持单个文件大小、性能等windows下的主流文件系统：NTFS
+
+linux下主流文">
+<meta name="twitter:creator" content="@｀Dondongooo｀">
+    
+    
+    
+        <meta property="og:image" content="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=640"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style.min.css" type="text/css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-69794593-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">Lidong&#39;s blog</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="/#about">
+        
+        
+            <img class="header-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=90"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=110"/>
+            </a>
+            <span class="sidebar-profile-name">lidong</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="/#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-user"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/dongoo" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://www.lidong.me" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-list"></i>
+                    <span class="sidebar-button-desc">Website</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            linux文件系统
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Sun Dec 01 2013 23:37:55 GMT+0800">
+	
+		    12月 01, 2013
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p><strong>linux文件系统</strong></p>
+<p>操作系统通过文件系统管理文件及数据，磁盘或分区需要文件系统之后才能够为操作系统使用，创建文件an系统的过程又称为格式化。</p>
+<ul>
+<li>没有文件系统的设备又称为裸（raw）设备</li>
+<li>常见的文件系统有fat32，NTFS、ext2、ext3、ext4、xfs、HFS等</li>
+<li>文件系统之间的区别：日志、支持的分区大小、支持单个文件大小、性能等<br>windows下的主流文件系统：NTFS</li>
+</ul>
+<p>linux下主流文件系统：ext3、ext4</p>
+<p><strong><a id="more"></a>linux支持的文件系统</strong></p>
+<p>ext2</p>
+<p>ext3</p>
+<p>ext4</p>
+<p>fat（msdos）</p>
+<p>vfat</p>
+<p>nfs</p>
+<p>iso9600</p>
+<p>proc</p>
+<p>gfs</p>
+<p>……</p>
+<p><strong>mke2fs</strong></p>
+<p>命令mke2fs用以创建文件系统</p>
+<p>mke2fs -t ext4/dev/sda3</p>
+<p>常用的参数：</p>
+<p>-b  blocksize   指定文件系统块大小</p>
+<p>-c     建立文件系统时检查坏损块</p>
+<p>-L     指定卷标</p>
+<p>-j     建立文件系统日志（ext3、ext4默认带日志）</p>
+<p><strong>mkfs</strong></p>
+<p>命令mkfs也可用于创建文件系统，相较于mke2fs简单，但是支持的参数较少，不能进行精细化的控制。</p>
+<ul>
+<li>mkfs.ext3 /dev/sda3</li>
+<li>mkfs.ext4 /dev/sda3</li>
+<li>mkfs.vfat /dev/sda3<br><strong>dumpe2fs</strong></li>
+</ul>
+<p>命令dumpe2fs 可以用来查看分区的文件系统信息</p>
+<p>dumpe2fs /dev/sdb2</p>
+<p><strong>journal日志</strong></p>
+<p>带日志的文件系统（ext3、ext4）拥有较强的稳定性，在出现错误时可以进行恢复。</p>
+<p>使用带日志的文件系统，文件系统会使用一个叫做“两阶段提交”的方式进行磁盘操作，当进行磁盘操作时，文件系统进行如下操作：</p>
+<ol>
+<li>文件系统将准备执行的事务的具体内容写入日志</li>
+<li>文件系统进行操作</li>
+<li>操作成功后，将事务的具体内容从日志中删除<br>这样做的好处：当事务执行的时候如果出现意外（如断电，磁盘故障），可以通过查询日志进行恢复操作。缺点：会丧失一定的性能（额外的日志读写操作）。</li>
+</ol>
+<p><strong>e2label</strong></p>
+<p>命令e2label 可以用以为文件系统添加标签</p>
+<ul>
+<li>e2label /dev/sda2 显示sda2的系统标签</li>
+<li>e2label /dev/sda2 LINUX 将sda2的系统标签设置为LINUX (标签一般大写)<br><strong>fsck</strong></li>
+</ul>
+<p>命令fsck用以检查并修复损坏的文件系统 (检查、修复，磁盘必须卸载)</p>
+<p>fsck /dev/sdb1</p>
+<ul>
+<li>使用-y参数不提示而直接进行修复</li>
+<li>默认fsck会自动判断文件系统类型，如果文件系统损坏较为严重，最好使用 -t 参数指定文件系统类型</li>
+<li>对于识别为文件的损坏数据（文件系统无记录），fsck会将该文件放入lost+found目录</li>
+<li>系统启动时会对磁盘进行fsck操作</li>
+</ul>
+
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/linux/">linux</a> <a class="tag tag--primary tag--small t-link" href="/tags/文件系统/">文件系统</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/linux-fliesystem-mount/"  data-tooltip="linux文件系统挂载管理">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/use-fdisk/" data-tooltip="使用fdisk进行磁盘管理">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-filesystem/&amp;title=linux文件系统">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-filesystem/&amp;title=linux文件系统">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-filesystem/&amp;title=linux文件系统">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-filesystem/&amp;title=linux文件系统">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2015 lidong. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/linux-fliesystem-mount/"  data-tooltip="linux文件系统挂载管理">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2013/use-fdisk/" data-tooltip="使用fdisk进行磁盘管理">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-filesystem/&amp;title=linux文件系统">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-filesystem/&amp;title=linux文件系统">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-filesystem/&amp;title=linux文件系统">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2013/linux-filesystem/&amp;title=linux文件系统">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2013/linux-filesystem/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2013/linux-filesystem/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2013/linux-filesystem/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        <!-- Define author's picture -->
+
+
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="https://dn-dongl.qbox.me54113e269bec477ae865853776076e15?s=110"/>
+        
+            <h4 id="about-card-name">lidong</h4>
+        
+            <h5 id="about-card-bio"><p>author.bio</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </h5>
+        
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('https://dn-lidongim.qbox.me/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script.min.js" type="text/javascript"></script>
+<!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'lidongme';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+            e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','PC-rbcbbSstfz5xfcUAK','2.0.0');
+    </script>
+
+
+</html>
