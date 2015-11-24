@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My life and My notes]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="https://blog.lidong.me/"/>
-  <updated>2015-11-14T17:49:59.000Z</updated>
+  <updated>2015-11-23T00:54:37.000Z</updated>
   <id>https://blog.lidong.me/</id>
   
   <author>
@@ -19,9 +19,9 @@
     <link href="https://blog.lidong.me/2015/https/"/>
     <id>https://blog.lidong.me/2015/https/</id>
     <published>2015-11-14T02:36:54.000Z</published>
-    <updated>2015-11-14T17:49:59.000Z</updated>
+    <updated>2015-11-23T00:54:37.000Z</updated>
     <content type="html"><![CDATA[<p>首先如果想部署在GITHUB上使用HTTPS，就目前来看那是不可能，除非使用github.io域名，所以首先要有一个VPS或云主机，之前做SS时，在digitalocean买了一个水滴，使用也不算多我的BLOG访问量也不高，为了省钱就一起搞吧，也是为了充分利用资源吧  O(∩_∩)O</p>
-<p>我的digitalocean推荐链接：使用我的链接，你将有10美元奖励，我也有额外获得。 <a id="more"></a><br><a href="https://www.digitalocean.com/?refcode=7c320d50fe04" target="_blank" rel="external">https://www.digitalocean.com/?refcode=7c320d50fe04</a></p>
+<p>我的digitalocean推荐链接：使用我的链接，你将有10美元奖励，我也有额外获得。<br><a id="more"></a><br><a href="https://www.digitalocean.com/?refcode=7c320d50fe04" target="_blank" rel="external">https://www.digitalocean.com/?refcode=7c320d50fe04</a></p>
 <p>###下载nginx</p>
 <pre><code>cd ~/tmp/
 wget http:<span class="comment">//nginx.org/download/nginx-1.9.6.tar.gz</span>
@@ -88,7 +88,7 @@ sudo make install
 ]]></content>
     <summary type="html">
     <![CDATA[<p>首先如果想部署在GITHUB上使用HTTPS，就目前来看那是不可能，除非使用github.io域名，所以首先要有一个VPS或云主机，之前做SS时，在digitalocean买了一个水滴，使用也不算多我的BLOG访问量也不高，为了省钱就一起搞吧，也是为了充分利用资源吧  O(∩_∩)O</p>
-<p>我的digitalocean推荐链接：使用我的链接，你将有10美元奖励，我也有额外获得。]]>
+<p>我的digitalocean推荐链接：使用我的链接，你将有10美元奖励，我也有额外获得。<br>]]>
     
     </summary>
     
