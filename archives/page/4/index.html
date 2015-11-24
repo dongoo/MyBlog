@@ -229,6 +229,53 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/2014/del-wordpress-google-font/">删除wordpress的google font字体</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Wed Apr 16 2014 23:50:37 GMT+0800">
+	
+		    4月 16, 2014
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>删除wordpress的google font字体<br>网站搬家后，测试的时候发现清除缓存后，博客载入都很慢，使用百度站长工具发现其中的font.google.com需要20多秒<br>一看到google你懂得，于是我想移除，感觉在header.php中<br>但是在header.php怎么也找不到。于是用google去找google的问题，原来早有先例<br>我用了比较简单的方法在主题的function.php 添加<br><blockquote><p>class Disable_Google_Fonts {<br> public function __construct() {<br> add_filter( ‘gettext_with_context’, array( $this, ‘disable_open_sans’), 888, 4 );<br> }<br> public function disable_open_sans( $translations, $text, $context, $domain ) {<br> if ( ‘Open Sans font: on or off’ == $context &amp;&amp; ‘on’ == $text ) {<br> $translations = ‘off’;<br> }<br> return $translations;<br> }<br> }<br> $disable_google_fonts = new Disable_Google_Fonts;</p>
+</blockquote><br>如果你真要找到这个字体在wordpress的位置，那我也告诉你，它在在/wp-includes/script-loader.php中<br>大约在581行，把//fonts.googleapis.com/…这行代码删除即可。<br>又或者貌似有个插件叫Disable Google Fonts，直接安装这个插件也行。</p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/del-wordpress-google-font/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/2014/get-https/">保护数据安全，开启全站HTTPS</a>
                         
                     </h1>
@@ -750,52 +797,6 @@
                         
                             <p>
                                 <a href="/2014/windows-md5-view/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2014/driving-license-step3/">距离拿驾照又近了一步——科目三考试通过</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Jan 09 2014 23:33:17 GMT+0800">
-	
-		    1月 09, 2014
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/生活感悟/">生活感悟</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>最近几天练车，清早出去，晚上才回来，狠狠的练了几天车。网站都没时间弄了。<br>昨天科目三考试，幸运的顺利通过了。从此踏进拿驾照的大门了，但是考场电脑不给力，科目四还考不了。所以还得等几天才可以去去进行科目四。但一想到从此再也不用去驾校那里，再也不用求那教练了，我就高兴。从开始到现在，在驾校共花费五千多一点大洋，不算很多，但也不是一笔小数目啊。<br>昨天科目三顺利通过，祝贺自己。</p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2014/driving-license-step3/#post-footer" class="postShorten-excerpt_link link">
                                     注释和共享
                                 </a>
                             </p>

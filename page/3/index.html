@@ -228,6 +228,61 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/2014/shenzhen-again/">深圳，我又来了</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Wed Jun 25 2014 23:49:36 GMT+0800">
+	
+		    6月 25, 2014
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/生活感悟/">生活感悟</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <div><br><br>[caption id=”” align=”aligncenter” width=”400”]undefined 图片来至网络[/caption]<br><br>只身一人，怀着一颗不安分的心，叛逆的盲目的好奇的坐上了前往深圳的火车。这是我第三次来深圳了。之前都没好好的体验深圳城市的生活，这回一定好好的感受一下深圳的大城市的生活。<br><br></div><br><div>来深圳只是觉得很想到大城市看看有什么新鲜的，都说大城市机会多，待遇好，于是来深圳再闯一闯。</div><br><div>为什么要到深圳呢？</div>
+
+
+<ol>
+<li>机会多、待遇好。</li>
+<li>在武汉，有太多牵隔,太多个人，家人的束缚，来这里可以开辟一个新天地。</li>
+<li>都说去北上广深，作为一个想做互联网行业技术类的人，深圳可谓是天高皇帝远，得天独厚的地理优势。哈哈^O^。</li>
+<li>距离香港近，以后可以很容易去香港（可惜这回没有办证）。</li>
+</ol>
+<p>理由这么多，归根结底就一个，一颗不安分的心。</p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/shenzhen-again/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/2014/graduated-today/">今天，毕业了</a>
                         
                     </h1>
@@ -677,53 +732,6 @@
                         
                             <p>
                                 <a href="/2014/cmd-whois/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2014/del-wordpress-google-font/">删除wordpress的google font字体</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Apr 16 2014 23:50:37 GMT+0800">
-	
-		    4月 16, 2014
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>删除wordpress的google font字体<br>网站搬家后，测试的时候发现清除缓存后，博客载入都很慢，使用百度站长工具发现其中的font.google.com需要20多秒<br>一看到google你懂得，于是我想移除，感觉在header.php中<br>但是在header.php怎么也找不到。于是用google去找google的问题，原来早有先例<br>我用了比较简单的方法在主题的function.php 添加<br><blockquote><p>class Disable_Google_Fonts {<br> public function __construct() {<br> add_filter( ‘gettext_with_context’, array( $this, ‘disable_open_sans’), 888, 4 );<br> }<br> public function disable_open_sans( $translations, $text, $context, $domain ) {<br> if ( ‘Open Sans font: on or off’ == $context &amp;&amp; ‘on’ == $text ) {<br> $translations = ‘off’;<br> }<br> return $translations;<br> }<br> }<br> $disable_google_fonts = new Disable_Google_Fonts;</p>
-</blockquote><br>如果你真要找到这个字体在wordpress的位置，那我也告诉你，它在在/wp-includes/script-loader.php中<br>大约在581行，把//fonts.googleapis.com/…这行代码删除即可。<br>又或者貌似有个插件叫Disable Google Fonts，直接安装这个插件也行。</p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2014/del-wordpress-google-font/#post-footer" class="postShorten-excerpt_link link">
                                     注释和共享
                                 </a>
                             </p>
