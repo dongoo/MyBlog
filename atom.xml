@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My life and My notes]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="https://blog.lidong.me/"/>
-  <updated>2015-11-24T18:26:35.000Z</updated>
+  <updated>2015-11-24T18:29:22.000Z</updated>
   <id>https://blog.lidong.me/</id>
   
   <author>
@@ -19,21 +19,17 @@
     <link href="https://blog.lidong.me/2015/dokuwiki/"/>
     <id>https://blog.lidong.me/2015/dokuwiki/</id>
     <published>2015-11-24T04:12:46.000Z</published>
-    <updated>2015-11-24T18:26:35.000Z</updated>
-    <content type="html"><![CDATA[<p>学习的东西，东一下，西一下，说起来感觉什么都会，但是真正做起来又不知道怎么做。学习过的有的有记录了，有的没有记录了，记录了的又到处都是，keep，Evernote，RSS…散落各处。我又比较收藏，但是收藏了没有整理消化。现在尝试用wiki整理一下吧。</p>
-<p>先后尝试比较了 <a href="http://doonoo.tiddlyspot.com/#about" target="_blank" rel="external">TiddlyWiki</a> ，MediaWiki 和 dokuwiki。</p>
-<p>###TiddlyWiki</p>
-<p>简单，只有一个文件的wiki，只有一个文件，势必会很大，在试用了几天后发现这个文件达到2MB左右。每次打开、保存就要传送这个2MB文件，不能忍。</p>
-<p>###MediaWiki </p>
-<p>维基百科出品，名声大，用户权限管理不适合个人使用。</p>
-<p>###dokuwiki </p>
-<p>不需要数据库，PHP运行环境即可，编写的wiki页面，实际是以txt文件保存着，感觉不错，就选择了dokuwiki了。</p>
+    <updated>2015-11-24T18:29:22.000Z</updated>
+    <content type="html"><![CDATA[<p>学习的东西，东一下，西一下，说起来感觉什么都会，但是真正做起来又不知道怎么做。学习过的有的有记录了，有的没有记录了，记录了的又到处都是，keep，Evernote，RSS…散落各处。我又比较收藏，但是收藏了没有整理消化。现在尝试用wiki整理一下吧。<br><a id="more"></a><br>先后尝试比较了 <a href="http://doonoo.tiddlyspot.com/#about" target="_blank" rel="external">TiddlyWiki</a> ，MediaWiki 和 dokuwiki。</p>
+<h3 id="TiddlyWiki">TiddlyWiki</h3><p>简单，只有一个文件的wiki，只有一个文件，势必会很大，在试用了几天后发现这个文件达到2MB左右。每次打开、保存就要传送这个2MB文件，不能忍。</p>
+<h3 id="MediaWiki">MediaWiki</h3><p>维基百科出品，名声大，用户权限管理不适合个人使用。</p>
+<h3 id="dokuwiki">dokuwiki</h3><p>不需要数据库，PHP运行环境即可，编写的wiki页面，实际是以txt文件保存着，感觉不错，就选择了dokuwiki了。</p>
 <p>下载安装参考官方文档: <a href="https://www.dokuwiki.org/start?id=zh:install" target="_blank" rel="external">https://www.dokuwiki.org/start?id=zh:install</a></p>
 <p>查看我的 wiki：<a href="http://wiki.lidong.me" target="_blank" rel="external">http://wiki.lidong.me</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>学习的东西，东一下，西一下，说起来感觉什么都会，但是真正做起来又不知道怎么做。学习过的有的有记录了，有的没有记录了，记录了的又到处都是，keep，Evernote，RSS…散落各处。我又比较收藏，但是收藏了没有整理消化。现在尝试用wiki整理一下吧。</p>
-<p>先后尝试]]>
+    <![CDATA[<p>学习的东西，东一下，西一下，说起来感觉什么都会，但是真正做起来又不知道怎么做。学习过的有的有记录了，有的没有记录了，记录了的又到处都是，keep，Evernote，RSS…散落各处。我又比较收藏，但是收藏了没有整理消化。现在尝试用wiki整理一下吧。<br>]]>
+    
     </summary>
     
       <category term="wiki" scheme="https://blog.lidong.me/tags/wiki/"/>
