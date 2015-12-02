@@ -168,7 +168,7 @@
         
             <li class="sidebar-button">
                 
-                    <a  class="sidebar-button-link " href="https://github.com/dongoo" target="_blank">
+                    <a  class="sidebar-button-link " href="https://github.com/dooonooo" target="_blank">
                 
                     <i class="sidebar-button-icon fa fa-lg fa-github"></i>
                     <span class="sidebar-button-desc">GitHub</span>
@@ -221,6 +221,54 @@
                 
 
 <section class="postShorten-group main-content-wrap">
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/2014/windows-md5-view/">Windows平台文件md5查看方法</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Tue Jan 14 2014 15:06:28 GMT+0800">
+	
+		    1月 14, 2014
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>有时想要查看文件的md5值，与文件提供的md5值比对，确认文件是否被损坏或被篡改了。但是window没有自带的文件md5值查看工具。那我们该怎么去查看呢？</p>
+<p><strong>方法一</strong>：windows虽然没自带文件md5值查看工具，但是微软还是提供工具的，需要我们自己去下载，<a href="http://ilidong.com/ul57" target="_blank" rel="external">点我去下载</a>。将下载的文件与要查看md5值文件放在同一文件夹中，运行命令提示符（cmd），切换到对应文件夹，输入fciv 文件名，如：fciv ilidong.zip ，即可得出一个32位数字或字母组成的字符，这就是该文件的md5值。</p>
+<p><strong>方法二</strong>：下载nirsoft的 hash_my_files软件进行查看，下载地址：<a href="http://ilidong.com/xsye" target="_blank" rel="external">官网下载</a> <a href="http://ilidong.com/download/software/hashmyfiles.zip" target="_blank" rel="external">本站下载</a></p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/windows-md5-view/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
     
         
         <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
@@ -747,62 +795,6 @@ margin: <span class="number">0</span> <span class="number">2px</span></span></sp
                         
                             <p>
                                 <a href="/2013/modify-twenty-twelve/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2013/wordpress-rss-feed/">在WordPress中使用二级域名发布RSS Feed</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Sat Dec 28 2013 20:54:04 GMT+0800">
-	
-		    12月 28, 2013
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>, <a class="category-link" href="/categories/电脑网络/网站日志/">网站日志</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>Feed托管服务国外有Feedburnner，国内有Feedsky。<br>但是依赖其它的网站的服务貌似都不太可靠，一旦这网站的服务停止，使用该网站服务的网站就不得不停止。所以俺喜欢还是自己把握自己的网站的服务。使用二级域名发布RSS feed的好处还有就是方便管理，也方便记忆，也比较好看。</p>
-<p>WordPress 二级域名Feed地址设置方法：</p>
-<ol>
-<li>在你域名DNS设置中添加二级域名，feed.xxx.com</li>
-<li>在主机后台添加子域名，在cPanel是叫子域（Subdomain）的地方添加二级域名，并指向一个目录，一般系统会指向网站主文件夹/public_html/目录下的同名目录，但是WordPress默认的RSS feed链接格式本来就是xxx.com/feed/（在使用了固定链接的情形下），如果将feed.xxx.com指向/public_html/feed就会产生冲突，所以建议指向/public_html/feeds目录，便于自己记忆。注意：如果系统自动创建了feed目录，需要手工将feed目录删除。</li>
-<li><p>新建一个index.php的文件，文件内容为：</p>
-<pre><code><span class="php"><span class="preprocessor">&lt;?php</span> header(“Content-Type: application/xml; charset=utf-<span class="number">8</span>”) ; @readfile(“<span class="comment">//FEED源XML文件的地址//”); ?&gt;</span></span>
-</code></pre></li>
-<li><p>OK，大功告成，等你的域名解析生效之后，访问feed.xxx.com,就可以得到和xxx.com/feed一样的内容了。<br>欢迎 订阅本站<a href="http://feed.ilidong.com" title="订阅本站" target="_blank" rel="external">http://feed.ilidong.com</a></p>
-</li>
-</ol>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2013/wordpress-rss-feed/#post-footer" class="postShorten-excerpt_link link">
                                     注释和共享
                                 </a>
                             </p>
