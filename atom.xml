@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My life and My notes]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="https://blog.lidong.me/"/>
-  <updated>2015-12-02T05:47:02.000Z</updated>
+  <updated>2015-12-14T15:08:06.000Z</updated>
   <id>https://blog.lidong.me/</id>
   
   <author>
@@ -13,6 +13,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)]]></title>
+    <link href="https://blog.lidong.me/2015/centos7-nginx-php-mysql/"/>
+    <id>https://blog.lidong.me/2015/centos7-nginx-php-mysql/</id>
+    <published>2015-12-09T10:44:32.000Z</published>
+    <updated>2015-12-14T15:08:06.000Z</updated>
+    <content type="html"><![CDATA[<p>折腾好久，终于完整的整理了Nginx＋PHP的安装<br>安装顺序最好是先安装PHP，再安装Nginx<br><a id="more"></a></p>
+<h2 id="1-安装php">1.安装php</h2><p><code>wget http://cn2.php.net/distributions/php-5.6.16.tar.gz</code><br><code>tar -xvf php-5.6.16.tar.gz</code><br><code>cd php-5.6.16/</code></p>
+<p><code>./configure --prefix=/usr/local/php  --enable-inline-optimization --disable-debug --disable-rpath --enable-shared --enable-opcache --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-gettext --enable-mbstring --with-iconv --with-mcrypt --with-mhash --with-openssl --enable-bcmath --enable-soap --with-libxml-dir --enable-pcntl --enable-shmop --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-sockets --with-curl --with-zlib --enable-zip --with-bz2 --with-readline --without-sqlite3 --without-pdo-sqlite --with-pear</code></p>
+<p><code>make</code><br><code>sudo make install</code></p>
+<p>安装完成的截图</p>
+<p><img src="https://dn-blogme.qbox.me/15-12-14/62005590.jpg" alt="安装完成"></p>
+<p>设置php-fpm配置文件<br><code>cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf</code></p>
+<p>启动php-fpm<br><code>sudo /usr/local/php/sbin/php-fpm</code></p>
+<h3 id="编译过程可能出现的报错情况">编译过程可能出现的报错情况</h3><p>configure: error: xml2-config not found. Please check your libxml2 installation.<br><code>sudo yum install -y libxml2-devel</code></p>
+<p>configure: error: Cannot find OpenSSL’s <evp.h><br><code>sudo yum install -y openssl-devel</code></evp.h></p>
+<p>configure: error: Please reinstall the BZip2 distribution<br><code>sudo yum install -y bzip2-devel</code></p>
+<p>configure: error: Please reinstall the libcurl distribution -<br>    easy.h should be in <curl-dir>/include/curl/<br><code>sudo yum install -y libcurl-devel</code></curl-dir></p>
+<p>configure: error: mcrypt.h not found. Please reinstall libmcrypt.<br>libmcrypt在官方yum源中没有，需要手动编译安装可以到sourceforge下载<br><a href="http://sourceforge.net/projects/mcrypt/files/Libmcrypt/" target="_blank" rel="external">http://sourceforge.net/projects/mcrypt/files/Libmcrypt/</a><br><code>wget http://downloads.sourceforge.net/project/mcrypt/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.gz</code><br><code>tar -xvf libmcrypypt-2.5.8.tar.gz</code><br><code>./configure</code><br><code>make</code><br><code>sudo make install</code></p>
+<p>configure: error: Don’t know how to define struct flock on this system, set –enable-opcache=no<br>编辑 /etc/ld.so.conf.d/local.conf文件，加入/usr/local/lib内容<br><code>sudo vi /etc/ld.so.conf.d/local.conf</code><br><code>/usr/local/lib</code><br><code>sudo ldconfig</code></p>
+<p>configure: error: Please reinstall readline - I cannot find readline.h<br><code>sudo yum install -y readline-devel</code></p>
+<p>PS：一次全部安装上述依赖<br><code>sudo yum install -y libxml2-devel openssl-devel bzip2-devel libcurl-devel readline-devel</code></p>
+<h2 id="2-安装nginx">2.安装nginx</h2><p><code>wget http://nginx.org/download/nginx-1.9.8.tar.gz</code><br>解压<br><code>tar -xvf nginx-1.9.8.tar.gz</code><br><code>cd nginx-1.9.8.tar.gz</code><br><code>./configure</code><br><code>make</code><br><code>sudo make install</code></p>
+<p>修改配置文件以支持php-fpm<br><code>sudo  vi /usr/local/nginx/conf/nginx.conf</code></p>
+<p>其中server段增加如下配置，注意标红内容配置，否则会出现No input file specified.错误</p>
+<pre><code><span class="title">location</span> <span class="regexp">~ \.php$</span> {
+        <span class="title">root</span>           html;
+        <span class="title">fastcgi_pass</span>   <span class="number">127.0.0.1:9000</span>;
+        <span class="title">fastcgi_index</span>  index.php;
+        <span class="comment">#修改下面字段，否则会出现No input file specified.错误</span>
+        <span class="title">fastcgi_param</span>  SCRIPT_FILENAME    <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;
+        <span class="title">include</span>        fastcgi_params;
+    }
+</code></pre><p>启动nginx<br><code>sudo /usr/local/nginx/sbin/nginx</code></p>
+<p>PS：这里是nginx编译完成的信息图，在这里可以看到nginx的路径，配置文件位置及其它一些有用信息<br><img src="https://dn-blogme.qbox.me/15-12-14/7981235.jpg" alt="编译完成"></p>
+<h3 id="编译过程可能出现的报错情况-1">编译过程可能出现的报错情况</h3><p>./configure: error: the HTTP rewrite module requires the PCRE library.</p>
+<p><code>sudo yum -y install pcre-devel</code></p>
+<p>./configure: error: the HTTP gzip module requires the zlib library.</p>
+<p><code>sudo yum -y install zlib-devel</code></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>折腾好久，终于完整的整理了Nginx＋PHP的安装<br>安装顺序最好是先安装PHP，再安装Nginx<br>]]>
+    
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[改换linode主机]]></title>
@@ -575,44 +622,6 @@ return <span class="variable">$sendername</span>;
       <category term="信用卡" scheme="https://blog.lidong.me/tags/%E4%BF%A1%E7%94%A8%E5%8D%A1/"/>
     
       <category term="生活感悟" scheme="https://blog.lidong.me/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Java在windows上开发环境的搭建]]></title>
-    <link href="https://blog.lidong.me/2014/java-on-windows/"/>
-    <id>https://blog.lidong.me/2014/java-on-windows/</id>
-    <published>2014-07-22T09:52:09.000Z</published>
-    <updated>2015-08-31T07:17:22.000Z</updated>
-    <content type="html"><![CDATA[<ol>
-<li><p>下载jdk<br>下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a><br>选择相对应的版本<br><a href="http://ilidong.com/wp-content/uploads/2014/07/java-1.png" target="_blank" rel="external">undefined</a></p>
-</li>
-<li><p>安装jdk<br>安装可以直接下一步，下一步……完成安装。可以根据需要更改安装路径。</p>
-</li>
-</ol>
-<p><a href="http://ilidong.com/wp-content/uploads/2014/07/java-2.png" target="_blank" rel="external">undefined</a></p>
-<p>我的安装路径<a href="http://ilidong.com/wp-content/uploads/2014/07/java-3.png" target="_blank" rel="external">undefined</a><a href="http://ilidong.com/wp-content/uploads/2014/07/java-4.png" target="_blank" rel="external">undefined</a></p>
-<ol>
-<li>修改环境变量<br>a． 在“计算机”图标上右击鼠标，选择“属性”命令，在弹出的对话框中，单击左侧的高级系统设置，打开如图的系统属性<a href="http://ilidong.com/wp-content/uploads/2014/07/java-5.png" target="_blank" rel="external">undefined</a></li>
-</ol>
-<p>b． 新建 变量名”JAVA_HOME”的变量，变量值为JDK的安装路径</p>
-<p><a href="http://ilidong.com/wp-content/uploads/2014/07/JAVA_HOME.png" target="_blank" rel="external">undefined</a></p>
-<p>c． 新建 变量名”CLASSPATH”的变量，变量值为%JAVA_HOME%\lib;%JAVA_HOME%\jre\bin\;（;不可以丢掉）</p>
-<p><a href="http://ilidong.com/wp-content/uploads/2014/07/PATH.png" target="_blank" rel="external">undefined</a></p>
-<p>d． 修改path变量：在path变量值最前面添加%JAVA_HOME%\bin;（;不可以丢掉，它是用于分割不同的变量值）<a href="http://ilidong.com/wp-content/uploads/2014/07/CLASSPATH.png" target="_blank" rel="external">undefined</a></p>
-<ol>
-<li>验证环境变量是否正确<br>打开“运行”窗口，输入“cmd”回车；输入java和javac有如图的输出，则Java在 windows开发环境搭建大功告成了</li>
-</ol>
-<p><a href="http://ilidong.com/wp-content/uploads/2014/07/java-9.png" target="_blank" rel="external">undefined</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<ol>
-<li><p>下载jdk<br>下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel=]]>
-    </summary>
-    
-      <category term="java" scheme="https://blog.lidong.me/tags/java/"/>
-    
-      <category term="电脑网络" scheme="https://blog.lidong.me/categories/%E7%94%B5%E8%84%91%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   

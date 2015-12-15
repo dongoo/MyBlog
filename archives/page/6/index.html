@@ -241,6 +241,63 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/2013/modify-twenty-twelve/">修改我的Twenty Twelve主题——添加本文链接</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Sun Dec 29 2013 23:46:55 GMT+0800">
+	
+		    12月 29, 2013
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>Twenty Twelve主题是现在wordpress自带的最旧的主题，这个主题个人觉得很清爽、简单。也是一个响应式设计的主题。加上俺对自己设计主题冇信心。所以选择了这个主题。但是这个主题还是有些不符合我们的习惯。</p>
+<p><strong>1.添加本文链接</strong><br>为了不让别人盗取自己的劳动成果,在文章末尾添加本文的链接地址,来防止别人采集我们的文章。<br>方法：<br>修改主题目录里的content.php文件</p>
+<p>在&lt;!– .entry-content –&gt;之前添加</p>
+<pre><code><span class="tag">&lt;<span class="title">div</span>&gt;</span> 转载请注明来源：<span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">“&lt;?php</span> <span class="attribute">bloginfo</span>(‘<span class="attribute">url</span>’); ?&gt;</span>”&gt;<span class="php"><span class="preprocessor">&lt;?php</span> bloginfo(‘name’); <span class="preprocessor">?&gt;</span></span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>-<span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">“&lt;?php</span> <span class="attribute">the_permalink</span>() ?&gt;</span>”&gt; <span class="php"><span class="preprocessor">&lt;?php</span> the_title(); <span class="preprocessor">?&gt;</span></span><span class="tag">&lt;/<span class="title">a</span>&gt;</span> <span class="tag">&lt;/<span class="title">div</span>&gt;</span> <span class="tag">&lt;<span class="title">div</span>&gt;</span> 本文链接地址：<span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">“&lt;?php</span> <span class="attribute">the_permalink</span>() ?&gt;</span>”&gt;<span class="php"><span class="preprocessor">&lt;?php</span> the_permalink() <span class="preprocessor">?&gt;</span></span><span class="tag">&lt;/<span class="title">a</span>&gt;</span> 
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span> 
+</code></pre><p><strong>2.修改feed地址</strong><br>昨天设置了<a href="http://ilidong.com/html/1087.html" title="在WordPress中使用二级域名发布RSS Feed" target="_blank" rel="external">二级域名发布RSS Feed</a>，但是有些阅读器可以通过输入网址自动识别feed地址，比如feedly，reeder都可以通过输入ilidong.com自动找到本站的feed地址，但是它自动识别的是<a href="http://ilidong.com/feed,原理是通过抓取首页的源代码" target="_blank" rel="external">http://ilidong.com/feed,原理是通过抓取首页的源代码</a> &lt;link rel=”alternate” type=”application/rss+xml” title=”” /&gt;来识别，原来为</p>
+<pre><code><span class="tag">&lt;<span class="title">link</span> <span class="attribute">title</span>=<span class="value">“iLiDong</span> » <span class="attribute">Feed</span>” <span class="attribute">href</span>=<span class="value">“http:</span>//<span class="attribute">www.ilidong.com</span>/<span class="attribute">feed</span>” <span class="attribute">rel</span>=<span class="value">“alternate”</span> <span class="attribute">type</span>=<span class="value">“application</span>/<span class="attribute">rss</span>+<span class="attribute">xml</span>” /&gt;</span>
+</code></pre><p>通过在主题的funtion.php文件中添加</p>
+<pre><code><span class="keyword">function</span> custom_rss(<span class="variable">$output</span>, <span class="variable">$show</span>) { if (in_array(<span class="variable">$show</span>, array(‘rss_url’, ‘rss2_url’, ‘rss’, ‘rss2’, “))) <span class="variable">$output</span> = ‘your_custom_rss_feed_url_goes_here’; return <span class="variable">$output</span>; } add_filter(‘bloginfo_url’, ‘custom_rss’, <span class="number">10</span>, <span class="number">2</span>); add_filter(‘feed_link’, ‘custom_rss’, <span class="number">10</span>, <span class="number">2</span>); 
+</code></pre><p>现在源码中已经是</p>
+<pre><code><span class="tag">&lt;<span class="title">link</span> <span class="attribute">title</span>=<span class="value">“iLiDong</span> » <span class="attribute">Feed</span>” <span class="attribute">href</span>=<span class="value">“http:</span>//<span class="attribute">feed.ilidong.com</span>” <span class="attribute">rel</span>=<span class="value">“alternate”</span> <span class="attribute">type</span>=<span class="value">“application</span>/<span class="attribute">rss</span>+<span class="attribute">xml</span>” /&gt;</span>
+</code></pre><p>阅读器可以自动识别feed地址是<a href="http://feed.ilidong.com" target="_blank" rel="external">http://feed.ilidong.com</a></p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2013/modify-twenty-twelve/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/2013/wordpress-rss-feed/">在WordPress中使用二级域名发布RSS Feed</a>
                         
                     </h1>
@@ -678,48 +735,6 @@
 <p>
                         
                             <a href="/2013/use-virtualbox/" class="postShorten-excerpt_link link">
-                                阅读全文
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2013/linux-limit/">linux权限机制</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Tue Dec 03 2013 23:46:19 GMT+0800">
-	
-		    12月 03, 2013
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p><strong>权限</strong><br>权限是操作系统用来限制对资源访问的机制，权限一般分为读、写、执行。<br>系统中每一个文件都拥有特定的权限、所属用户及附属组，通过这样的机制来限制哪些用户。哪些组可以对特定的文件进行什么样的操作。<br>每个进程都是以某个用户的身份运行的，所以进程的权限与该用户的权限一样，用户的权限大，该进程拥有的权限就大。</p>
-<p><strong>文件权限</strong></p>
-<p>Linux中每个文件都拥有以下三种权限：
-                        
-                            <a href="/2013/linux-limit/" class="postShorten-excerpt_link link">
                                 阅读全文
                             </a>
                             

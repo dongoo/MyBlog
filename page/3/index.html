@@ -240,6 +240,71 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/2014/java-on-windows/">Java在windows上开发环境的搭建</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Tue Jul 22 2014 17:52:09 GMT+0800">
+	
+		    7月 22, 2014
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <ol>
+<li><p>下载jdk<br>下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a><br>选择相对应的版本<br><a href="http://ilidong.com/wp-content/uploads/2014/07/java-1.png" target="_blank" rel="external">undefined</a></p>
+</li>
+<li><p>安装jdk<br>安装可以直接下一步，下一步……完成安装。可以根据需要更改安装路径。</p>
+</li>
+</ol>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/07/java-2.png" target="_blank" rel="external">undefined</a></p>
+<p>我的安装路径<a href="http://ilidong.com/wp-content/uploads/2014/07/java-3.png" target="_blank" rel="external">undefined</a><a href="http://ilidong.com/wp-content/uploads/2014/07/java-4.png" target="_blank" rel="external">undefined</a></p>
+<ol>
+<li>修改环境变量<br>a． 在“计算机”图标上右击鼠标，选择“属性”命令，在弹出的对话框中，单击左侧的高级系统设置，打开如图的系统属性<a href="http://ilidong.com/wp-content/uploads/2014/07/java-5.png" target="_blank" rel="external">undefined</a></li>
+</ol>
+<p>b． 新建 变量名”JAVA_HOME”的变量，变量值为JDK的安装路径</p>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/07/JAVA_HOME.png" target="_blank" rel="external">undefined</a></p>
+<p>c． 新建 变量名”CLASSPATH”的变量，变量值为%JAVA_HOME%\lib;%JAVA_HOME%\jre\bin\;（;不可以丢掉）</p>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/07/PATH.png" target="_blank" rel="external">undefined</a></p>
+<p>d． 修改path变量：在path变量值最前面添加%JAVA_HOME%\bin;（;不可以丢掉，它是用于分割不同的变量值）<a href="http://ilidong.com/wp-content/uploads/2014/07/CLASSPATH.png" target="_blank" rel="external">undefined</a></p>
+<ol>
+<li>验证环境变量是否正确<br>打开“运行”窗口，输入“cmd”回车；输入java和javac有如图的输出，则Java在 windows开发环境搭建大功告成了</li>
+</ol>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/07/java-9.png" target="_blank" rel="external">undefined</a></p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/java-on-windows/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/2014/get-job/">找到工作了</a>
                         
                     </h1>
@@ -675,65 +740,6 @@
                         
                             <p>
                                 <a href="/2014/get-icp/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2014/google-pagespeed-tools/">使用Google PageSpeed Tools优化网站性能</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Mon Apr 21 2014 17:58:28 GMT+0800">
-	
-		    4月 21, 2014
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>在做网页的时候，我们总是希望，我们的网站能够能够快一点，再快一点，但是如果没有一个好的工具，我们就很难知道网站到底是不是很快，也不知道怎么去让它快一点。强大的google给我们提供的PageSpeed Tools强大的工具。可以在线分析并给出解决办法。<br>其中包括十项检查：</p>
-<blockquote>
-<p>清除首屏内容中阻止呈现的Javascrlpt和css</p>
-<p>使用浏览器缓存</p>
-<p>缩短服务器响应时间</p>
-<p>启用压缩</p>
-<p>压缩CSS</p>
-<p>优化图片</p>
-<p>按优先级排列可见内容</p>
-<p>压缩 JavaScript</p>
-<p>压缩 HTML</p>
-<p>避免使用目标网页重定向<br>网站地址：<a href="http://developers.google.com/speed/pagespeed/insights/" target="_blank" rel="external">http://developers.google.com/speed/pagespeed/insights/</a><br>这是我的网页测试结果（2014年4月20日的结果)</p>
-</blockquote>
-<p><a href="https://ilidong.com/wp-content/uploads/2014/04/GooglePageSpeedInsights.png" target="_blank" rel="external">undefined</a></p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2014/google-pagespeed-tools/#post-footer" class="postShorten-excerpt_link link">
                                     注释和共享
                                 </a>
                             </p>

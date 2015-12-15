@@ -6,23 +6,24 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Lidong&#39;s blog">
-    <title>改换linode主机 - Lidong&#39;s blog</title>
+    <title>CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm) - Lidong&#39;s blog</title>
     <meta name="author" content="lidong">
     
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <meta name="description" content="之前购买了digitalocean，先是选Singapore节点，感觉速度不太理想，后来换成San Francisco节点，稍稍好一点了，可是好景不长，现在不知道最近是又有什么新政策要出台，到SFO的网络丢包丢的厉害">
+    <meta name="description" content="折腾好久，终于完整的整理了Nginx＋PHP的安装安装顺序最好是先安装PHP，再安装Nginx">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="改换linode主机">
-<meta property="og:url" content="https://blog.lidong.me/2015/linode/index.html">
+<meta property="og:title" content="CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
+<meta property="og:url" content="https://blog.lidong.me/2015/centos7-nginx-php-mysql/index.html">
 <meta property="og:site_name" content="Lidong's blog">
-<meta property="og:description" content="之前购买了digitalocean，先是选Singapore节点，感觉速度不太理想，后来换成San Francisco节点，稍稍好一点了，可是好景不长，现在不知道最近是又有什么新政策要出台，到SFO的网络丢包丢的厉害">
-<meta property="og:image" content="https://blog.lidong.me/static/uploads/2015/12/sfo-digitalocean-ping.png">
-<meta property="og:updated_time" content="2015-12-02T05:47:02.000Z">
+<meta property="og:description" content="折腾好久，终于完整的整理了Nginx＋PHP的安装安装顺序最好是先安装PHP，再安装Nginx">
+<meta property="og:image" content="https://dn-blogme.qbox.me/15-12-14/62005590.jpg">
+<meta property="og:image" content="https://dn-blogme.qbox.me/15-12-14/7981235.jpg">
+<meta property="og:updated_time" content="2015-12-14T15:08:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="改换linode主机">
-<meta name="twitter:description" content="之前购买了digitalocean，先是选Singapore节点，感觉速度不太理想，后来换成San Francisco节点，稍稍好一点了，可是好景不长，现在不知道最近是又有什么新政策要出台，到SFO的网络丢包丢的厉害">
+<meta name="twitter:title" content="CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
+<meta name="twitter:description" content="折腾好久，终于完整的整理了Nginx＋PHP的安装安装顺序最好是先安装PHP，再安装Nginx">
 <meta name="twitter:creator" content="@｀Dondongooo｀">
     
     
@@ -239,13 +240,13 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
-            改换linode主机
+            CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)
         </h1>
     
     <div class="post-meta">
-    <time itemprop="datePublished" content="Tue Dec 01 2015 11:47:25 GMT+0800">
+    <time itemprop="datePublished" content="Wed Dec 09 2015 18:44:32 GMT+0800">
 	
-		    12月 01, 2015
+		    12月 09, 2015
     	
     </time>
     
@@ -254,11 +255,39 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p>之前购买了digitalocean，先是选Singapore节点，感觉速度不太理想，后来<a href="https://blog.lidong.me/2015/digitalocean-transfer/">换成San Francisco节点</a>，稍稍好一点了，可是好景不长，现在不知道最近是又有什么新政策要出台，到SFO的网络丢包丢的厉害<br><a id="more"></a><br><img src="/static/uploads/2015/12/sfo-digitalocean-ping.png" alt=""></p>
-<p>其它DQ节点网络就更渣了。不得不感叹我大GFW！网络不通那可是万万不可啊。于是只能上高大上的linode了。一个月10刀啊。</p>
-<p>购买了linode时，只是一股脑的想着去买了，用的很早以前注册的linode帐号，一直没有用。后来发现黑色星期五，linode送25刀。我了个去，只针对新用户，我也是新用户好吗！！第一次购买！白白丢了25刀，💔心好痛.因为要绑定信用卡，忍痛不去注册新账号了。</p>
-<p>如果你要购买linode主机，使用我的<a href="https://www.linode.com/?r=6169f1024c811c3a477843efc2cb619f8df4dcd5" target="_blank" rel="external">linode推荐链接</a>，你也可以有10刀的现金券。安抚一下我受伤的心！感谢！</p>
-<p>购买linode的选择的是东京节点，速度很不错，下载可以跑满我的10Mb宽带，ping值在100左右</p>
+            <p>折腾好久，终于完整的整理了Nginx＋PHP的安装<br>安装顺序最好是先安装PHP，再安装Nginx<br><a id="more"></a></p>
+<h2 id="1-安装php">1.安装php</h2><p><code>wget http://cn2.php.net/distributions/php-5.6.16.tar.gz</code><br><code>tar -xvf php-5.6.16.tar.gz</code><br><code>cd php-5.6.16/</code></p>
+<p><code>./configure --prefix=/usr/local/php  --enable-inline-optimization --disable-debug --disable-rpath --enable-shared --enable-opcache --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-gettext --enable-mbstring --with-iconv --with-mcrypt --with-mhash --with-openssl --enable-bcmath --enable-soap --with-libxml-dir --enable-pcntl --enable-shmop --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-sockets --with-curl --with-zlib --enable-zip --with-bz2 --with-readline --without-sqlite3 --without-pdo-sqlite --with-pear</code></p>
+<p><code>make</code><br><code>sudo make install</code></p>
+<p>安装完成的截图</p>
+<p><img src="https://dn-blogme.qbox.me/15-12-14/62005590.jpg" alt="安装完成"></p>
+<p>设置php-fpm配置文件<br><code>cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf</code></p>
+<p>启动php-fpm<br><code>sudo /usr/local/php/sbin/php-fpm</code></p>
+<h3 id="编译过程可能出现的报错情况">编译过程可能出现的报错情况</h3><p>configure: error: xml2-config not found. Please check your libxml2 installation.<br><code>sudo yum install -y libxml2-devel</code></p>
+<p>configure: error: Cannot find OpenSSL’s <evp.h><br><code>sudo yum install -y openssl-devel</code></evp.h></p>
+<p>configure: error: Please reinstall the BZip2 distribution<br><code>sudo yum install -y bzip2-devel</code></p>
+<p>configure: error: Please reinstall the libcurl distribution -<br>    easy.h should be in <curl-dir>/include/curl/<br><code>sudo yum install -y libcurl-devel</code></curl-dir></p>
+<p>configure: error: mcrypt.h not found. Please reinstall libmcrypt.<br>libmcrypt在官方yum源中没有，需要手动编译安装可以到sourceforge下载<br><a href="http://sourceforge.net/projects/mcrypt/files/Libmcrypt/" target="_blank" rel="external">http://sourceforge.net/projects/mcrypt/files/Libmcrypt/</a><br><code>wget http://downloads.sourceforge.net/project/mcrypt/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.gz</code><br><code>tar -xvf libmcrypypt-2.5.8.tar.gz</code><br><code>./configure</code><br><code>make</code><br><code>sudo make install</code></p>
+<p>configure: error: Don’t know how to define struct flock on this system, set –enable-opcache=no<br>编辑 /etc/ld.so.conf.d/local.conf文件，加入/usr/local/lib内容<br><code>sudo vi /etc/ld.so.conf.d/local.conf</code><br><code>/usr/local/lib</code><br><code>sudo ldconfig</code></p>
+<p>configure: error: Please reinstall readline - I cannot find readline.h<br><code>sudo yum install -y readline-devel</code></p>
+<p>PS：一次全部安装上述依赖<br><code>sudo yum install -y libxml2-devel openssl-devel bzip2-devel libcurl-devel readline-devel</code></p>
+<h2 id="2-安装nginx">2.安装nginx</h2><p><code>wget http://nginx.org/download/nginx-1.9.8.tar.gz</code><br>解压<br><code>tar -xvf nginx-1.9.8.tar.gz</code><br><code>cd nginx-1.9.8.tar.gz</code><br><code>./configure</code><br><code>make</code><br><code>sudo make install</code></p>
+<p>修改配置文件以支持php-fpm<br><code>sudo  vi /usr/local/nginx/conf/nginx.conf</code></p>
+<p>其中server段增加如下配置，注意标红内容配置，否则会出现No input file specified.错误</p>
+<pre><code><span class="title">location</span> <span class="regexp">~ \.php$</span> {
+        <span class="title">root</span>           html;
+        <span class="title">fastcgi_pass</span>   <span class="number">127.0.0.1:9000</span>;
+        <span class="title">fastcgi_index</span>  index.php;
+        <span class="comment">#修改下面字段，否则会出现No input file specified.错误</span>
+        <span class="title">fastcgi_param</span>  SCRIPT_FILENAME    <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;
+        <span class="title">include</span>        fastcgi_params;
+    }
+</code></pre><p>启动nginx<br><code>sudo /usr/local/nginx/sbin/nginx</code></p>
+<p>PS：这里是nginx编译完成的信息图，在这里可以看到nginx的路径，配置文件位置及其它一些有用信息<br><img src="https://dn-blogme.qbox.me/15-12-14/7981235.jpg" alt="编译完成"></p>
+<h3 id="编译过程可能出现的报错情况-1">编译过程可能出现的报错情况</h3><p>./configure: error: the HTTP rewrite module requires the PCRE library.</p>
+<p><code>sudo yum -y install pcre-devel</code></p>
+<p>./configure: error: the HTTP gzip module requires the zlib library.</p>
+<p><code>sudo yum -y install zlib-devel</code></p>
 
             
                 
@@ -273,7 +302,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/centos7-nginx-php-mysql/"  data-tooltip="CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -281,7 +310,7 @@
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/dokuwiki/" data-tooltip="尝试使用wiki来整理分享">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/linode/" data-tooltip="改换linode主机">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right"></i>
@@ -291,23 +320,23 @@
     </nav>
 <ul class="post-actions post-action-share">
      <li class="post-action">
-          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/linode/&amp;title=改换linode主机">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/centos7-nginx-php-mysql/&amp;title=CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
                 <i class="fa fa-print"></i>
             </a>
         </li>
      <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/linode/&amp;title=改换linode主机">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/centos7-nginx-php-mysql/&amp;title=CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
         <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/linode/&amp;title=改换linode主机">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/centos7-nginx-php-mysql/&amp;title=CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
                 <i class="fa fa-weixin"></i>
             </a>
         </li>
        
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/linode/&amp;title=改换linode主机">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/centos7-nginx-php-mysql/&amp;title=CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
                 <i class="fa fa-weibo"></i>
             </a>
         </li>
@@ -339,7 +368,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/centos7-nginx-php-mysql/"  data-tooltip="CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -347,7 +376,7 @@
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/dokuwiki/" data-tooltip="尝试使用wiki来整理分享">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/linode/" data-tooltip="改换linode主机">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right"></i>
@@ -357,23 +386,23 @@
     </nav>
 <ul class="post-actions post-action-share">
      <li class="post-action">
-          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/linode/&amp;title=改换linode主机">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/centos7-nginx-php-mysql/&amp;title=CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
                 <i class="fa fa-print"></i>
             </a>
         </li>
      <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/linode/&amp;title=改换linode主机">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/centos7-nginx-php-mysql/&amp;title=CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
         <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/linode/&amp;title=改换linode主机">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/centos7-nginx-php-mysql/&amp;title=CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
                 <i class="fa fa-weixin"></i>
             </a>
         </li>
        
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/linode/&amp;title=改换linode主机">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2015/centos7-nginx-php-mysql/&amp;title=CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)">
                 <i class="fa fa-weibo"></i>
             </a>
         </li>
@@ -385,17 +414,17 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2015/linode/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2015/centos7-nginx-php-mysql/">
                 <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2015/linode/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2015/centos7-nginx-php-mysql/">
                 <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2015/linode/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2015/centos7-nginx-php-mysql/">
                 <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
             </a>
         </li>
