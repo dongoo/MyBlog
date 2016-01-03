@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My life and My notes]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="https://blog.lidong.me/"/>
-  <updated>2015-12-14T15:08:06.000Z</updated>
+  <updated>2016-01-03T14:47:53.000Z</updated>
   <id>https://blog.lidong.me/</id>
   
   <author>
@@ -13,6 +13,85 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[MYSQL 命令行基本操作]]></title>
+    <link href="https://blog.lidong.me/2016/mysql-basic/"/>
+    <id>https://blog.lidong.me/2016/mysql-basic/</id>
+    <published>2016-01-01T14:10:00.000Z</published>
+    <updated>2016-01-03T14:47:53.000Z</updated>
+    <content type="html"><![CDATA[<p>mysql命令行的基本操作命令<br> <a id="more"></a></p>
+<h2 id="登录">登录</h2><pre><code>mysql -<span class="keyword">u</span> root -p/mysql-<span class="keyword">h</span> localhost -<span class="keyword">u</span> root -p databasrName;
+</code></pre><h2 id="数据库操作">数据库操作</h2><pre><code>显示所有数据库
+<span class="operator"><span class="keyword">show</span> <span class="keyword">databases</span>；
+
+选定某个数据库
+<span class="keyword">use</span> 数据库名;</span>
+
+创建数据库
+<span class="operator"><span class="keyword">create</span> <span class="keyword">database</span> 数据库名;</span>
+
+删除数据库
+<span class="operator"><span class="keyword">drop</span> <span class="keyword">database</span> 数据库名;</span>
+
+查询数据库版本
+<span class="operator"><span class="keyword">select</span> <span class="keyword">version</span>;</span>
+
+查询当前选定的数据库
+<span class="operator"><span class="keyword">select</span> <span class="keyword">database</span>();</span>
+</code></pre><h2 id="表操作">表操作</h2><pre><code>创建表
+<span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> 表名；
+
+删除表
+<span class="keyword">drop</span> <span class="keyword">table</span> 表名;</span>
+
+清空表
+<span class="operator"><span class="keyword">delete</span> <span class="keyword">table</span> 表名;</span>
+
+查看表内容
+<span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> 表名;</span>
+
+查看表结构
+<span class="operator"><span class="keyword">describe</span> 表名;</span>
+
+修改表内容
+<span class="operator"><span class="keyword">update</span>表名<span class="keyword">set</span> 参数名要改成的值<span class="keyword">where</span>参数名＝某个值;</span>
+</code></pre><h2 id="用户操作">用户操作</h2><pre><code>创建用户
+<span class="operator"><span class="keyword">grant</span> 权限 <span class="keyword">on</span> 数据库名.* <span class="keyword">to</span> 用户名@登录主机 <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">"密码"</span>;</span>
+
+用户已存在赋予权限
+<span class="operator"><span class="keyword">grant</span> <span class="keyword">select</span>, indert,<span class="keyword">update</span>,<span class="keyword">delete</span> <span class="keyword">on</span> 数据库.* <span class="keyword">to</span> 用户名@登录主机 <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">"密码"</span>；
+
+权限有<span class="number">14</span>种
+<span class="keyword">select</span>,<span class="keyword">insert</span>,<span class="keyword">update</span>,<span class="keyword">create</span>,<span class="keyword">drop</span>,<span class="keyword">index</span>,altergrant,<span class="keyword">references</span>,reload,<span class="keyword">shutdown</span>,process
+
+删除用户
+<span class="keyword">drop</span> <span class="keyword">user</span> 用户名;</span>
+
+查询所有用户
+<span class="operator"><span class="keyword">select</span> <span class="keyword">user</span> <span class="keyword">from</span> mysql.<span class="keyword">user</span>
+
+查看当前用户
+<span class="keyword">select</span> <span class="keyword">user</span>();</span>
+</code></pre><h2 id="其它">其它</h2><pre><code>查看存储过程
+show <span class="function"><span class="keyword">procedure</span> <span class="title">status</span>;</span>
+
+查看存储的具体内容
+show <span class="keyword">create</span> <span class="function"><span class="keyword">procedure</span> 存储过程名;</span>
+查询时间
+<span class="keyword">select</span> now();
+</code></pre><p>参考：<br><a href="http://www.cnblogs.com/JAYIT/p/5016688.html" target="_blank" rel="external">http://www.cnblogs.com/JAYIT/p/5016688.html</a><br><a href="http://blog.csdn.net/wangbofei/article/details/11357181" target="_blank" rel="external">http://blog.csdn.net/wangbofei/article/details/11357181</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>mysql命令行的基本操作命令<br>]]>
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://blog.lidong.me/tags/mysql/"/>
+    
+      <category term="基本操作" scheme="https://blog.lidong.me/tags/%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[CentOS7.0编译安装nginx1.9.8、php5.6(php-fpm)]]></title>
@@ -599,29 +678,6 @@ return <span class="variable">$sendername</span>;
       <category term="VirtualBox" scheme="https://blog.lidong.me/tags/VirtualBox/"/>
     
       <category term="电脑网络" scheme="https://blog.lidong.me/categories/%E7%94%B5%E8%84%91%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[糊涂申请信用卡获批]]></title>
-    <link href="https://blog.lidong.me/2014/get-credit-card/"/>
-    <id>https://blog.lidong.me/2014/get-credit-card/</id>
-    <published>2014-08-10T08:51:36.000Z</published>
-    <updated>2015-10-15T07:53:49.000Z</updated>
-    <content type="html"><![CDATA[<p>有时候有钱也买不到东西，比如 亚马逊，name，AWS，Google Play，只能用信用卡支付，于是拥有一张信用卡成了我的梦想。现在终于梦想成真了，哈哈。</p>
-<p>这一切都是源于意外，因为我很想拥有信用卡，加上刚刚找到工作了，于是到招商银行看了看，因在网上申请的步骤太简单，一不小心就提交了资料。过两天就有业务员打电话过来，问我住哪里，我说，我不办了；那业务员说，为什么不办了，说我的资料已经基本资料已经通过审核，只等上门再填一下其他资料；最后我还是给了她我工作的地址。</p>
-<p>上门填资料很简单，只有一样可能有困难，公司的盖章（谢谢俺的老板的开明），所以很顺利。因上面提到的原因，业务员问我要什么样的卡，我说我想用信用卡在网上购买国外的一些东西。她说“那你办这个visa卡吧”，我听了是visa卡我就同意了，没有顾虑那些，只是担心办不办的了。</p>
-<p>经过了20天左右的时间，卡通过快递寄到公司了。（不是一般都是挂号信寄过来的吗？）寄卡短信居然是我收到卡片的第二天才收到的。（是不是有点诡异）<br>拿到卡之后，仔细看了一下参数，招商银行标准Visa金卡，金卡噢，10000元信用额度。突然觉得自己好富有了，哈哈。（我现在的工资也只有3000元一月，10000元的额度叫我怎么用啊）</p>
-<p><a href="http://ilidong.com/wp-content/uploads/2014/08/zhaoshangyinhangxinyongka.jpg" target="_blank" rel="external">undefined</a>糊涂的就这么办成了这张信用卡，最初的目的倒是达到了——办一张可以在国外消费的信用卡。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>有时候有钱也买不到东西，比如 亚马逊，name，AWS，Google Play，只能用信用卡支付，于是拥有一张信用卡成了我的梦想。现在终于梦想成真了，哈哈。</p>
-<p>这一切都是源于意外，因为我很想拥有信用卡，加上刚刚找到工作了，于是到招商银行看了看，因在网上申请的步骤]]>
-    </summary>
-    
-      <category term="信用卡" scheme="https://blog.lidong.me/tags/%E4%BF%A1%E7%94%A8%E5%8D%A1/"/>
-    
-      <category term="生活感悟" scheme="https://blog.lidong.me/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/"/>
     
   </entry>
   

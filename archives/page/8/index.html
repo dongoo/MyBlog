@@ -241,6 +241,46 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/2013/linux-system-directory-structure/">系统目录结构</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Sat Nov 23 2013 22:59:08 GMT+0800">
+	
+		    11月 23, 2013
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-excerpt" itemprop="articleBody">
+                        <p><strong>系统目录结构</strong><br>bin 可执行文件<br>boot 引导目录<br>dev 计算机上所有硬件设备<br>ect 几乎所有配置文件<br>home 所有用户家目录（root的home目录在根目录root目录）<br>
+                        
+                            <a href="/2013/linux-system-directory-structure/" class="postShorten-excerpt_link link">
+                                阅读全文
+                            </a>
+                            
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/2013/linux-file-operations/">linux文件基本操作</a>
                         
                     </h1>
@@ -675,80 +715,6 @@
             
         </article>
     
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2013/wordpress-robots/">给wordpress添加robots.txt</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Nov 06 2013 19:01:20 GMT+0800">
-	
-		    11月 06, 2013
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <h3 id="Robots-txt的写法">Robots.txt的写法</h3><p>Robots.txt文档以User-agent: 开头，标识语句对应的搜索引擎机器人，后面跟上Disallow: 和Allow：表示起作用的链接。</p>
-<pre><code>User-<span class="string">agent:</span> baiduspider 表示对百度机器人起作用。
-User-<span class="string">agent:</span> * 表示对所有搜索引擎机器人起作用。
-Robots.txt文档中至少要有一条User-<span class="string">agent:</span>记录
-而User-<span class="string">agent:</span> * 记录只允许有一条。
-<span class="string">Disallow:</span> <span class="regexp">/ilidong     表示不允许搜索引擎访问或者收录/</span>ilidong.html、<span class="regexp">/ilidong/</span>index.html、<span class="regexp">/ilidong.php等包含/</span>ilidong的链接，
-而<span class="string">Disallow:</span> <span class="regexp">/ilidong/</span>    则允许访问<span class="regexp">/ilidong.html、/</span>ilidong.php等，但是禁止访问<span class="regexp">/ilidong/</span>index.html。
-<span class="string">Disallow:</span> / 表示禁止搜索引擎机器人访问收录所有页面。
-<span class="string">Disallow:</span>     表示允许搜索引擎访问收录所有页面。
-<span class="string">Allow:</span> <span class="regexp">/ilidong  表示允许搜索引擎访问或者收录/</span>ilidong.html、<span class="regexp">/ilidong/</span>index.html、<span class="regexp">/ilidong.php等包含/</span>ilidong的链接，
-<span class="string">Allow:</span><span class="regexp">/ilidong/</span>    则表示允许搜索引擎机器人访问<span class="regexp">/ilidong/</span>index.html等链接，但是对<span class="regexp">/ilidong.html、/</span>ilidong.php未置可否。
-</code></pre><h3 id="“*”和“$”通配符">“*”和“$”通配符</h3><pre><code><span class="string">Disallow:</span> */comments 表示不允许访问和收录所有wordpress评论留言页面。
-比如：<span class="string">http:</span><span class="comment">// ilidong.com/html/1.html#comment-37 是禁止收录的。</span>
-<span class="string">Disallow:</span> <span class="regexp">/category/</span>*<span class="regexp">/page/</span> 表示禁止访问和收录分类的相关分页。
-<span class="string">Disallow:</span> .jpg$ 和<span class="string">Disallow:</span> .php$ 分别表示禁止访问收录“,jpg”和“.php”后缀的文件
-</code></pre><p>我的robots.txt</p>
-<pre><code><span class="attribute">User-agent</span>: <span class="string">*</span>
-<span class="attribute">Disallow</span>: <span class="string">/*?*</span>
-<span class="attribute">Disallow</span>: <span class="string">/wp-admin</span>
-<span class="attribute">Disallow</span>: <span class="string">/wp-content/plugins</span>
-<span class="attribute">Disallow</span>: <span class="string">/wp-content/themes</span>
-<span class="attribute">Disallow</span>: <span class="string">/wp-includes</span>
-<span class="attribute">Disallow</span>: <span class="string">/trackback</span>
-<span class="attribute">Disallow</span>: <span class="string">/feed</span>
-<span class="attribute">Disallow</span>: <span class="string">/comments</span>
-<span class="attribute">Disallow</span>: <span class="string">/category/*/page/</span>
-<span class="attribute">Disallow</span>: <span class="string">/tag/*/page/</span>
-<span class="attribute">Sitemap</span>: <span class="string">http://ilidong.com/sitemap.html</span>
-<span class="attribute">Sitemap</span>: <span class="string">http://ilidong.com/sitemap_baidu.xml</span>
-</code></pre>
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2013/wordpress-robots/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
     <div class="pagination-bar">
     <ul class="pagination">
         
@@ -769,7 +735,7 @@ Robots.txt文档中至少要有一条User-<span class="string">agent:</span>记�
             </a>
         </li>
         
-        <li class="pagination-number">第 8 页 共 12 页</li>
+        <li class="pagination-number">第 8 页 共 13 页</li>
     </ul>
 </div>
 
@@ -779,7 +745,7 @@ Robots.txt文档中至少要有一条User-<span class="string">agent:</span>记�
 
                 <footer id="footer" class="main-content-wrap">
     <span class="copyrights">
-        Copyrights &copy; 2015 lidong. All Rights Reserved.
+        Copyrights &copy; 2016 lidong. All Rights Reserved.
     </span>
 </footer>
 
