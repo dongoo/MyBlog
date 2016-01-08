@@ -6,21 +6,62 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Lidong&#39;s blog">
-    <title>归档: 2016/1 - Lidong&#39;s blog</title>
+    <title>《JavaScript权威指南》读书笔记1 - Lidong&#39;s blog</title>
     <meta name="author" content="lidong">
     
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <meta name="description">
+    <meta name="description" content="词法结构当函数赋值给对象的属性，我们称为“方法”
+按照惯例，构造函数均以大写字母开始
+JavaScript是区分大小写的语言
+JavaScript会忽略程序中标示之间的空格。多数情况下，JavaScript同样会忽略换行符（可选分号情形）
+JavaScript支持两种格式的注释：
+//单行注释 
+
+/*
+多行注释内容
+*/
+（1）javascript保留字
+
+if分支语句：if, else
+swi">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Lidong's blog">
-<meta property="og:url" content="https://blog.lidong.me/archives/2016/01/index.html">
+<meta property="og:title" content="《JavaScript权威指南》读书笔记1">
+<meta property="og:url" content="https://blog.lidong.me/2016/javascript-guide-1/index.html">
 <meta property="og:site_name" content="Lidong's blog">
-<meta property="og:description">
+<meta property="og:description" content="词法结构当函数赋值给对象的属性，我们称为“方法”
+按照惯例，构造函数均以大写字母开始
+JavaScript是区分大小写的语言
+JavaScript会忽略程序中标示之间的空格。多数情况下，JavaScript同样会忽略换行符（可选分号情形）
+JavaScript支持两种格式的注释：
+//单行注释 
+
+/*
+多行注释内容
+*/
+（1）javascript保留字
+
+if分支语句：if, else
+swi">
+<meta property="og:image" content="https://blog.lidong.me/media/s8958854.jpg">
+<meta property="og:updated_time" content="2016-01-08T16:00:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lidong's blog">
-<meta name="twitter:description">
+<meta name="twitter:title" content="《JavaScript权威指南》读书笔记1">
+<meta name="twitter:description" content="词法结构当函数赋值给对象的属性，我们称为“方法”
+按照惯例，构造函数均以大写字母开始
+JavaScript是区分大小写的语言
+JavaScript会忽略程序中标示之间的空格。多数情况下，JavaScript同样会忽略换行符（可选分号情形）
+JavaScript支持两种格式的注释：
+//单行注释 
+
+/*
+多行注释内容
+*/
+（1）javascript保留字
+
+if分支语句：if, else
+swi">
 <meta name="twitter:creator" content="@｀Dondongooo｀">
     
     
@@ -68,7 +109,7 @@
         
     
 
-<header id="header" data-behavior="1">
+<header id="header" data-behavior="3">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <h1 class="header-title">
         <a class="header-title-link" href="/ ">Lidong&#39;s blog</a>
@@ -90,7 +131,7 @@
 
     
 
-<nav id="sidebar" data-behavior="1">
+<nav id="sidebar" data-behavior="3">
     
         <div class="sidebar-profile">
             <a href="/#about">
@@ -226,25 +267,21 @@
 </nav>
 
             
-            <div id="main" data-behavior="1"
+            <div id="main" data-behavior="3"
                  class="
                         hasCoverMetaIn
                         ">
                 
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
     
-
-<section class="postShorten-group main-content-wrap">
     
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2016/javascript-guide-1/">《JavaScript权威指南》读书笔记1</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            《JavaScript权威指南》读书笔记1
+        </h1>
+    
+    <div class="post-meta">
     <time itemprop="datePublished" content="Sat Jan 02 2016 23:22:20 GMT+0800">
 	
 		    1月 02, 2016
@@ -252,11 +289,11 @@
     </time>
     
 </div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p><img src="/media/s8958854.jpg" alt="JavaScript权威指南"></p>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p><img src="/media/s8958854.jpg" alt="JavaScript权威指南"></p>
 <h2 id="词法结构">词法结构</h2><p>当函数赋值给对象的属性，我们称为“方法”</p>
 <p>按照惯例，构造函数均以大写字母开始</p>
 <p>JavaScript是区分大小写的语言</p>
@@ -327,66 +364,75 @@ s.<span class="function"><span class="title">split</span><span class="params">(<
 s.<span class="function"><span class="title">replace</span><span class="params">(<span class="string">"H"</span>,<span class="string">"h"</span>)</span></span>  <span class="comment">//  =&gt; "hello,World" :全文字符替换</span>
 s.<span class="function"><span class="title">toUpperCase</span><span class="params">()</span></span>  <span class="comment">//  =&gt; "HELLO,WORLD" :大写</span>
 </code></pre>
-                        
-                            
+            
+                
 
-                        
-                        
-                            <p>
-                                <a href="/2016/javascript-guide-1/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
             
-        </article>
-    
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2016/mysql-basic/">MYSQL 命令行基本操作</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Fri Jan 01 2016 22:10:00 GMT+0800">
-	
-		    1月 01, 2016
-    	
-    </time>
-    
-</div>
-                </div>
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
                 
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p>mysql命令行的基本操作命令<br>
-                        
-                            <a href="/2016/mysql-basic/" class="postShorten-excerpt_link link">
-                                阅读全文
-                            </a>
-                            
-                        
-                    </div>
-                
+    <a class="tag tag--primary tag--small t-link" href="/tags/JavaScript/">JavaScript</a> <a class="tag tag--primary tag--small t-link" href="/tags/读书笔记/">读书笔记</a>
+
             </div>
-            
-        </article>
-    
-    <div class="pagination-bar">
-    <ul class="pagination">
         
-        
-        <li class="pagination-number">第 1 页 共 1 页</li>
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/mysql-basic/" data-tooltip="MYSQL 命令行基本操作">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
     </ul>
 </div>
 
-</section>
+
+        
+            <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+    </div>
+</article>
 
 
 
@@ -397,6 +443,76 @@ s.<span class="function"><span class="title">toUpperCase</span><span class="para
 </footer>
 
             </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/mysql-basic/" data-tooltip="MYSQL 命令行基本操作">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<ul class="post-actions post-action-share">
+     <li class="post-action">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+     <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+       
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2016/javascript-guide-1/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2016/javascript-guide-1/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2016/javascript-guide-1/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
             
         </div>
         <!-- Define author's picture -->
@@ -435,6 +551,17 @@ s.<span class="function"><span class="title">toUpperCase</span><span class="para
     <!--SCRIPTS-->
 <script src="/assets/js/script.min.js" type="text/javascript"></script>
 <!--SCRIPTS END-->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'lidongme';
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
 
 
     <script type="text/javascript">
