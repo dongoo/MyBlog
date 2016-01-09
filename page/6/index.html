@@ -240,6 +240,126 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/2014/modify-twenty-twelve-3/">修改我的Twenty Twelve主题（3）——首页自动摘要输出及长度修改</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Fri Jan 03 2014 17:07:45 GMT+0800">
+	
+		    1月 03, 2014
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>要首页实现摘要输出可以使用&lt;!–more–&gt;，但是不够美观，有时忘记了添加&lt;!—more–&gt;，就在全文输出了,影响美观。</p>
+<p><strong>1.首页摘要输出</strong></p>
+<p>其实Twenty Twelve主题本身是有摘要输出的影子的，当使用搜索是搜索结果就是摘要输出的。在主题的content.php文件中你会发现这样的代码：</p>
+<pre><code><span class="php"><span class="preprocessor">&lt;?php</span> <span class="keyword">if</span> ( is_search()) : <span class="comment">// Only display Excerpts for Search ?&gt;</span></span>
+
+<span class="php"><span class="preprocessor">&lt;?php</span> the_excerpt(); <span class="preprocessor">?&gt;</span></span>
+</code></pre><p>没错the_excerpt();就是wordpress中的摘要输出函数。</p>
+<p>在is_search()后，以||隔开，</p>
+<p>添加is_home()，首页就是摘要输出</p>
+<p>添加is_category()，分类页摘要输出</p>
+<p>添加is_archive()，存档页摘要输出</p>
+<p>一般我们需要在内容页全文输出，在首页、搜索结果页，分类页、存档页都是摘要输出，所以我们可以将</p>
+<pre><code><span class="php"><span class="preprocessor">&lt;?php</span> <span class="keyword">if</span> ( is_search()) : <span class="comment">// Only display Excerpts for Search ?&gt;</span></span>
+</code></pre><p>改成</p>
+<pre><code>&lt;?php <span class="keyword">if</span> (<span class="keyword">is</span><span class="number">_</span>home()||<span class="keyword">is</span><span class="number">_</span>search()||<span class="keyword">is</span><span class="number">_</span>category()||<span class="keyword">is</span><span class="number">_</span>archive()):?&gt;
+</code></pre><p>如果你是英文网站，那就可以到此结束了。</p>
+<p><strong>2.修改摘要长度</strong></p>
+<p>但是如果是中文网站，你会发现首页输出的内容太少了。接下来就是修改摘要长度。</p>
+<p>在网上搜索，很多人说在主题的functions.php中添加自定义函数。</p>
+<pre><code><span class="keyword">function</span> chinese_excerpt(<span class="variable">$text</span>, <span class="variable">$lenth</span>=<span class="number">100</span>) { <span class="variable">$text</span> = mb_substr(<span class="variable">$text</span>,<span class="number">0</span>, <span class="variable">$lenth</span>); return $ text; } add_filter(‘the_excerpt’, chinese_excerpt<span class="string">');</span>
+</code></pre><p>这样有好处，当以后升级wordpress版本的时候，只要不升级主题，不作修改，首页照样能自动摘要输出。</p>
+<p>但是不知道是我的水平问题，还是主题、主机问题，反正就是不能实现。于是从wordpress文件着手，修改wp-includes目录下的formatting.php（不是functions.php）文件。</p>
+<p>将</p>
+<pre><code><span class="list">[<span class="keyword">excerpt_length</span> = apply_filters<span class="list">( ‘excerpt_length’, <span class="number">55</span> )</span><span class="comment">;</span></span>
+</code></pre><p>修改为</p>
+<pre><code><span class="variable">$excerpt</span>_length = apply_filters( ‘excerpt_length’, <span class="number">200</span> );
+</code></pre><p>代码大约在2373行。</p>
+<p>当然这种方法会在升级wordpress被覆盖，也就是说在每次升级后要修改一下。</p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/modify-twenty-twelve-3/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/2014/travel-wudangshan-again/">武当山再次游玩</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Fri Jan 03 2014 14:27:41 GMT+0800">
+	
+		    1月 03, 2014
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/生活感悟/">生活感悟</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>今年的元旦是在武当山度过的，2013年12月31日去2014月1日2日回来，话说是去年去武当山，今年回的武汉噢。去年去过一会武当山，<br><strong>行程：</strong><br>31日晚上22：30武汉乘坐火车出发，1日早上5:22到武当山。<br>1日白天在武当山游玩。<br>1日晚上19:00乘坐火车回武汉。<br>交通比较方便，前一天晚上去，第二天晚上回，晚上都在车上，免去住酒店的费用。<br><strong>门票：</strong>（刚刚在网上查了一下，各种百科里没有一个是正确的）<br>武当山的门票全价246元=140元（门票）+100元（景区车费）+3元（保险）+3元（地图）<br>我是学生，可以享受半价优惠：123元=70元（门票）+50元（景区车费）+3元（保险），没有地图。有点感觉保险和地图是强行购买。但是为了安全保障，为了在里面不至于迷路，也没去追究。<br>不知道凭啥武当山就成了5A景区了。就一座山，门票240元，太黑心了吧。<br><a href="http://ilidong.com/html/1122.html/desktop" target="_blank" rel="external">undefined</a><br><strong>感受：</strong><br>进入景区，首先坐景区的汽车，大约50分钟到了半山腰，然后徒步上山。<br>山上的空气那是相当不错，当我在武当山看到蓝天，我怀疑在武汉看的那是天吗？<br>这里的树千奇百怪，没有经过修剪的，才是原生态的。<br><a href="http://ilidong.com/html/1122.html/tiff-infomation" target="_blank" rel="external">undefined</a></p>
+<p>不知道是不是中国的山都是这样的，在山上有各种神仙，人们就各种烧香拜神。<br>在武当山有一个集中烧香烧纸的地方，别听别人忽悠，就一个焚烧炉，要烧的什么纸、香、蜡都往里扔就行了。其实我相信这种东西，也不喜欢这种东西。所以我们什么都没有弄，全当看风景了。<br>山顶称为金顶（大部分神仙的聚集区），上金顶，还有额外购买门票20元。<br><a href="http://ilidong.com/html/1122.html/jinding" target="_blank" rel="external">undefined</a>（本图片来自网络）<br>因为去年去过，我们就没有再上去了。<br><strong>遗憾：</strong><br>去的晚上没有购买卧铺，去武当山的火车上没有睡好，第二天昏昏欲睡。每次上车就是睡觉，错过了在车上可以看到的风景。<br>可能是因为平时太宅了，爬完上回来我的小腿酸痛酸痛的，现在还是痛的。<br>更多图片：（手机拍照，加上技术不行）<br>[gallery ids=”1135,1131,1127,1128,1134,1129,1130,1133,1132”]</p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/travel-wudangshan-again/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/2013/get-wordpress-theme-plugins/">怎么知道别人的wordpress站使用什么主题和插件</a>
                         
                     </h1>
@@ -656,110 +776,6 @@ margin: <span class="number">0</span> <span class="number">2px</span></span></sp
                         
                             <p>
                                 <a href="/2013/ipad-mini-ios7-0-4-jailbreak/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2013/get-duoshuo/">给网站用上多说评论插件</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Sun Dec 22 2013 23:37:57 GMT+0800">
-	
-		    12月 22, 2013
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>在博客上需要有互动才能拉近俺与读者距离，自然离不开评论的互动方式。<br>犹犹豫豫的现在终于安装上了评论插件：多说社会化评论插件<br>使用第三方插件的好处是，把评论的事情交给专业网站来做，让专业更专业。数据备份，更安全。<br>支持wordpress评论插件大概有：</p>
-<ol>
-<li>多说评论</li>
-<li>无觅</li>
-<li>灯鹭评论</li>
-<li>评论啦</li>
-<li>畅言评论<br>最终选择了多说是因为觉得多说界面比较漂亮，而且前一段是逛博客，各种小网站时感觉用多说的人比较多，自己也注册了帐号，所以现在先用着如果好，先用着，不好就换。哈哈哈。<br>多说评论的工作原理是在俺的数据保存一份，在多说服务器里保存一份。俺的小站，一个人维护，加上俺的水平不咋滴，用多说可以以防万一，数据丢失了，还能找回。</li>
-</ol>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2013/get-duoshuo/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2013/driving-license-step2-pass/">科目二考试通过</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Dec 19 2013 20:21:25 GMT+0800">
-	
-		    12月 19, 2013
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/生活感悟/">生活感悟</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>考试通过，本是意料之中，也是意料之外。</p>
-<p>紧张的连做梦都在倒桩，<a href="http://ilidong.com/html/1031.html" title="明天要去考试科目二" target="_blank" rel="external">连昨天还在担心</a>，现在终于放下心，可以结束这段苦日子了。</p>
-<p>我是幸运的，我顺利的通过了考试，从今天起就不用在去排队，倒桩了（天气真心有点冷，天天还要早起）。</p>
-<p>但是我认为考驾照很有是靠运气。通过考试，只要懂一些基本的技能，加上一点好的运气，你就能通过。</p>
-<p>我们班一起考试只有可怜的老占没有通过，悲催呀</p>
-<p>据说科目三很简单，只是还要出几百元。今年有望拿驾照。</p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2013/driving-license-step2-pass/#post-footer" class="postShorten-excerpt_link link">
                                     注释和共享
                                 </a>
                             </p>

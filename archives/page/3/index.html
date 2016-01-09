@@ -241,6 +241,109 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/2014/github/">github仓库使用</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Tue Sep 09 2014 14:09:26 GMT+0800">
+	
+		    9月 09, 2014
+    	
+    </time>
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <h3 id="1-生成SSH_keys">1.生成SSH keys</h3><p>email修改成你自己的email地址</p>
+<p>然后就可以一路回车，使用默认值即可</p>
+<pre><code><span class="variable">$ </span>ssh-keygen -t rsa -<span class="constant">C </span><span class="string">"youremail@example.com"</span>
+</code></pre><p>看到如下画面就说明SSH keys已经生成</p>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/09/20140909114443.png" target="_blank" rel="external">undefined</a></p>
+<h3 id="2-将生成的SSH_keys添加到github">2.将生成的SSH keys添加到github</h3><p>登陆GitHub，打开“settings”，“SSH Keys”页面，</p>
+<p>将id_rsa.pub文件用文本编辑器打开，把其中的内容全部粘贴到key里面。</p>
+<p>测试链接</p>
+<pre><code><span class="variable">$ </span>ssh -<span class="constant">T</span> git<span class="variable">@github</span>.com
+</code></pre><p>提示是否继续连接，yes后，你将看到如下信息，说明你已经</p>
+<pre><code>Hi <span class="string">"username"</span>! You've successfully authentiated,<span class="keyword">but</span> GitHub <span class="keyword">does</span> <span class="keyword">not</span> provide shell access.
+</code></pre><h3 id="3-将本地库与github仓库同步">3.将本地库与github仓库同步</h3><p>在github创建一个仓库<br><a href="http://ilidong.com/wp-content/uploads/2014/09/20140909134018.png" target="_blank" rel="external">undefined</a><br>执行下面命令(执行其中一步即可)<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">创建一个新的仓库</span><br><span class="line">$ mkdir test</span><br><span class="line">$ cd test</span><br><span class="line">$ git init</span><br><span class="line">$ touch README</span><br><span class="line">$ git add README</span><br><span class="line">$ git commit -m <span class="string">'first commit'</span></span><br><span class="line">$ git remote add origin git@github<span class="class">.com</span>:ilidong/test<span class="class">.git</span></span><br><span class="line">$ git push -u origin <span class="function"><span class="title">master</span><span class="params">(第一次推送需要加-u参数，之后的推送不需要加-u参数)</span></span></span><br><span class="line"></span><br><span class="line">推送（push）一个已有的仓库(如仓库已经创建了)</span><br><span class="line">$ git remote add origin git@github<span class="class">.com</span>:ilidong/test<span class="class">.git</span></span><br><span class="line">$ git push -u origin <span class="function"><span class="title">master</span><span class="params">(第一次推送需要加-u参数，之后的推送不需要加-u参数)</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="4-从github仓库将内容克隆到本地">4.从github仓库将内容克隆到本地</h3><pre><code><span class="variable">$ </span>git clone git<span class="variable">@github</span>.<span class="symbol">com:</span>ilidong/test.git
+</code></pre>
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/github/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/2014/learn-github/">github入门</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Tue Sep 09 2014 11:25:32 GMT+0800">
+	
+		    9月 09, 2014
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>1.下载msysgit，<a href="http://msysgit.github.io/" title="下载msysgit" target="_blank" rel="external">http://msysgit.github.io/</a>，按照默认设置安装即可<br>安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash”，出现一个类似命令行窗口的东西，就说明Git安装成功！</p>
+<p>2.添加全局设置,设置你的名字和Email地址</p>
+<blockquote><p>$ git config –global user.name &quot;Your Name&quot;<br>$ git config –global user.email &quot;email@example.com&quot;</p>
+</blockquote>
+<p>3.创建版本库</p>
+<blockquote><p>$ mkdir test<br>$ cd test<br>$ git init<br>$ git add readme.txt<br>$ git commit -m &quot;wrote a readme file&quot;</p>
+</blockquote>
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/learn-github/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/2014/oracle-vm-virtualbox-x64/">Oracle VM VirtualBox不能安装64位系统</a>
                         
                     </h1>
@@ -630,100 +733,6 @@
                         
                             <p>
                                 <a href="/2014/lastpass-password/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2014/happiness-too-soon/">幸福来的太快了</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed May 14 2014 23:31:41 GMT+0800">
-	
-		    5月 14, 2014
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/生活感悟/">生活感悟</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>幸福来的太快了，我还没有准备好。确实有点出乎我的意料。我的淘宝里的宝贝还没有全部上架完成，就有人来把拍下了我的宝贝，我着实有点受宠若惊。<br>今天下午突然我的旺旺有信息，我就很奇怪了（因为在旺旺上一般是不会有人主动跟我发信息的），我看了一下信息，“亲，你有大学精读英语吗 ”。哇哦难道是顾客光临我的店铺，我连忙说到“有的”。<br>最后交易达成，TA买了6本书。因为没有经验，当时我心慌手乱了，很想做好一个卖家，但是太没经验了，最后也给TA少了一些价。<br>很感谢这位买家，感谢TA相信我，我的店铺没有一点卖家信用等级，TA是我店铺第一个顾客，谢谢。</p>
-<p>嘿嘿，如果你是博客的博友，支持我的，可以有优惠的噢。我的店铺地址：<a href="http://go.ilidong.com/taobao" target="_blank" rel="external">http://shop110044087.taobao.com/</a></p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2014/happiness-too-soon/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2014/taobaoshop/">淘宝开店</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Tue May 13 2014 18:22:35 GMT+0800">
-	
-		    5月 13, 2014
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/生活感悟/">生活感悟</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>前一时间总是想尝试在淘宝上开店，做一点生意。于是淘宝的各种认证弄了，我的淘宝店铺开起来啦，但不知道卖什么，只有一个宝贝：QQ币充值。<br>前几天，我一同学QY说，你不是要做淘宝吗，不知道卖什么，你可以把你那书旧在淘宝上卖了，嘿，不错的想法啊，在淘宝上把书买了，一来把那些不要的书处理掉，二来在网上卖旧书可以卖的比卖给废品收购站要划算的多。三来可以可以在淘宝上积累那信用什么滴。<br>于是店铺里宝贝就多起来了，哈哈，目前为止27件宝贝喽。欢迎有需要的来店选购，价格从优。</p>
-<p>我的店铺地址：<a href="http://go.ilidong.com/taobao" target="_blank" rel="external">http://shop110044087.taobao.com/</a></p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2014/taobaoshop/#post-footer" class="postShorten-excerpt_link link">
                                     注释和共享
                                 </a>
                             </p>

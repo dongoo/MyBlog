@@ -6,23 +6,22 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Lidong&#39;s blog">
-    <title>《JavaScript权威指南》读书笔记1 - Lidong&#39;s blog</title>
+    <title>CSS选择器 - Lidong&#39;s blog</title>
     <meta name="author" content="lidong">
     
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <meta name="description" content="学了好久WEB，只因为没有认真学习JavaScript，做不出完整效果来，现在要认真看书记笔记了">
+    <meta name="description" content="css选择器内容繁多，整理便于理解">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="《JavaScript权威指南》读书笔记1">
-<meta property="og:url" content="https://blog.lidong.me/2016/javascript-guide-1/index.html">
+<meta property="og:title" content="CSS选择器">
+<meta property="og:url" content="https://blog.lidong.me/2016/css-selectors/index.html">
 <meta property="og:site_name" content="Lidong's blog">
-<meta property="og:description" content="学了好久WEB，只因为没有认真学习JavaScript，做不出完整效果来，现在要认真看书记笔记了">
-<meta property="og:image" content="https://blog.lidong.me/media/s8958854.jpg">
-<meta property="og:updated_time" content="2016-01-08T17:10:54.000Z">
+<meta property="og:description" content="css选择器内容繁多，整理便于理解">
+<meta property="og:updated_time" content="2016-01-09T15:44:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《JavaScript权威指南》读书笔记1">
-<meta name="twitter:description" content="学了好久WEB，只因为没有认真学习JavaScript，做不出完整效果来，现在要认真看书记笔记了">
+<meta name="twitter:title" content="CSS选择器">
+<meta name="twitter:description" content="css选择器内容繁多，整理便于理解">
 <meta name="twitter:creator" content="@｀Dondongooo｀">
     
     
@@ -239,13 +238,13 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
-            《JavaScript权威指南》读书笔记1
+            CSS选择器
         </h1>
     
     <div class="post-meta">
-    <time itemprop="datePublished" content="Sat Jan 02 2016 23:22:20 GMT+0800">
+    <time itemprop="datePublished" content="Fri Jan 08 2016 22:58:44 GMT+0800">
 	
-		    1月 02, 2016
+		    1月 08, 2016
     	
     </time>
     
@@ -254,77 +253,95 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p>学了好久WEB，只因为没有认真学习JavaScript，做不出完整效果来，现在要认真看书记笔记了<br><a id="more"></a><br><img src="/media/s8958854.jpg" alt="JavaScript权威指南"></p>
-<h2 id="词法结构">词法结构</h2><p>当函数赋值给对象的属性，我们称为“方法”</p>
-<p>按照惯例，构造函数均以大写字母开始</p>
-<p>JavaScript是区分大小写的语言</p>
-<p>JavaScript会忽略程序中标示之间的空格。多数情况下，JavaScript同样会忽略换行符（可选分号情形）</p>
-<p>JavaScript支持两种格式的注释：</p>
-<pre><code><span class="comment">//单行注释 </span>
+            <p>css选择器内容繁多，整理便于理解<br><a id="more"></a></p>
+<h2 id="1-_元素选择器">1. 元素选择器</h2><pre><code><span class="tag">h1</span><span class="rules">{}</span>
+<span class="tag">p</span><span class="rules">{}</span>
+</code></pre><h3 id="选择器分组">选择器分组</h3><pre><code>h1,p{}
+<span class="bullet">* </span>通配符
+</code></pre><h2 id="2-类选择器">2.类选择器</h2><pre><code><span class="class">.class</span>
+结合元素选择器 <span class="tag">a</span><span class="class">.class</span>
+多类选择器 <span class="class">.class1</span> <span class="class">.class2</span><span class="rules">{}</span>
+</code></pre><h2 id="3-ID选择器">3.ID选择器</h2><pre><code><span class="preprocessor">#id</span>
+</code></pre><h2 id="4-属性选择器">4.属性选择器</h2><p>[attribute]:用于选取带有指定属性的元素</p>
+<pre><code><span class="comment">//把包含标题的所有元素变成蓝色</span>
+<span class="attr_selector">[title]</span>{
+    <span class="attribute">color</span>:blue
+}
+</code></pre><pre><code><span class="tag">a</span><span class="attr_selector">[title='w3school']</span><span class="rules">{
+    <span class="rule"><span class="attribute">color</span>:<span class="value">red</span></span>;
+}</span>
+</code></pre><p>[attribute ~= value]: 根据部分属性值选择，如果需要根据属性值中的词列表的某个词进行选择（词与词之间用空格分开）则需要使用波浪号（～）</p>
+<p>[attribute |= value]: 选取属性值等于value或以value-开头的所有元素</p>
+<pre><code>*<span class="attr_selector">[title|='en']</span><span class="rules">{
+    <span class="rule"><span class="attribute">color</span>:<span class="value">red</span></span>;
+}</span>
+</code></pre><p>css3新增属性选择器<br>    [att*=val]包含<br>    [att\^=val]开头<br>    [att\$=val]结尾</p>
+<h2 id="5-后代选择器">5.后代选择器</h2><pre><code><span class="tag">p</span> <span class="tag">strong</span><span class="rules">{
+    <span class="rule"><span class="attribute">color</span>:<span class="value">blue</span></span>;
+}</span>
+</code></pre><h2 id="6-子元素选择器">6.子元素选择器</h2><p>与后代选择器相比，只能选择作为某元素之元素的元素</p>
+<pre><code><span class="tag">h1</span>&gt;<span class="tag">strong</span><span class="rules">{
+    <span class="rule"><span class="attribute">color</span>:<span class="value">blue</span></span>;
+}</span>
+</code></pre><h2 id="7-相邻兄弟选择器">7.相邻兄弟选择器</h2><p>可选择紧接在另一个元素后的元素(自身没有选择)，且二者有相同的父元素</p>
+<pre><code><span class="tag">h1</span>+<span class="tag">p</span><span class="rules">{}</span>;
+</code></pre><h2 id="8-伪类">8.伪类</h2><h3 id="结构性伪类选择器（伪元素）（css3）">结构性伪类选择器（伪元素）（css3）</h3><pre><code><span class="comment">/*首行*/</span>
+<span class="string">p:</span>first-line{
+<span class="label">    color:</span>bule    
+}
+<span class="comment">/*首字母*/</span>
+<span class="string">p:</span>first-letter{
+<span class="label">    color:</span>blue
+}
+<span class="comment">/*before*/</span>
+<span class="string">li:</span>before{
+<span class="label">    content:</span><span class="string">"---"</span>
+}
+<span class="comment">/*after*/</span>
+<span class="string">li:</span>after{
+<span class="label">    content:</span><span class="string">"注释内容"</span>；
+    font-<span class="string">size:</span><span class="number">12</span>px;
+}
+</code></pre><h3 id="root_not_empty_target">root not empty target</h3><p>在css3中，结构性伪类选择器的特点是允许开发者根据文档中的结构来指定元素的样式。</p>
+<pre><code><span class="pseudo">:root</span><span class="rules">{
+    <span class="rule"><span class="attribute">background-color</span>:<span class="value"> darkgrey</span></span>;
+    }</span>
 
-<span class="comment">/*
-多行注释内容
-*/</span>
-</code></pre><p>（1）javascript保留字</p>
-<ul>
-<li>if分支语句：if, else</li>
-<li>switch分支语句：switch, case, default, break</li>
-<li>循环语句：do, while, for, continue</li>
-<li>异常处理语句：try, catch, finally, throw</li>
-<li>获取类型：typeof, instanceof</li>
-<li>布尔值：true, false, null</li>
-<li>函数相关：var, void, function, return</li>
-<li>其他：in, this, with, new, delete</li>
-</ul>
-<p>（2）ECMA扩展保留的关键字</p>
-<ul>
-<li>基本数据类型：byte, char, boolean, int, short, long, float, double, enum</li>
-<li>继承：implements, extends, super</li>
-<li>类与接口：class, interface</li>
-<li>用来修饰函数的关键字：abstract, native, static, final, const, volatile, synchronized</li>
-<li>导入导出：export, import</li>
-<li>访问权限：private, protected, public</li>
-<li>其他：goto, package, throws, transient, debugger</li>
-</ul>
-<p>（3）javascript预定义的全局变量名或函数名</p>
-<ul>
-<li>数据类型：Number, Boolean, String, undefined, Object, Array, Function, Date, Math, RegExp, Error</li>
-<li>错误类型：EvalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError</li>
-<li>编码：decodeURI, decodeURIComponent, encodeURI</li>
-<li>转义：escape, unescape</li>
-<li>类型转换：parentInt, parentFloat</li>
-<li>特殊值及判断：isFinite, isNaN, NaN, Infinity</li>
-<li>其他：arguments, eval</li>
-</ul>
-<h2 id="类型、值和变量">类型、值和变量</h2><p>在JavaScript中，字符串是不可变的，可以访问字符串任意位置的文本，但JavaScript并没有提供修改已知字符串的文本内容的方法。</p>
-<h3 id="数字">数字</h3><p>JavaScript中算术运算在溢出、下溢、被零整除时不会报错。<br>零除以零是没有意义的</p>
-<p>数字中的特殊值：</p>
-<ul>
-<li>Infinity：表示无穷大的特殊值</li>
-<li>NaN：特殊的非数字值（产生未定义的结果或错误时出现，如除0）</li>
-<li>Number.MAX_VALUE：可表示的最大数字</li>
-<li>Number.MIN_VALUE：可表示的最小数字（与0最接近的数字）</li>
-<li>Number.NaN：特殊的非数字值</li>
-<li>Number.POSITIVE_INFINITY：表示正无穷大的特殊值</li>
-<li>Number.NEGATIVE_INFINITY：表示负无穷大的特殊值</li>
-</ul>
-<p>注意：NaN和任何数值都不相等，包括它自己在内，因此需要用isNaN()来检测。isFinite()用来检测一个数字是否是NaN、正无穷大或负无穷大。</p>
-<h3 id="文本">文本</h3><p>由单引号定界的字符串中可以包含双引号，由双引号定界的字符串中也可以包含单引号。</p>
-<p>字符串可调用的方法</p>
-<pre><code><span class="tag">var</span> s =<span class="string">"Hello,World"</span>  <span class="comment">//定义一个字符串</span>
-s<span class="class">.length</span>  <span class="comment">// =&gt; "11"  </span>
-s.<span class="function"><span class="title">chaAt</span><span class="params">(<span class="number">0</span>)</span></span>  <span class="comment">// =&gt; "H": 第一个字符</span>
-s.<span class="function"><span class="title">charAt</span><span class="params">(s.length-<span class="number">1</span>)</span></span>  <span class="comment">//  =&gt; "d" :最后一个字符</span>
-s.<span class="function"><span class="title">substring</span><span class="params">(<span class="number">1</span>,<span class="number">4</span>)</span></span>  <span class="comment">//  =&gt; "ell" :第2-4个字符</span>
-s.<span class="function"><span class="title">slice</span><span class="params">(<span class="number">1</span>,<span class="number">4</span>)</span></span>  <span class="comment">//  =&gt; "ell" :同上</span>
-s.<span class="function"><span class="title">slice</span><span class="params">(-<span class="number">3</span>)</span></span>  <span class="comment">//  =&gt; "rld" :最后三个字符</span>
-s.<span class="function"><span class="title">indexOf</span><span class="params">(<span class="string">"l"</span>)</span></span>  <span class="comment">//  =&gt; "2" :字符l首次出现的位置</span>
-s.<span class="function"><span class="title">lastIndexOf</span><span class="params">(<span class="string">"l"</span>)</span></span>  <span class="comment">//  =&gt; "10" : 字符l最后一次出现的位置</span>
-s.<span class="function"><span class="title">indexOf</span><span class="params">(<span class="string">"l"</span>,<span class="number">3</span>)</span></span>  <span class="comment">//  =&gt; 3 :在位置3及以后首次出现l的位置</span>
-s.<span class="function"><span class="title">split</span><span class="params">(<span class="string">","</span>)</span></span>  <span class="comment">//  =&gt; ["Hello","World"] : 分割成字串</span>
-s.<span class="function"><span class="title">replace</span><span class="params">(<span class="string">"H"</span>,<span class="string">"h"</span>)</span></span>  <span class="comment">//  =&gt; "hello,World" :全文字符替换</span>
-s.<span class="function"><span class="title">toUpperCase</span><span class="params">()</span></span>  <span class="comment">//  =&gt; "HELLO,WORLD" :大写</span>
-</code></pre>
+<span class="tag">div</span> *<span class="pseudo">:not(h1)</span><span class="rules">{
+    <span class="rule"><span class="attribute">color</span>:<span class="value">black</span></span>;
+    }</span>
+
+<span class="pseudo">:empty</span><span class="rules">{
+
+    }</span>
+<span class="pseudo">:target</span><span class="rules">{
+    <span class="rule"><span class="attribute">background-color</span>:<span class="value">orange
+    }</span></span></span>
+</code></pre><h3 id="first-child、last-child、nth-child、nth-last-child">first-child、last-child、nth-child、nth-last-child</h3><p>针对一个父元素中的第一个子元素、最后一个子元素、指定序号的子元素</p>
+<pre><code><span class="tag">li</span><span class="pseudo">:first-child</span>{<span class="attribute">backgroud-color</span>:;}
+<span class="tag">li</span><span class="pseudo">:last-child</span>{}
+<span class="tag">li</span><span class="pseudo">:nth-child</span>(n){}
+<span class="tag">li</span><span class="pseudo">:nth-last-child</span>(n){}
+
+<span class="comment">//奇数</span>
+<span class="tag">li</span><span class="pseudo">:nth-child</span>(odd){}
+<span class="comment">//偶数    </span>
+<span class="tag">li</span><span class="pseudo">:nth-child</span>(even){}
+</code></pre><h3 id=":nth-of-type和:nth-last-of-type"><code>:nth-of-type</code>和<code>:nth-last-of-type</code></h3><p><code>:only-child</code><br>只有一个子元素<br>可以使用only－child选择器来代替使用nth-child和 nth-last-child的实现方法</p>
+<h3 id="UI元素状态伪类选择器">UI元素状态伪类选择器</h3><p>只有当元素处于某种状态下时才起作用，默认状态下不起作用。</p>
+<p>(注意:必须以<span style="color: #ff0000;">L</span>o<span style="color: #ff0000;">v</span>e ,<span style="color: #ff0000;">Ha</span>的顺序来定义锚伪类)</p>
+<pre><code>link、 hover、active、focus、disable、checked
+enabled、disable
+read-<span class="keyword">only</span>、<span class="keyword">default</span>、indeterminate、selection、invalid、valid、required、<span class="type">optional</span>、<span class="type">in</span>-<span class="built_in">range</span>、
+</code></pre><h3 id="通用兄弟选择器">通用兄弟选择器</h3><p>同一个父元素之中的某元素之后的所有其他某个种类的兄弟元素所使用样式。</p>
+<hr>
+<p>参考：</p>
+<ol>
+<li>整理自极客学院视频</li>
+<li>W3Cschool <a href="http://www.w3school.com.cn/cssref/css_selectors.asp" target="_blank" rel="external">CSS 选择器参考手册</a></li>
+<li><a href="http://www.cnblogs.com/JustYong/p/5015643.html" target="_blank" rel="external">CSS选择器</a></li>
+</ol>
+
             
                 
 
@@ -333,19 +350,12 @@ s.<span class="function"><span class="title">toUpperCase</span><span class="para
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
         
-            <div class="post-footer-tags">
-                <span class="text-color-light text-small">标签</span><br/>
-                
-    <a class="tag tag--primary tag--small t-link" href="/tags/JavaScript/">JavaScript</a> <a class="tag tag--primary tag--small t-link" href="/tags/读书笔记/">读书笔记</a>
-
-            </div>
-        
         <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/vim-basic/"  data-tooltip="Vim 基本操作">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -353,7 +363,7 @@ s.<span class="function"><span class="title">toUpperCase</span><span class="para
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/mysql-basic/" data-tooltip="MYSQL 命令行基本操作">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/vim-basic/" data-tooltip="Vim 基本操作">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right"></i>
@@ -363,23 +373,23 @@ s.<span class="function"><span class="title">toUpperCase</span><span class="para
     </nav>
 <ul class="post-actions post-action-share">
      <li class="post-action">
-          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
                 <i class="fa fa-print"></i>
             </a>
         </li>
      <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
         <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
                 <i class="fa fa-weixin"></i>
             </a>
         </li>
        
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
                 <i class="fa fa-weibo"></i>
             </a>
         </li>
@@ -411,7 +421,7 @@ s.<span class="function"><span class="title">toUpperCase</span><span class="para
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/vim-basic/"  data-tooltip="Vim 基本操作">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -419,7 +429,7 @@ s.<span class="function"><span class="title">toUpperCase</span><span class="para
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/mysql-basic/" data-tooltip="MYSQL 命令行基本操作">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/vim-basic/" data-tooltip="Vim 基本操作">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right"></i>
@@ -429,23 +439,23 @@ s.<span class="function"><span class="title">toUpperCase</span><span class="para
     </nav>
 <ul class="post-actions post-action-share">
      <li class="post-action">
-          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
                 <i class="fa fa-print"></i>
             </a>
         </li>
      <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
         <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
                 <i class="fa fa-weixin"></i>
             </a>
         </li>
        
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-1/&amp;title=《JavaScript权威指南》读书笔记1">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
                 <i class="fa fa-weibo"></i>
             </a>
         </li>
@@ -457,17 +467,17 @@ s.<span class="function"><span class="title">toUpperCase</span><span class="para
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2016/javascript-guide-1/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2016/css-selectors/">
                 <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2016/javascript-guide-1/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2016/css-selectors/">
                 <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2016/javascript-guide-1/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2016/css-selectors/">
                 <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
             </a>
         </li>

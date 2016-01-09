@@ -236,6 +236,121 @@
 <section class="postShorten-group main-content-wrap">
     
         
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/2013/disks-basic/">磁盘基本概念</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Sat Nov 23 2013 23:01:04 GMT+0800">
+	
+		    11月 23, 2013
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>###基本概念<br> cylinder 柱面<br> sector 扇片<br> head 磁头 </p>
+<p>###磁盘在LINUX中的表示<br> Linux中所有设备都被抽象为一个文件,保存在/dev目录下 </p>
+<p> 设备名称一般是hd[a-z]或sd[a-z].([a-z]为分区号)，如hda，hdb，sda，sdb；</p>
+<ul>
+<li>IDE设备名称是hd[a-z],</li>
+<li>SATA,SCSI,SAS,USB等设备的名称是sd[a-z]。（现在的一般都是sd） </li>
+</ul>
+<p>###分区的概念<br> 把一个磁盘逻辑的分层几个区，每个区当做独立磁盘，以方便使用管理。 <br><br> 不同的分区用：设备名称+分区名称，保存在/dev目录下 </p>
+<p> 主流分区机制是MBR和GPT两种 </p>
+<p>####MBR<br> MBR是传统的分区机制，应用于绝大多数使用BOIS的PC设备。 </p>
+<ul>
+<li>MBR支持32bit和64bit系统</li>
+<li>支持分区数量有限</li>
+<li>只支持不超过2T的硬盘，超过2T的硬盘将只能使用2T的空间（有第三方的解决方法）<br>MBR结构</li>
+</ul>
+<p>MBR分区<br></p>
+<ul>
+<li>主分区  最多只能创建4个主分区 <br></li>
+<li>扩展分区  一个扩展分区会占用一个主分区位置<br> </li>
+<li>逻辑分区  linux最多支持63个IDE分区和SCSI分区<br> </li>
+</ul>
+<p>####GPT<br> GPT（GUID Partiton Table）是一个较新的分区机制，解决了MBR的很多的缺点 </p>
+<ul>
+<li>支持超过2T的磁盘</li>
+<li>向后兼容MBR</li>
+<li>必须在支持UEFI的硬件上才能使用</li>
+<li>必须使用64bit系统</li>
+<li>MAC、Linux系统都能支持GPT分区格式</li>
+<li>Windows7 64bit、Windows server2008 64bit支持64GPT</li>
+</ul>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2013/disks-basic/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/2013/vim/">vim文本编辑器使用</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Sat Nov 23 2013 23:00:35 GMT+0800">
+	
+		    11月 23, 2013
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-excerpt" itemprop="articleBody">
+                        <p>vim有三种模式<br> 命令模式<br> vim启动后，默认进入命令模式，任何模式都可以通过Esc键回到命令模式（可以多按几次）；<br> 命令模式可以通过键入不同的命令完成选择、复制、粘贴、撤销等等操作。<br> 插入模式<br> 命令模式中按“i”键，进入插入模式，在插入模式可以编辑文本内容。<br> ex模式<br> 命令模式中按“.”键，进入ex模式光标会移动到底部，在这里可以保存修改或退出vim。<br>
+                        
+                            <a href="/2013/vim/" class="postShorten-excerpt_link link">
+                                阅读全文
+                            </a>
+                            
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
         <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
             <div class="postShorten-wrap">
                 <div class="postShorten-header">
@@ -603,97 +718,6 @@
                         
                             <p>
                                 <a href="/2013/10-chinese-song-to-foreign-language/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2013/beauty-exam/">漂亮学生妹考试作弊的最高境界</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Thu Nov 07 2013 18:12:55 GMT+0800">
-	
-		    11月 07, 2013
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/生活感悟/">生活感悟</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>漂亮学生妹考试作弊的最高境界</p>
-<iframe width="560" height="470" src="http://www.56.com/iframe/OTkwMjM5MDM" frameborder="0" allowfullscreen></iframe>
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2013/beauty-exam/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2013/243-nb-moment-to-wonderful-life/">网络243个最牛逼瞬间，完美演绎史诗般人生</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Wed Nov 06 2013 23:29:10 GMT+0800">
-	
-		    11月 06, 2013
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/生活感悟/">生活感悟</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <iframe src="http://www.56.com/iframe/OTkxNTM3Mjg" height="405" width="480" allowfullscreen frameborder="0"></iframe>
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2013/243-nb-moment-to-wonderful-life/#post-footer" class="postShorten-excerpt_link link">
                                     注释和共享
                                 </a>
                             </p>
