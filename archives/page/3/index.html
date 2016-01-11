@@ -241,6 +241,57 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/2014/find-nearby-by-geohash/">查找附近的点——使用Geohash.class.php</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Wed Sep 24 2014 11:08:41 GMT+0800">
+	
+		    9月 24, 2014
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>在做微信的时候想到很多微信服务号有查找附近门店，网点的功能，如顺丰快递，就可以发送位置信息，就可以得到附近的收寄件网点。</p>
+<p>如何实现这样的功能呢？</p>
+<p>实现的方法有2种（文章写的比较粗略也，小儿科，高手可以移步至<a href="http://www.wubiao.info/372" title="查找附近的xxx 球面距离以及Geohash方案探讨" target="_blank" rel="external">http://www.wubiao.info/372</a>）</p>
+<p>1.将用户的位置（坐标）与数据库中所有坐标对比，计算出距离，并按距离由远到近进行排序，这方法是不是太笨了</p>
+<p>2.高级模式：</p>
+<p>因为每个坐标都有两个数，我们平常更关注的长度，两个数就不便于对数排序计算了。<br>所以我们可以坐标重新编码，编码原理Geohash，参看<a href="https://en.wikipedia.org/wiki/Geohash" target="_blank" rel="external">维基百科</a>，或<a href="http://www.wubiao.info/372" title="查找附近的xxx 球面距离以及Geohash方案探讨" target="_blank" rel="external">http://www.wubiao.info/372</a>，在数据库保存编码。比如：坐标(22.539341，113.995115)按照Geohash编码后为：uxbpbzuxuxyz因为编码规则是将两个坐标的数字交叉进行，所以以后查询附近的点可以用类似LIKE ‘uxbpbzux%’语句查询，调整uxbpbzux的长度就可以对附近的距离的值设定了。</p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/find-nearby-by-geohash/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/2014/github/">github仓库使用</a>
                         
                     </h1>
@@ -685,54 +736,6 @@
                         
                             <p>
                                 <a href="/2014/chrome-http-to-https/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2014/lastpass-password/">使用lastpass管理密码</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Fri May 30 2014 15:25:40 GMT+0800">
-	
-		    5月 30, 2014
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>现在是各种网站，各种账号and密码，为了防止一个账号被盗，其他的也跟着遭殃，每个账号密码还要尽可能不同。这么多账号and密码，着实让人记不住。于是乎，就有了密码管理软件之物。选来选去，最后决定使用lastpass。<br>1.密码保存在云端， 随用随取，方便。<br>2.密码自动填充，多终端支持，IE，chrome，Firefox，iOS，Android，Windows Phone，……常用浏览器，系统都支持，可算是真正的全平台undefined<br>3.安全性，按照last pass官方的说法，你的密码是安全的。<br>如有需要可以点击下面的链接注册，你和我都就得到一个月的VIP会员。(直接注册是没有的)</p>
-<p><a href="http://go.ilidong.com/lastpass" title="lastpass" target="_blank" rel="external">注册lastpass</a></p>
-<p>最赞的功能是在手机也能自动填充密码（貌似目前只支持chrome）<br><a href="http://static.ilidong.com/20140530150930.jpg" target="_blank" rel="external">undefined</a>有了这个功能，真的可以只记住一个密码，其它的密码就交给lastpass去吧。</p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2014/lastpass-password/#post-footer" class="postShorten-excerpt_link link">
                                     注释和共享
                                 </a>
                             </p>

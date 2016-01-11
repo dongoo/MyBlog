@@ -241,6 +241,102 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/2014/yourls/">Yourls 开启自己的短网址</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Sat Apr 05 2014 23:41:54 GMT+0800">
+	
+		    4月 05, 2014
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>在wordpress中有一个插件，也是可以实现短网址的功能，但是太依赖wordpress了，不能将链接定义到目录（也许是我笨，不会弄）。</p>
+<p><a href="http://ilidong.com/wp-content/uploads/2014/04/yourls.png" target="_blank" rel="external">undefined</a></p>
+<p>现在发现了yourls这个开源项目，可以独立运行。同样有统计，书签等功能。并且更加强大。</p>
+<p>现在就说说怎么弄吧</p>
+<p>下载Yourls  <a href="https://codeload.github.com/YOURLS/YOURLS/zip/master" target="_blank" rel="external">https://codeload.github.com/YOURLS/YOURLS/zip/master</a></p>
+<p>Yourls的安装比较简单。</p>
+<p><strong>1.**</strong>修改配置文件：user\config-sample.php**</p>
+<p>[php]</p>
+<pre><code><span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DB_USER'</span>, <span class="string">'your db user name'</span> );<span class="comment">// MySQL 数据库用户名</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DB_PASS'</span>, <span class="string">'your db password'</span> );<span class="comment">// MySQL 数据库密码</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DB_NAME'</span>, <span class="string">'yourls'</span> );<span class="comment">// MySQL 数据库名称</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DB_HOST'</span>, <span class="string">'localhost'</span> );<span class="comment">// MySQL 数据库所在主机。</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DB_PREFIX'</span>, <span class="string">'yourls_'</span> );<span class="comment">/**创建的 Yourls 的表的名字前缀，同一个数据库放多个 Yourls 程序时需要修改。*/</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_SITE'</span>, <span class="string">'http://site.com'</span> );<span class="comment">//站点域名</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_HOURS_OFFSET'</span>, <span class="number">0</span> ); <span class="comment">//时区修改，基本没必要</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_LANG'</span>, <span class="string">''</span> ); <span class="comment">//设置语言</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_UNIQUE_URLS'</span>, <span class="literal">true</span> );<span class="comment">//只允许一个要被缩短网址对应一个短网址，若允许对应多个短网址写false</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_PRIVATE'</span>, <span class="literal">true</span> );<span class="comment">//私人用还是公开用，公开的话写false</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_COOKIEKEY'</span>, <span class="string">'modify this text with something random'</span> );<span class="comment">//访问 http://yourls.org/cookiekey.php  取得一个唯一的 Key 并且修改填入</span>
+
+<span class="variable">$yourls_user_passwords</span> = <span class="built_in">array</span>(
+    <span class="string">'username'</span> =<span class="subst">&amp;</span><span class="literal">gt</span>; <span class="string">'password'</span>,
+    <span class="string">'username2'</span> =<span class="subst">&amp;</span><span class="literal">gt</span>; <span class="string">'password2'</span>    <span class="comment">// You can have one or more 'login'=&amp;gt;'password' lines</span>
+    );<span class="comment">/**username管理员用户名和password密码，默认两组，可删除一组或增加N组 */</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DEBUG'</span>, <span class="literal">false</span> );<span class="comment">//是否开启调试模式</span>
+
+<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_URL_CONVERT'</span>, <span class="number">36</span> );<span class="comment">//设置url编码</span>
+
+<span class="variable">$yourls_reserved_URL</span> = <span class="built_in">array</span>(
+    <span class="string">'porn'</span>, <span class="string">'faggot'</span>, <span class="string">'sex'</span>, <span class="string">'nigger'</span>, <span class="string">'fuck'</span>, <span class="string">'cunt'</span>, <span class="string">'dick'</span>, <span class="string">'gay'</span>,
+);<span class="comment">/** 保留词语，建议增加proxy等词。*/</span>
+</code></pre><p>关于url编码：</p>
+<p>Yourls 提供两种 URL 编码形式，一种是只有小写的 Base 36 </p>
+<pre><code>encoding：
+<span class="number">0123456789</span>abcdefghijklmnopqrstuvwxyz，
+</code></pre><p>还有一种是有大小写的 Base 62 encoding：</p>
+<pre><code><span class="number">123456789</span>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz，
+</code></pre><p>一般来说，使用默认的 Base 36 即可，因为要使用 Base 62 需要空间支持 php 的 BCMath 扩展，个人用 Base 32 足矣，官方宣称可以创建4,738,381,338,321,617,846 个短网址，所以没什么特殊情况就不用修改 config.php ，用默认的编码即可。<br>然后把 config-sample.php 重命名为 config.php ，确保你的空间支持 PHP + MySQL 以及基本的几个组件（Mod-Rewrite功能，Curl 等，一般的空间都支持）</p>
+<p><strong>2.安装</strong></p>
+<p>将文件上传你的网站某个目录<br>执行 <a href="http://你的地址/目录名/admin/install.php" target="_blank" rel="external">http://你的地址/目录名/admin/install.php</a> 进行安装即可。<br>比如我是上传到go目录，执行 <a href="http://ilidong/go/admin/install.php" target="_blank" rel="external">http://ilidong/go/admin/install.php</a> 进行安装。</p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/yourls/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/2014/nexus5-4g/">Nexus5使用中国移动4G网络</a>
                         
                     </h1>
@@ -743,67 +839,6 @@ netstat –tupln   <span class="comment">//可以看到监听有127.0.0.1:9000 �
                         
                             <p>
                                 <a href="/2014/install-repoforge/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2014/install-nginx/">lnmp环境搭建——nginx安装</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Sun Jan 05 2014 22:59:46 GMT+0800">
-	
-		    1月 05, 2014
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>星期五获得了华为云主机赠送1000元，于是开始对华为云体验兼学习。<br>虽然有lnmp一键安装包，但是自定义安装，将更加个性化，便于适当取舍。<br>搭建lnmp建议使用全新的系统。第一次使用的华为云主机当然是是全新的系统啦。<br>系统配置：<br>centos 6.3 64bit<br>安装nginx，确保apache没有安装。若安装了最好卸载。</p>
-<p><strong>安装开发工具软件组</strong></p>
-<pre><code><span class="title">yum</span> groupinstall -y “Development Tools”
-</code></pre><p><strong>下载nginx</strong><br>需要到nginx官方网站<a href="http://nginx.org下载，" target="_blank" rel="external">http://nginx.org下载，</a></p>
-<pre><code>wget <span class="string">http:</span><span class="comment">//nginx.org/download/nginx-1.4.4.tar.gz</span>
-</code></pre><p>解压，tar –xvf nginx-1.4.4.tar.gz<br>运行./configure生成makefile<br>使用make编译<br>make install安装<br>若一切正常，nginx到此就安装成功了。</p>
-<p>nginx默认安装在 /usr/local/nginx/目录<br>配置文件保存在/usr/local/nginx/conf/目录中</p>
-<p><strong>启动nginx</strong></p>
-<pre><code><span class="regexp">/usr/</span>local<span class="regexp">/nginx/</span>sbin<span class="regexp">/nginx</span>
-</code></pre><p><strong>注：</strong>若启动nginx提示，error while loading shared libraries: libpcre.so.1: cannot open shared object file: No such file or directory，这意思是找不到libpcre.so.1这个模块，于是启动失败。<br>如果是32位系统<br>运行</p>
-<pre><code>ln -s /usr/local/<span class="class"><span class="keyword">lib</span>/<span class="title">libpcre</span>.<span class="title">so</span>.1 /<span class="title">lib</span></span>
-</code></pre><p>如果是64位系统<br>运行</p>
-<pre><code>ln -s /usr/local/<span class="class"><span class="keyword">lib</span>/<span class="title">libpcre</span>.<span class="title">so</span>.1 /<span class="title">lib64</span></span>
-</code></pre><p>再启动nginx就OK了</p>
-<pre><code><span class="regexp">/usr/</span>local<span class="regexp">/ nginx/</span>sbin<span class="regexp">/nginx</span>
-</code></pre><p>参考：itercast.com视频学习</p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2014/install-nginx/#post-footer" class="postShorten-excerpt_link link">
                                     注释和共享
                                 </a>
                             </p>

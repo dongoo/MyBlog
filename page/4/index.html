@@ -240,6 +240,54 @@
                 <div class="postShorten-header">
                     <h1 class="postShorten-title" itemprop="headline">
                         
+                                <a class="link-unstyled" href="/2014/lastpass-password/">使用lastpass管理密码</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Fri May 30 2014 15:25:40 GMT+0800">
+	
+		    5月 30, 2014
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-content" itemprop="articleBody">
+                        <p>现在是各种网站，各种账号and密码，为了防止一个账号被盗，其他的也跟着遭殃，每个账号密码还要尽可能不同。这么多账号and密码，着实让人记不住。于是乎，就有了密码管理软件之物。选来选去，最后决定使用lastpass。<br>1.密码保存在云端， 随用随取，方便。<br>2.密码自动填充，多终端支持，IE，chrome，Firefox，iOS，Android，Windows Phone，……常用浏览器，系统都支持，可算是真正的全平台undefined<br>3.安全性，按照last pass官方的说法，你的密码是安全的。<br>如有需要可以点击下面的链接注册，你和我都就得到一个月的VIP会员。(直接注册是没有的)</p>
+<p><a href="http://go.ilidong.com/lastpass" title="lastpass" target="_blank" rel="external">注册lastpass</a></p>
+<p>最赞的功能是在手机也能自动填充密码（貌似目前只支持chrome）<br><a href="http://static.ilidong.com/20140530150930.jpg" target="_blank" rel="external">undefined</a>有了这个功能，真的可以只记住一个密码，其它的密码就交给lastpass去吧。</p>
+
+                        
+                            
+
+                        
+                        
+                            <p>
+                                <a href="/2014/lastpass-password/#post-footer" class="postShorten-excerpt_link link">
+                                    注释和共享
+                                </a>
+                            </p>
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
+        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
                                 <a class="link-unstyled" href="/2014/happiness-too-soon/">幸福来的太快了</a>
                         
                     </h1>
@@ -682,102 +730,6 @@
                         
                             <p>
                                 <a href="/2014/move-to-aliyun/#post-footer" class="postShorten-excerpt_link link">
-                                    注释和共享
-                                </a>
-                            </p>
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2014/yourls/">Yourls 开启自己的短网址</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Sat Apr 05 2014 23:41:54 GMT+0800">
-	
-		    4月 05, 2014
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-content" itemprop="articleBody">
-                        <p>在wordpress中有一个插件，也是可以实现短网址的功能，但是太依赖wordpress了，不能将链接定义到目录（也许是我笨，不会弄）。</p>
-<p><a href="http://ilidong.com/wp-content/uploads/2014/04/yourls.png" target="_blank" rel="external">undefined</a></p>
-<p>现在发现了yourls这个开源项目，可以独立运行。同样有统计，书签等功能。并且更加强大。</p>
-<p>现在就说说怎么弄吧</p>
-<p>下载Yourls  <a href="https://codeload.github.com/YOURLS/YOURLS/zip/master" target="_blank" rel="external">https://codeload.github.com/YOURLS/YOURLS/zip/master</a></p>
-<p>Yourls的安装比较简单。</p>
-<p><strong>1.**</strong>修改配置文件：user\config-sample.php**</p>
-<p>[php]</p>
-<pre><code><span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DB_USER'</span>, <span class="string">'your db user name'</span> );<span class="comment">// MySQL 数据库用户名</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DB_PASS'</span>, <span class="string">'your db password'</span> );<span class="comment">// MySQL 数据库密码</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DB_NAME'</span>, <span class="string">'yourls'</span> );<span class="comment">// MySQL 数据库名称</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DB_HOST'</span>, <span class="string">'localhost'</span> );<span class="comment">// MySQL 数据库所在主机。</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DB_PREFIX'</span>, <span class="string">'yourls_'</span> );<span class="comment">/**创建的 Yourls 的表的名字前缀，同一个数据库放多个 Yourls 程序时需要修改。*/</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_SITE'</span>, <span class="string">'http://site.com'</span> );<span class="comment">//站点域名</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_HOURS_OFFSET'</span>, <span class="number">0</span> ); <span class="comment">//时区修改，基本没必要</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_LANG'</span>, <span class="string">''</span> ); <span class="comment">//设置语言</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_UNIQUE_URLS'</span>, <span class="literal">true</span> );<span class="comment">//只允许一个要被缩短网址对应一个短网址，若允许对应多个短网址写false</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_PRIVATE'</span>, <span class="literal">true</span> );<span class="comment">//私人用还是公开用，公开的话写false</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_COOKIEKEY'</span>, <span class="string">'modify this text with something random'</span> );<span class="comment">//访问 http://yourls.org/cookiekey.php  取得一个唯一的 Key 并且修改填入</span>
-
-<span class="variable">$yourls_user_passwords</span> = <span class="built_in">array</span>(
-    <span class="string">'username'</span> =<span class="subst">&amp;</span><span class="literal">gt</span>; <span class="string">'password'</span>,
-    <span class="string">'username2'</span> =<span class="subst">&amp;</span><span class="literal">gt</span>; <span class="string">'password2'</span>    <span class="comment">// You can have one or more 'login'=&amp;gt;'password' lines</span>
-    );<span class="comment">/**username管理员用户名和password密码，默认两组，可删除一组或增加N组 */</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_DEBUG'</span>, <span class="literal">false</span> );<span class="comment">//是否开启调试模式</span>
-
-<span class="class"><span class="keyword">define</span></span>( <span class="string">'YOURLS_URL_CONVERT'</span>, <span class="number">36</span> );<span class="comment">//设置url编码</span>
-
-<span class="variable">$yourls_reserved_URL</span> = <span class="built_in">array</span>(
-    <span class="string">'porn'</span>, <span class="string">'faggot'</span>, <span class="string">'sex'</span>, <span class="string">'nigger'</span>, <span class="string">'fuck'</span>, <span class="string">'cunt'</span>, <span class="string">'dick'</span>, <span class="string">'gay'</span>,
-);<span class="comment">/** 保留词语，建议增加proxy等词。*/</span>
-</code></pre><p>关于url编码：</p>
-<p>Yourls 提供两种 URL 编码形式，一种是只有小写的 Base 36 </p>
-<pre><code>encoding：
-<span class="number">0123456789</span>abcdefghijklmnopqrstuvwxyz，
-</code></pre><p>还有一种是有大小写的 Base 62 encoding：</p>
-<pre><code><span class="number">123456789</span>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz，
-</code></pre><p>一般来说，使用默认的 Base 36 即可，因为要使用 Base 62 需要空间支持 php 的 BCMath 扩展，个人用 Base 32 足矣，官方宣称可以创建4,738,381,338,321,617,846 个短网址，所以没什么特殊情况就不用修改 config.php ，用默认的编码即可。<br>然后把 config-sample.php 重命名为 config.php ，确保你的空间支持 PHP + MySQL 以及基本的几个组件（Mod-Rewrite功能，Curl 等，一般的空间都支持）</p>
-<p><strong>2.安装</strong></p>
-<p>将文件上传你的网站某个目录<br>执行 <a href="http://你的地址/目录名/admin/install.php" target="_blank" rel="external">http://你的地址/目录名/admin/install.php</a> 进行安装即可。<br>比如我是上传到go目录，执行 <a href="http://ilidong/go/admin/install.php" target="_blank" rel="external">http://ilidong/go/admin/install.php</a> 进行安装。</p>
-
-                        
-                            
-
-                        
-                        
-                            <p>
-                                <a href="/2014/yourls/#post-footer" class="postShorten-excerpt_link link">
                                     注释和共享
                                 </a>
                             </p>
