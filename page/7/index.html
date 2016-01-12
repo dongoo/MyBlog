@@ -235,6 +235,50 @@
 <section class="postShorten-group main-content-wrap">
     
         
+        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="postShorten-wrap">
+                <div class="postShorten-header">
+                    <h1 class="postShorten-title" itemprop="headline">
+                        
+                                <a class="link-unstyled" href="/2013/no-count-self/">禁止统计代码统计自己</a>
+                        
+                    </h1>
+                    <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Wed Dec 25 2013 22:28:46 GMT+0800">
+	
+		    12月 25, 2013
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
+
+
+    
+</div>
+                </div>
+                
+                
+                    <div class="postShorten-excerpt" itemprop="articleBody">
+                        <p>参考露兜博客，稍加改动<br>作为网站的管理者，每天要打开我的网站无数次。给网站安装了统计代码后，如果自己的产生的这些流量也都被统计工具统计进去，势必影响统计结果，违背统计的初衷。<br>如何避免这种情况：<br>1. wordpress不统计登录用户<br>如果wordpress网站是单个用户的，不统计登录用户的流量，就是不统计自己访问数据了，一般我们都将统计代码放在footer.php中，那现在用文本编辑器打开你的footer.php，找到你的统计代码，将其改成：</p>
+<pre><code><span class="php"><span class="preprocessor">&lt;?php</span> <span class="keyword">global</span> <span class="variable">$user_ID</span>; <span class="keyword">if</span> (!<span class="variable">$user_ID</span>) : <span class="preprocessor">?&gt;</span></span> 
+这里替换成统计代码 
+<span class="php"><span class="preprocessor">&lt;?php</span> <span class="keyword">endif</span>; <span class="preprocessor">?&gt;</span></span>
+</code></pre><p>这样当没有用户登录的情况下，页面输出统计代码；用户登录的情况下页面，不会输出统计代码。<br>
+                        
+                            <a href="/2013/no-count-self/" class="postShorten-excerpt_link link">
+                                阅读全文
+                            </a>
+                            
+                        
+                    </div>
+                
+            </div>
+            
+        </article>
+    
+        
         <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
             <div class="postShorten-wrap">
                 <div class="postShorten-header">
@@ -649,54 +693,6 @@
 <p><strong>
                         
                             <a href="/2013/linux-fliesystem-mount/" class="postShorten-excerpt_link link">
-                                阅读全文
-                            </a>
-                            
-                        
-                    </div>
-                
-            </div>
-            
-        </article>
-    
-        
-        <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-            <div class="postShorten-wrap">
-                <div class="postShorten-header">
-                    <h1 class="postShorten-title" itemprop="headline">
-                        
-                                <a class="link-unstyled" href="/2013/linux-filesystem/">linux文件系统</a>
-                        
-                    </h1>
-                    <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Sun Dec 01 2013 23:37:55 GMT+0800">
-	
-		    12月 01, 2013
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/电脑网络/">电脑网络</a>
-
-
-    
-</div>
-                </div>
-                
-                
-                    <div class="postShorten-excerpt" itemprop="articleBody">
-                        <p><strong>linux文件系统</strong></p>
-<p>操作系统通过文件系统管理文件及数据，磁盘或分区需要文件系统之后才能够为操作系统使用，创建文件an系统的过程又称为格式化。</p>
-<ul>
-<li>没有文件系统的设备又称为裸（raw）设备</li>
-<li>常见的文件系统有fat32，NTFS、ext2、ext3、ext4、xfs、HFS等</li>
-<li>文件系统之间的区别：日志、支持的分区大小、支持单个文件大小、性能等<br>windows下的主流文件系统：NTFS</li>
-</ul>
-<p>linux下主流文件系统：ext3、ext4</p>
-<p><strong>
-                        
-                            <a href="/2013/linux-filesystem/" class="postShorten-excerpt_link link">
                                 阅读全文
                             </a>
                             

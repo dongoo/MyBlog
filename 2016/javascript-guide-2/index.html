@@ -6,22 +6,22 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Lidong&#39;s blog">
-    <title>CSS选择器 - Lidong&#39;s blog</title>
+    <title>《JavaScript权威指南》读书笔记2－对象 - Lidong&#39;s blog</title>
     <meta name="author" content="lidong">
     
     
         <link rel="alternative" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <meta name="description" content="css选择器内容繁多，整理便于理解">
+    <meta name="description" content="JavaScript对象">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="CSS选择器">
-<meta property="og:url" content="https://blog.lidong.me/2016/css-selectors/index.html">
+<meta property="og:title" content="《JavaScript权威指南》读书笔记2－对象">
+<meta property="og:url" content="https://blog.lidong.me/2016/javascript-guide-2/index.html">
 <meta property="og:site_name" content="Lidong's blog">
-<meta property="og:description" content="css选择器内容繁多，整理便于理解">
-<meta property="og:updated_time" content="2016-01-12T15:58:11.000Z">
+<meta property="og:description" content="JavaScript对象">
+<meta property="og:updated_time" content="2016-01-12T16:00:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CSS选择器">
-<meta name="twitter:description" content="css选择器内容繁多，整理便于理解">
+<meta name="twitter:title" content="《JavaScript权威指南》读书笔记2－对象">
+<meta name="twitter:description" content="JavaScript对象">
 <meta name="twitter:creator" content="@｀Dondongooo｀">
     
     
@@ -238,13 +238,13 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
-            CSS选择器
+            《JavaScript权威指南》读书笔记2－对象
         </h1>
     
     <div class="post-meta">
-    <time itemprop="datePublished" content="Fri Jan 08 2016 22:58:44 GMT+0800">
+    <time itemprop="datePublished" content="Tue Jan 12 2016 23:52:25 GMT+0800">
 	
-		    1月 08, 2016
+		    1月 12, 2016
     	
     </time>
     
@@ -253,94 +253,44 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p>css选择器内容繁多，整理便于理解<br><a id="more"></a></p>
-<h2 id="1-_元素选择器">1. 元素选择器</h2><pre><code><span class="tag">h1</span><span class="rules">{}</span>
-<span class="tag">p</span><span class="rules">{}</span>
-</code></pre><h3 id="选择器分组">选择器分组</h3><pre><code>h1,p{}
-<span class="bullet">* </span>通配符
-</code></pre><h2 id="2-类选择器">2.类选择器</h2><pre><code><span class="class">.class</span>
-结合元素选择器 <span class="tag">a</span><span class="class">.class</span>
-多类选择器 <span class="class">.class1</span> <span class="class">.class2</span><span class="rules">{}</span>
-</code></pre><h2 id="3-ID选择器">3.ID选择器</h2><pre><code><span class="preprocessor">#id</span>
-</code></pre><h2 id="4-属性选择器">4.属性选择器</h2><p>[attribute]:用于选取带有指定属性的元素</p>
-<pre><code><span class="comment">//把包含标题的所有元素变成蓝色</span>
-<span class="attr_selector">[title]</span>{
-    <span class="attribute">color</span>:blue
-}
-</code></pre><pre><code><span class="tag">a</span><span class="attr_selector">[title='w3school']</span><span class="rules">{
-    <span class="rule"><span class="attribute">color</span>:<span class="value">red</span></span>;
-}</span>
-</code></pre><p>[attribute ~= value]: 根据部分属性值选择，如果需要根据属性值中的词列表的某个词进行选择（词与词之间用空格分开）则需要使用波浪号（～）</p>
-<p>[attribute |= value]: 选取属性值等于value或以value-开头的所有元素</p>
-<pre><code>*<span class="attr_selector">[title|='en']</span><span class="rules">{
-    <span class="rule"><span class="attribute">color</span>:<span class="value">red</span></span>;
-}</span>
-</code></pre><p>css3新增属性选择器<br>    [att*=val]包含<br>    [att\^=val]开头<br>    [att\$=val]结尾</p>
-<h2 id="5-后代选择器">5.后代选择器</h2><pre><code><span class="tag">p</span> <span class="tag">strong</span><span class="rules">{
-    <span class="rule"><span class="attribute">color</span>:<span class="value">blue</span></span>;
-}</span>
-</code></pre><h2 id="6-子元素选择器">6.子元素选择器</h2><p>与后代选择器相比，只能选择作为某元素之元素的元素</p>
-<pre><code><span class="tag">h1</span>&gt;<span class="tag">strong</span><span class="rules">{
-    <span class="rule"><span class="attribute">color</span>:<span class="value">blue</span></span>;
-}</span>
-</code></pre><h2 id="7-相邻兄弟选择器">7.相邻兄弟选择器</h2><p>可选择紧接在另一个元素后的元素(自身没有选择)，且二者有相同的父元素</p>
-<pre><code><span class="tag">h1</span>+<span class="tag">p</span><span class="rules">{}</span>;
-</code></pre><h2 id="8-伪类">8.伪类</h2><h3 id="结构性伪类选择器（伪元素）（css3）">结构性伪类选择器（伪元素）（css3）</h3><pre><code><span class="comment">/*首行*/</span>
-<span class="string">p:</span>first-line{
-<span class="label">    color:</span>bule    
-}
-<span class="comment">/*首字母*/</span>
-<span class="string">p:</span>first-letter{
-<span class="label">    color:</span>blue
-}
-<span class="comment">/*before*/</span>
-<span class="string">li:</span>before{
-<span class="label">    content:</span><span class="string">"---"</span>
-}
-<span class="comment">/*after*/</span>
-<span class="string">li:</span>after{
-<span class="label">    content:</span><span class="string">"注释内容"</span>；
-    font-<span class="string">size:</span><span class="number">12</span>px;
-}
-</code></pre><h3 id="root_not_empty_target">root not empty target</h3><p>在css3中，结构性伪类选择器的特点是允许开发者根据文档中的结构来指定元素的样式。</p>
-<pre><code><span class="pseudo">:root</span><span class="rules">{
-    <span class="rule"><span class="attribute">background-color</span>:<span class="value"> darkgrey</span></span>;
-    }</span>
-
-<span class="tag">div</span> *<span class="pseudo">:not(h1)</span><span class="rules">{
-    <span class="rule"><span class="attribute">color</span>:<span class="value">black</span></span>;
-    }</span>
-
-<span class="pseudo">:empty</span><span class="rules">{
-
-    }</span>
-<span class="pseudo">:target</span><span class="rules">{
-    <span class="rule"><span class="attribute">background-color</span>:<span class="value">orange
-    }</span></span></span>
-</code></pre><h3 id="first-child、last-child、nth-child、nth-last-child">first-child、last-child、nth-child、nth-last-child</h3><p>针对一个父元素中的第一个子元素、最后一个子元素、指定序号的子元素</p>
-<pre><code><span class="tag">li</span><span class="pseudo">:first-child</span>{<span class="attribute">backgroud-color</span>:;}
-<span class="tag">li</span><span class="pseudo">:last-child</span>{}
-<span class="tag">li</span><span class="pseudo">:nth-child</span>(n){}
-<span class="tag">li</span><span class="pseudo">:nth-last-child</span>(n){}
-
-<span class="comment">//奇数</span>
-<span class="tag">li</span><span class="pseudo">:nth-child</span>(odd){}
-<span class="comment">//偶数    </span>
-<span class="tag">li</span><span class="pseudo">:nth-child</span>(even){}
-</code></pre><h3 id=":nth-of-type和:nth-last-of-type"><code>:nth-of-type</code>和<code>:nth-last-of-type</code></h3><p><code>:only-child</code><br>只有一个子元素<br>可以使用only－child选择器来代替使用nth-child和 nth-last-child的实现方法</p>
-<h3 id="UI元素状态伪类选择器">UI元素状态伪类选择器</h3><p>只有当元素处于某种状态下时才起作用，默认状态下不起作用。</p>
-<p>(注意:必须以<span style="color: #ff0000;">L</span>o<span style="color: #ff0000;">v</span>e ,<span style="color: #ff0000;">Ha</span>的顺序来定义锚伪类)</p>
-<pre><code>link、 hover、active、focus、disable、checked
-enabled、disable
-read-<span class="keyword">only</span>、<span class="keyword">default</span>、indeterminate、selection、invalid、valid、required、<span class="type">optional</span>、<span class="type">in</span>-<span class="built_in">range</span>、
-</code></pre><h3 id="通用兄弟选择器">通用兄弟选择器</h3><p>同一个父元素之中的某元素之后的所有其他某个种类的兄弟元素所使用样式。</p>
-<hr>
-<p>参考：</p>
-<ol>
-<li>整理自极客学院视频</li>
-<li>W3Cschool <a href="http://www.w3school.com.cn/cssref/css_selectors.asp" target="_blank" rel="external">CSS 选择器参考手册</a></li>
-<li><a href="http://www.cnblogs.com/JustYong/p/5015643.html" target="_blank" rel="external">CSS选择器</a></li>
-</ol>
+            <p>JavaScript对象<br><a id="more"></a></p>
+<h2 id="对象创建">对象创建</h2><h3 id="对象直接量">对象直接量</h3><p>对象直接量是由若干名/值对组成的映射表，名/值对中间用分号分割，名/值对之间用逗号分隔</p>
+<pre><code><span class="variable"><span class="keyword">var</span> empty</span> = {};  <span class="comment">//没有任何属性的对象</span>
+<span class="variable"><span class="keyword">var</span> point</span> = {x:<span class="number">0</span>, y:<span class="number">0</span>}  <span class="comment">//两个属性</span>
+<span class="variable"><span class="keyword">var</span> point2</span> = {x:point.x, y:point.y+<span class="number">1</span>}  <span class="comment">//更复杂的值</span>
+<span class="variable"><span class="keyword">var</span> book</span> = {
+    <span class="string">"main title"</span>: <span class="string">"javascript"</span>,  <span class="comment">//属性名中有空格，必须用字符串表示</span>
+    'sub-title': <span class="string">"the definitive guide"</span>,  <span class="comment">//属性名中有连字符，必须用字符串表示</span>
+    '<span class="keyword">for</span>': <span class="string">"all audiences"</span>,  <span class="comment">//"for " 是保留字，因此必须用引号</span>
+    author: {  <span class="comment">//这个属性值是一个对象</span>
+        firstname: <span class="string">"David"</span>
+        surname: <span class="string">"flanagan"</span>
+    }
+};
+</code></pre><h3 id="通过new创建对象">通过new创建对象</h3><pre><code><span class="keyword">var</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>(); <span class="comment">//创建一个空对象，和{}一样</span>
+<span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Array</span>(); <span class="comment">// 创建一个空数组，和[]一样</span>
+<span class="keyword">var</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>();  <span class="comment">//创建一个表示当前时间的data对象</span>
+<span class="keyword">var</span> r = <span class="keyword">new</span> <span class="built_in">RegExp</span>();  <span class="comment">//创建一个可以进行模式匹配的RegExp对象</span>
+</code></pre><h3 id="Object-create()">Object.create()</h3><p>第一个参数是这个对象的原型，第二个可选参数用于对对象的属性进行进一步描述。</p>
+<h2 id="属性的查询和设置">属性的查询和设置</h2><p>可以通过点<code>.</code>或方括号<code>[]</code>运算符来获取属性的值，对于点<code>.</code>来说，右侧必须是一个以属性名称命名的简单标识符，对于方括号来说<code>[]</code>，方括号内必须是一个计算结果为字符串的表达式，这个字符串就是属性的名字</p>
+<pre><code><span class="label">var</span> author ＝ <span class="keyword">book.author; </span>//得到<span class="keyword">book的 </span><span class="string">"author"</span> 属性
+</code></pre><h2 id="删除属性">删除属性</h2><pre><code><span class="keyword">delete</span> book.author; <span class="comment">//book不再有属性author</span>
+</code></pre><p>delete只是断开属性和宿主对象的联系，不会操作属性中的属性。<br>只能删除自有属性不能删除继承属性</p>
+<h2 id="检测属性">检测属性</h2><p>in运算符、hasOwnPreperty()、propertyIsEnumerable()</p>
+<pre><code>检测对象的含有自有属性或继承属性，返回<span class="literal">true</span>
+<span class="keyword">var</span> o = {x:<span class="number">1</span>}
+<span class="variable">"x"</span> <span class="keyword">in</span> o;  //<span class="literal">true</span> <span class="variable">"x"</span>是o的属性
+<span class="variable">"y"</span> <span class="keyword">in</span> o;  //<span class="literal">false</span> <span class="variable">"y"</span>不是o的属性
+<span class="variable">"toString"</span> <span class="keyword">in</span> o; //<span class="literal">true</span> o继承toString属性
+</code></pre><p><code>hasOwnPreperty()</code> 自有属性ture，继承属性false<br><code>propertyIsEnumerable()</code> 只有检测自有属性且这个属性的可枚举性为true 才返回true。</p>
+<p>使用<code>!==</code>判断一个属性是否是undefined：</p>
+<pre><code><span class="keyword">var</span> o = {x:<span class="number">1</span>}
+o.x !==<span class="literal">undefined</span>;  <span class="comment">//true o中有属性x</span>
+o.y !==<span class="literal">undefined</span>;  <span class="comment">//false o中没有属性x</span>
+o.toString !==<span class="literal">undefined</span>; <span class="comment">//true o继承toString属性</span>
+</code></pre><h2 id="对象序列化">对象序列化</h2><p>JSON：JavaScript Object Notation ——JavaScript对象表示法</p>
+<p><code>JSON.stringify()</code> //序列化JavaScript对象<br><code>JSON.parse()</code> //还原JavaScript对象</p>
+<p>##对象方法<br><code>toString()</code>  返回一个表示调用这个方法的对象值的字符串<br><code>toLocaleString()</code>  返回一个表示这个对象的本地化字符串<br><code>toJSON()</code><br><code>valueOf()</code></p>
 
             
                 
@@ -353,7 +303,7 @@ read-<span class="keyword">only</span>、<span class="keyword">default</span>、
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">标签</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/css/">css</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/javascript/">javascript</a> <a class="tag tag--primary tag--small t-link" href="/tags/读书笔记/">读书笔记</a>
 
             </div>
         
@@ -362,7 +312,7 @@ read-<span class="keyword">only</span>、<span class="keyword">default</span>、
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/javascript-guide-2/"  data-tooltip="《JavaScript权威指南》读书笔记2－对象">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -370,7 +320,7 @@ read-<span class="keyword">only</span>、<span class="keyword">default</span>、
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/vim-basic/" data-tooltip="Vim 基本操作">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/css-selectors/" data-tooltip="CSS选择器">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right"></i>
@@ -380,23 +330,23 @@ read-<span class="keyword">only</span>、<span class="keyword">default</span>、
     </nav>
 <ul class="post-actions post-action-share">
      <li class="post-action">
-          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-2/&amp;title=《JavaScript权威指南》读书笔记2－对象">
                 <i class="fa fa-print"></i>
             </a>
         </li>
      <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-2/&amp;title=《JavaScript权威指南》读书笔记2－对象">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
         <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-2/&amp;title=《JavaScript权威指南》读书笔记2－对象">
                 <i class="fa fa-weixin"></i>
             </a>
         </li>
        
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-2/&amp;title=《JavaScript权威指南》读书笔记2－对象">
                 <i class="fa fa-weibo"></i>
             </a>
         </li>
@@ -428,7 +378,7 @@ read-<span class="keyword">only</span>、<span class="keyword">default</span>、
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/javascript-guide-2/"  data-tooltip="《JavaScript权威指南》读书笔记2－对象">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -436,7 +386,7 @@ read-<span class="keyword">only</span>、<span class="keyword">default</span>、
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/vim-basic/" data-tooltip="Vim 基本操作">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/css-selectors/" data-tooltip="CSS选择器">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right"></i>
@@ -446,23 +396,23 @@ read-<span class="keyword">only</span>、<span class="keyword">default</span>、
     </nav>
 <ul class="post-actions post-action-share">
      <li class="post-action">
-          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
+          <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="打印" href="http://www.jiathis.com/send/?webid=print&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-2/&amp;title=《JavaScript权威指南》读书笔记2－对象">
                 <i class="fa fa-print"></i>
             </a>
         </li>
      <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter" href="http://www.jiathis.com/send/?webid=twitter&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-2/&amp;title=《JavaScript权威指南》读书笔记2－对象">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
         <li class="post-action">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-2/&amp;title=《JavaScript权威指南》读书笔记2－对象">
                 <i class="fa fa-weixin"></i>
             </a>
         </li>
        
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/css-selectors/&amp;title=CSS选择器">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=2069053&amp;url=https://blog.lidong.me/2016/javascript-guide-2/&amp;title=《JavaScript权威指南》读书笔记2－对象">
                 <i class="fa fa-weibo"></i>
             </a>
         </li>
@@ -474,17 +424,17 @@ read-<span class="keyword">only</span>、<span class="keyword">default</span>、
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2016/css-selectors/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://blog.lidong.me/2016/javascript-guide-2/">
                 <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2016/css-selectors/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lidong.me/2016/javascript-guide-2/">
                 <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2016/css-selectors/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://blog.lidong.me/2016/javascript-guide-2/">
                 <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
             </a>
         </li>

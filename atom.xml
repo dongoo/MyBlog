@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My life and My notes]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="https://blog.lidong.me/"/>
-  <updated>2016-01-09T15:44:50.000Z</updated>
+  <updated>2016-01-12T16:00:44.000Z</updated>
   <id>https://blog.lidong.me/</id>
   
   <author>
@@ -15,11 +15,67 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[《JavaScript权威指南》读书笔记2－对象]]></title>
+    <link href="https://blog.lidong.me/2016/javascript-guide-2/"/>
+    <id>https://blog.lidong.me/2016/javascript-guide-2/</id>
+    <published>2016-01-12T15:52:25.000Z</published>
+    <updated>2016-01-12T16:00:44.000Z</updated>
+    <content type="html"><![CDATA[<p>JavaScript对象<br><a id="more"></a></p>
+<h2 id="对象创建">对象创建</h2><h3 id="对象直接量">对象直接量</h3><p>对象直接量是由若干名/值对组成的映射表，名/值对中间用分号分割，名/值对之间用逗号分隔</p>
+<pre><code><span class="variable"><span class="keyword">var</span> empty</span> = {};  <span class="comment">//没有任何属性的对象</span>
+<span class="variable"><span class="keyword">var</span> point</span> = {x:<span class="number">0</span>, y:<span class="number">0</span>}  <span class="comment">//两个属性</span>
+<span class="variable"><span class="keyword">var</span> point2</span> = {x:point.x, y:point.y+<span class="number">1</span>}  <span class="comment">//更复杂的值</span>
+<span class="variable"><span class="keyword">var</span> book</span> = {
+    <span class="string">"main title"</span>: <span class="string">"javascript"</span>,  <span class="comment">//属性名中有空格，必须用字符串表示</span>
+    'sub-title': <span class="string">"the definitive guide"</span>,  <span class="comment">//属性名中有连字符，必须用字符串表示</span>
+    '<span class="keyword">for</span>': <span class="string">"all audiences"</span>,  <span class="comment">//"for " 是保留字，因此必须用引号</span>
+    author: {  <span class="comment">//这个属性值是一个对象</span>
+        firstname: <span class="string">"David"</span>
+        surname: <span class="string">"flanagan"</span>
+    }
+};
+</code></pre><h3 id="通过new创建对象">通过new创建对象</h3><pre><code><span class="keyword">var</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>(); <span class="comment">//创建一个空对象，和{}一样</span>
+<span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Array</span>(); <span class="comment">// 创建一个空数组，和[]一样</span>
+<span class="keyword">var</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>();  <span class="comment">//创建一个表示当前时间的data对象</span>
+<span class="keyword">var</span> r = <span class="keyword">new</span> <span class="built_in">RegExp</span>();  <span class="comment">//创建一个可以进行模式匹配的RegExp对象</span>
+</code></pre><h3 id="Object-create()">Object.create()</h3><p>第一个参数是这个对象的原型，第二个可选参数用于对对象的属性进行进一步描述。</p>
+<h2 id="属性的查询和设置">属性的查询和设置</h2><p>可以通过点<code>.</code>或方括号<code>[]</code>运算符来获取属性的值，对于点<code>.</code>来说，右侧必须是一个以属性名称命名的简单标识符，对于方括号来说<code>[]</code>，方括号内必须是一个计算结果为字符串的表达式，这个字符串就是属性的名字</p>
+<pre><code><span class="label">var</span> author ＝ <span class="keyword">book.author; </span>//得到<span class="keyword">book的 </span><span class="string">"author"</span> 属性
+</code></pre><h2 id="删除属性">删除属性</h2><pre><code><span class="keyword">delete</span> book.author; <span class="comment">//book不再有属性author</span>
+</code></pre><p>delete只是断开属性和宿主对象的联系，不会操作属性中的属性。<br>只能删除自有属性不能删除继承属性</p>
+<h2 id="检测属性">检测属性</h2><p>in运算符、hasOwnPreperty()、propertyIsEnumerable()</p>
+<pre><code>检测对象的含有自有属性或继承属性，返回<span class="literal">true</span>
+<span class="keyword">var</span> o = {x:<span class="number">1</span>}
+<span class="variable">"x"</span> <span class="keyword">in</span> o;  //<span class="literal">true</span> <span class="variable">"x"</span>是o的属性
+<span class="variable">"y"</span> <span class="keyword">in</span> o;  //<span class="literal">false</span> <span class="variable">"y"</span>不是o的属性
+<span class="variable">"toString"</span> <span class="keyword">in</span> o; //<span class="literal">true</span> o继承toString属性
+</code></pre><p><code>hasOwnPreperty()</code> 自有属性ture，继承属性false<br><code>propertyIsEnumerable()</code> 只有检测自有属性且这个属性的可枚举性为true 才返回true。</p>
+<p>使用<code>!==</code>判断一个属性是否是undefined：</p>
+<pre><code><span class="keyword">var</span> o = {x:<span class="number">1</span>}
+o.x !==<span class="literal">undefined</span>;  <span class="comment">//true o中有属性x</span>
+o.y !==<span class="literal">undefined</span>;  <span class="comment">//false o中没有属性x</span>
+o.toString !==<span class="literal">undefined</span>; <span class="comment">//true o继承toString属性</span>
+</code></pre><h2 id="对象序列化">对象序列化</h2><p>JSON：JavaScript Object Notation ——JavaScript对象表示法</p>
+<p><code>JSON.stringify()</code> //序列化JavaScript对象<br><code>JSON.parse()</code> //还原JavaScript对象</p>
+<p>##对象方法<br><code>toString()</code>  返回一个表示调用这个方法的对象值的字符串<br><code>toLocaleString()</code>  返回一个表示这个对象的本地化字符串<br><code>toJSON()</code><br><code>valueOf()</code></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>JavaScript对象<br>]]>
+    
+    </summary>
+    
+      <category term="javascript" scheme="https://blog.lidong.me/tags/javascript/"/>
+    
+      <category term="读书笔记" scheme="https://blog.lidong.me/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[CSS选择器]]></title>
     <link href="https://blog.lidong.me/2016/css-selectors/"/>
     <id>https://blog.lidong.me/2016/css-selectors/</id>
     <published>2016-01-08T14:58:44.000Z</published>
-    <updated>2016-01-09T15:44:50.000Z</updated>
+    <updated>2016-01-12T15:58:11.000Z</updated>
     <content type="html"><![CDATA[<p>css选择器内容繁多，整理便于理解<br><a id="more"></a></p>
 <h2 id="1-_元素选择器">1. 元素选择器</h2><pre><code><span class="tag">h1</span><span class="rules">{}</span>
 <span class="tag">p</span><span class="rules">{}</span>
@@ -113,6 +169,8 @@ read-<span class="keyword">only</span>、<span class="keyword">default</span>、
     <![CDATA[<p>css选择器内容繁多，整理便于理解<br>]]>
     
     </summary>
+    
+      <category term="css" scheme="https://blog.lidong.me/tags/css/"/>
     
   </entry>
   
@@ -282,8 +340,8 @@ s.<span class="function"><span class="title">toUpperCase</span><span class="para
     <link href="https://blog.lidong.me/2016/git-basic/"/>
     <id>https://blog.lidong.me/2016/git-basic/</id>
     <published>2016-01-02T14:21:15.000Z</published>
-    <updated>2016-01-10T08:07:59.000Z</updated>
-    <content type="html"><![CDATA[<p>日常使用只要记住下图6个命令，就可以了<br><img src="/media/bg2015120901.png" alt="bg2015120901"><br>图来自：<a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html</a></p>
+    <updated>2016-01-12T16:05:01.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="/media/bg2015120901.png" alt="bg2015120901"><br>日常使用只要记住上图6个命令，就可以了<br><a id="more"></a><br>图来自：<a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html</a></p>
 <h2 id="zui常用的命令">zui常用的命令</h2><h2 id="新建代码库">新建代码库</h2><pre><code><span class="comment">//在当前目录新建一个git代码库</span>
 git init
 
@@ -476,7 +534,8 @@ git archive
 </code></pre><p>####参考：<br>1.<a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html" target="_blank" rel="external">常用 Git 命令清单</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>日常使用只要记住下图6个命令，就可以了<br><img src="/media/bg2015120901.png" alt="bg2015120901"><br>图来自：<a href="http://www.ruanyifeng.com/blog/2015/12/git-]]>
+    <![CDATA[<p><img src="/media/bg2015120901.png" alt="bg2015120901"><br>日常使用只要记住上图6个命令，就可以了<br>]]>
+    
     </summary>
     
       <category term="git" scheme="https://blog.lidong.me/tags/git/"/>
@@ -1021,37 +1080,6 @@ return <span class="variable">$sendername</span>;
     </summary>
     
       <category term="wordprees" scheme="https://blog.lidong.me/tags/wordprees/"/>
-    
-      <category term="电脑网络" scheme="https://blog.lidong.me/categories/%E7%94%B5%E8%84%91%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[在电脑上打开手机网页－－在电脑上完成触屏操作]]></title>
-    <link href="https://blog.lidong.me/2014/play-buluo-with-pc/"/>
-    <id>https://blog.lidong.me/2014/play-buluo-with-pc/</id>
-    <published>2014-11-04T00:30:46.000Z</published>
-    <updated>2015-10-21T00:39:42.000Z</updated>
-    <content type="html"><![CDATA[<p>兴趣部落是一款在手机QQ上的类似贴吧的产品，我现在每天的工作就是围绕兴趣部落，前几天运气背，把手机给整坏了，木有手机了，工作怎么进行。虽然我们有可用PC端的后台，但是我就想用玩前端的，前端的才可以发帖，回帖嘛，要不然玩得多没意思。</p>
-<h3 id="正文开始">正文开始</h3><p>1.准备工具：chrome浏览器（我使用的是chrome 38，不同的版本可能有细微的差别）</p>
-<p>2.打开兴趣部落的网址：<a href="http://xiaoqu.qq.com/mobile/" title="兴趣部落" target="_blank" rel="external">http://xiaoqu.qq.com/mobile/</a>（网址会变成其他，不用担心，如果不放心也可以把这一步放在第五步之后）（网址可以通过关注兴趣部落官方微信获取噢 o(∩_∩)o ）</p>
-<p>3.按F12 打开浏览器的开发者工具；</p>
-<p>4.按图示操作，先选择弹出的开发者工具的左上角第二个图标，再点击右边圈中的按钮，并最小化弹出窗口（切记弹出的窗口不可以关闭。）</p>
-<p><a href="https://ilidong.com/wp-content/uploads/2014/11/20141104081200.png" target="_blank" rel="external">undefined</a><br>（点击可以放大）</p>
-<p>5.按图示设置，手机机型建议选择安卓机型，（苹果机型进去后没有搜索框，其它机型请自行测试）</p>
-<p><a href="https://ilidong.com/wp-content/uploads/2014/11/20141104084248.png" target="_blank" rel="external">undefined</a><br>（点击可以放大）</p>
-<p>6.按F5刷新页面，即可见到熟悉的页面了</p>
-<p>现在鼠标就是你的手的了，你可以用鼠标的点击代替手指的点按，用鼠标的点击按住拖动鼠标来代替手指的滑动。</p>
-<p>以上的方法适用于所有你想在电脑端浏览手机版页面，因为chrome浏览器已经帮我们配置好了手机模拟环境，不行你可以试试打开 <a href="http://3g.qq.com/" title="腾讯网" target="_blank" rel="external">腾讯网http://3g.qq.com/</a> <a href="http://3g.sina.com.cn/" title="新浪网" target="_blank" rel="external">新浪网http://3g.sina.com.cn/</a> 是不是都是手机版的页面呢，你选的手机型号比较NB的，还是触屏版噢，还能用鼠标操作噢。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>兴趣部落是一款在手机QQ上的类似贴吧的产品，我现在每天的工作就是围绕兴趣部落，前几天运气背，把手机给整坏了，木有手机了，工作怎么进行。虽然我们有可用PC端的后台，但是我就想用玩前端的，前端的才可以发帖，回帖嘛，要不然玩得多没意思。</p>
-<h3 id="正文开始">正文开]]>
-    </summary>
-    
-      <category term="兴趣部落" scheme="https://blog.lidong.me/tags/%E5%85%B4%E8%B6%A3%E9%83%A8%E8%90%BD/"/>
-    
-      <category term="触屏版" scheme="https://blog.lidong.me/tags/%E8%A7%A6%E5%B1%8F%E7%89%88/"/>
     
       <category term="电脑网络" scheme="https://blog.lidong.me/categories/%E7%94%B5%E8%84%91%E7%BD%91%E7%BB%9C/"/>
     
